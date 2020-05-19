@@ -6,6 +6,7 @@ import Container from 'react-bootstrap/Container';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import USAMap from "react-usa-map";
+import InfoContainer from './InfoContainer.js';
 
 
 
@@ -26,6 +27,9 @@ class Home extends Component {
   mapHandler = (event) => {
     alert(event.target.dataset.name);
   };
+
+
+ 
 
   showMobilityData = () => {
     console.log("sup", this.state.mobilityData)
@@ -49,6 +53,7 @@ class Home extends Component {
   render() {
     return (
     <div>
+      <InfoContainer />
       <br></br>
       <Container fluid="md">
         <Row>
