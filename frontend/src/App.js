@@ -1,5 +1,5 @@
 import React, {Component, Fragment} from 'react';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { BrowserRouter, Switch, Route, NavLink } from 'react-router-dom';
 import Home from './components/home/Home';
 import NotFound from './components/404/NotFound.js';
 import SignUp from './components/auth/SignUp';
@@ -7,6 +7,7 @@ import LogIn from './components/auth/LogIn';
 import Profile from './components/profile/Profile';
 import actions from './services/index';
 import Nav from 'react-bootstrap/Nav';
+import { LinkContainer } from 'react-router-bootstrap';
 
 class App extends Component {
   
@@ -54,7 +55,9 @@ class App extends Component {
             <Nav.Link onClick={this.logOut} href='/#'>Log Out</Nav.Link>
           </Nav.Item>
           <Nav.Item>
-            <Nav.Link href="/profile">Profile</Nav.Link>
+          <LinkContainer to="/profile">
+            <Nav.Link>Profile</Nav.Link>
+          </LinkContainer>
           </Nav.Item>
         </Fragment>
         :

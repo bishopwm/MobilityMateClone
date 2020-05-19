@@ -6,13 +6,19 @@ import Container from 'react-bootstrap/Container';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import USAMap from "react-usa-map";
-import InfoContainer from './InfoContainer.js';
+import ZingChart from 'zingchart-react';
 
 
 
 class Home extends Component {
   state = {
-    mobilityData: []
+    mobilityData: [],
+    config: {
+      type: 'bar',
+      series: [{
+        values: [4,5,3,4,5,3,5,4,11]
+      }]
+    }
   }
 
   async componentDidMount() {
@@ -53,7 +59,7 @@ class Home extends Component {
   render() {
     return (
     <div>
-      <InfoContainer />
+
       <br></br>
       <Container fluid="md">
         <Row>
@@ -62,6 +68,7 @@ class Home extends Component {
               <div className="App">
                 <USAMap onClick={this.mapHandler} />
               </div>
+              <ZingChart data={this.state.config}/>
               <ul className="justify-content-center mobility-data-list">
                 {this.showMobilityData()}
               </ul>
