@@ -1,5 +1,5 @@
 import React, {Component, Fragment} from 'react';
-import { BrowserRouter, Switch, Route, NavLink } from 'react-router-dom';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import Home from './components/home/Home';
 import NotFound from './components/404/NotFound.js';
 import SignUp from './components/auth/SignUp';
@@ -24,8 +24,9 @@ class App extends Component {
   setUser = (user) => this.setState(user)
   
   logOut = async () => {
-    let res = await actions.logOut()
-    this.setUser({email:null, createdAt: null, updatedAt: null, _id: null }) //FIX 
+    let res = await actions.logOut();
+    console.log(res);
+    this.setUser({email:null, createdAt: null, updatedAt: null, _id: null });
   }
 
   render(){
