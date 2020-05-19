@@ -1,5 +1,5 @@
 import React, {Component, Fragment} from 'react';
-import { BrowserRouter, Switch, Route, NavLink } from 'react-router-dom';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import Home from './components/home/Home';
 import NotFound from './components/404/NotFound.js';
 import SignUp from './components/auth/SignUp';

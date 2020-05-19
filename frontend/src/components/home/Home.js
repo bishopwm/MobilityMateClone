@@ -13,11 +13,43 @@ import ZingChart from 'zingchart-react';
 class Home extends Component {
   state = {
     mobilityData: [],
-    config: {
-      type: 'bar',
-      series: [{
-        values: [4,5,3,4,5,3,5,4,11]
-      }]
+    config1: {
+      type: 'line',
+      'scale-x': {
+        labels: [ "January", "February", "March", "April", "May", "June", "July" ]
+      },
+      'scale-y': {
+        values: "-80:100:80",
+        format: "%%v",
+        negation: "currency" //To change the placement of the negation sign.
+      },
+      plotarea: {
+        'margin-left': "dynamic"
+      },
+      series: [
+        {
+          values: [50,-30,-40,20,60,90,140]
+        }
+      ]
+    },
+    config2: {
+      type: 'line',
+      'scale-x': {
+        labels: [ "January", "February", "March", "April", "May", "June", "July" ]
+      },
+      'scale-y': {
+        values: "-80:100:80",
+        format: "%%v",
+        negation: "currency" //To change the placement of the negation sign.
+      },
+      plotarea: {
+        'margin-left': "dynamic"
+      },
+      series: [
+        {
+          values: [50,-30,-40,20,60,90,140]
+        }
+      ]
     }
   }
 
@@ -35,7 +67,25 @@ class Home extends Component {
   };
 
 
- 
+ organizeMobilityData = () => {
+   let datesAndGrocery = []
+   let rawData = this.state.mobilityData;
+   let lastFew = rawData.slice(rawData.length-10, rawData.length-1)
+   console.log("last 10,",lastFew);
+   let dateStats = lastFew.map(eachDataPoint => {
+     return eachDataPoint.date
+   })
+   let groceryStats = lastFew.map(eachDataPoint => {
+     return eachDataPoint.grocery_and_pharmacy_percent_change_from_baseline
+   });
+   console.log("last 10, just dates", dateStats);
+   console.log("last 10, just grocery", groceryStats);
+   datesAndGrocery.push(dateStats);
+   datesAndGrocery.push(groceryStats);
+  //  return datesAndGrocery;
+  console.log("array holding dates and grocery stats", datesAndGrocery)
+  
+ }
 
   showMobilityData = () => {
     console.log("sup", this.state.mobilityData)
@@ -47,10 +97,10 @@ class Home extends Component {
           <h4>Date: {eachDataPoint.date}</h4>
           <h4>Grocery & Pharmacy Mobility: {eachDataPoint.grocery_and_pharmacy_percent_change_from_baseline}</h4>
           <h4>Parks: {eachDataPoint.parks_percent_change_from_baseline}</h4>
-          <h4>Residential: {eachDataPoint.residential_percent_change_from_baseline}</h4>
+          {/* <h4>Residential: {eachDataPoint.residential_percent_change_from_baseline}</h4>
           <h4>Shopping & Dining: {eachDataPoint.retail_and_recreation_percent_change_from_baseline}</h4>
           <h4>Transit: {eachDataPoint.transit_stations_percent_change_from_baseline}</h4>
-          <h4>Work: {eachDataPoint.workplaces_percent_change_from_baseline}</h4>
+          <h4>Work: {eachDataPoint.workplaces_percent_change_from_baseline}</h4> */}
       </li>
       )
     })
@@ -59,7 +109,7 @@ class Home extends Component {
   render() {
     return (
     <div>
-
+    {this.organizeMobilityData()}
       <br></br>
       <Container fluid="md">
         <Row>
@@ -68,9 +118,12 @@ class Home extends Component {
               <div className="App">
                 <USAMap onClick={this.mapHandler} />
               </div>
-              <ZingChart data={this.state.config}/>
+              <h1>Grocery/Pharmacy</h1>
+              <ZingChart data={this.state.config1}/>
+              <h1>Parks</h1>
+              <ZingChart data={this.state.config2}/>
               <ul className="justify-content-center mobility-data-list">
-                {this.showMobilityData()}
+                {/* {this.showMobilityData()} */}
               </ul>
             </div>
           </Col>
