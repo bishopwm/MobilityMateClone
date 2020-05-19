@@ -20,6 +20,7 @@ class LogIn extends Component {
                 <h2>LogIn</h2>
                 <form onSubmit={this.handleSubmit}>
                     <input name="email" type="email" onChange={this.handleChange} />
+                    <br></br>
                     <input name="password" type="password" onChange={this.handleChange} />
                     <input type="submit" value="Log In"/>
                 </form>

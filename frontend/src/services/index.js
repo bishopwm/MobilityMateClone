@@ -20,6 +20,9 @@ const actions = {
   },
   logOut: async () => {
     return await service.get('/logout')
+  },
+  returnMobilityData: async () => {
+    return await service.get('/mobilities')
   }
 };
 
