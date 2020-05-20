@@ -8,6 +8,8 @@ import Profile from './components/profile/Profile';
 import actions from './services/index';
 import Nav from 'react-bootstrap/Nav';
 import { LinkContainer } from 'react-router-bootstrap';
+import Region from './components/Regions/Region';
+import MobilityTrends from './components/Mobility/MobilityTrends';
 
 class App extends Component {
   
@@ -76,6 +78,8 @@ class App extends Component {
         <Route exact path="/sign-up" render={(props)=><SignUp {...props} setUser={this.setUser} />} />
         <Route exact path="/log-in" render={(props) => <LogIn {...props} setUser={this.setUser}/>} />
         <Route exact path="/profile" render={(props) => <Profile {...props} user={this.state}/>} />
+        <Route exact path="/region" render={(props) => <Region {...props} user={this.state}/>} />
+        <Route exact path="/mobility-trends" render={(props) => <MobilityTrends {...props} user={this.state}/>} />
         
         <Route component={NotFound} />
       </Switch>
