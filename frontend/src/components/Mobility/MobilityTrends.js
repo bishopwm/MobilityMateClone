@@ -8,7 +8,10 @@ import Row from 'react-bootstrap/Row';
 import '../../../node_modules/react-vis/dist/style.css';
 import {XYPlot, LineSeries, VerticalGridLines, HorizontalGridLines, XAxis, YAxis} from 'react-vis';
 
+
 class MobilityTrends extends Component {
+
+
     state = {
         mobilityData: [],
         groceryStats: [1, 1],
@@ -20,7 +23,8 @@ class MobilityTrends extends Component {
       }
     
       async componentDidMount() {
-        let res = await actions.returnMobilityData();
+          console.log("hello", this.props.regionName)
+        let res = await actions.returnMobilityData(this.props.regionName);
         console.log("data", res);
         let rawData = [...res.data.mobilities]
         let lastFew = rawData.slice(rawData.length-10, rawData.length-1)
@@ -51,19 +55,20 @@ class MobilityTrends extends Component {
     
       showGraphGroceryPharmacy = () => {
         const data = [
-          {x: 0, y: this.state.groceryStats[0]},
-          {x: 1, y: this.state.groceryStats[1]},
-          {x: 2, y: this.state.groceryStats[2]},
-          {x: 3, y: this.state.groceryStats[3]},
-          {x: 4, y: this.state.groceryStats[4]},
-          {x: 5, y: this.state.groceryStats[5]},
-          {x: 6, y: this.state.groceryStats[6]},
-          {x: 7, y: this.state.groceryStats[7]},
-          {x: 8, y: this.state.groceryStats[8]}
+          {x: new Date(Date.parse(this.state.dateStats[0])), y: this.state.groceryStats[0]},
+          {x: new Date(Date.parse(this.state.dateStats[1])), y: this.state.groceryStats[1]},
+          {x: new Date(Date.parse(this.state.dateStats[2])), y: this.state.groceryStats[2]},
+          {x: new Date(Date.parse(this.state.dateStats[3])), y: this.state.groceryStats[3]},
+          {x: new Date(Date.parse(this.state.dateStats[4])), y: this.state.groceryStats[4]},
+          {x: new Date(Date.parse(this.state.dateStats[5])), y: this.state.groceryStats[5]},
+          {x: new Date(Date.parse(this.state.dateStats[6])), y: this.state.groceryStats[6]},
+          {x: new Date(Date.parse(this.state.dateStats[7])), y: this.state.groceryStats[7]},
+          {x: new Date(Date.parse(this.state.dateStats[8])), y: this.state.groceryStats[8]},
+          {x: new Date(Date.parse(this.state.dateStats[9])), y: this.state.groceryStats[9]}
         ];
         return (
           <div className="groceryPharmacy">
-            <XYPlot height={300} width= {600}>
+            <XYPlot height={300} width= {900} xType="time">
               <VerticalGridLines />
               <HorizontalGridLines />
               <XAxis />
@@ -76,19 +81,19 @@ class MobilityTrends extends Component {
     
       showGraphParks = () => {
         const data = [
-          {x: 0, y: this.state.parkStats[0]},
-          {x: 1, y: this.state.parkStats[1]},
-          {x: 2, y: this.state.parkStats[2]},
-          {x: 3, y: this.state.parkStats[3]},
-          {x: 4, y: this.state.parkStats[4]},
-          {x: 5, y: this.state.parkStats[5]},
-          {x: 6, y: this.state.parkStats[6]},
-          {x: 7, y: this.state.parkStats[7]},
-          {x: 8, y: this.state.parkStats[8]}
+          {x: new Date(Date.parse(this.state.dateStats[0])), y: this.state.parkStats[0]},
+          {x: new Date(Date.parse(this.state.dateStats[1])), y: this.state.parkStats[1]},
+          {x: new Date(Date.parse(this.state.dateStats[2])), y: this.state.parkStats[2]},
+          {x: new Date(Date.parse(this.state.dateStats[3])), y: this.state.parkStats[3]},
+          {x: new Date(Date.parse(this.state.dateStats[4])), y: this.state.parkStats[4]},
+          {x: new Date(Date.parse(this.state.dateStats[5])), y: this.state.parkStats[5]},
+          {x: new Date(Date.parse(this.state.dateStats[6])), y: this.state.parkStats[6]},
+          {x: new Date(Date.parse(this.state.dateStats[7])), y: this.state.parkStats[7]},
+          {x: new Date(Date.parse(this.state.dateStats[8])), y: this.state.parkStats[8]}
         ];
         return (
           <div className="parks">
-            <XYPlot height={300} width= {600}>
+            <XYPlot height={300} width= {900} xType="time">
               <VerticalGridLines />
               <HorizontalGridLines />
               <XAxis />
@@ -101,19 +106,19 @@ class MobilityTrends extends Component {
     
       showGraphTransit = () => {
         const data = [
-          {x: 0, y: this.state.transitStats[0]},
-          {x: 1, y: this.state.transitStats[1]},
-          {x: 2, y: this.state.transitStats[2]},
-          {x: 3, y: this.state.transitStats[3]},
-          {x: 4, y: this.state.transitStats[4]},
-          {x: 5, y: this.state.transitStats[5]},
-          {x: 6, y: this.state.transitStats[6]},
-          {x: 7, y: this.state.transitStats[7]},
-          {x: 8, y: this.state.transitStats[8]}
+          {x: new Date(Date.parse(this.state.dateStats[0])), y: this.state.transitStats[0]},
+          {x: new Date(Date.parse(this.state.dateStats[1])), y: this.state.transitStats[1]},
+          {x: new Date(Date.parse(this.state.dateStats[2])), y: this.state.transitStats[2]},
+          {x: new Date(Date.parse(this.state.dateStats[3])), y: this.state.transitStats[3]},
+          {x: new Date(Date.parse(this.state.dateStats[4])), y: this.state.transitStats[4]},
+          {x: new Date(Date.parse(this.state.dateStats[5])), y: this.state.transitStats[5]},
+          {x: new Date(Date.parse(this.state.dateStats[6])), y: this.state.transitStats[6]},
+          {x: new Date(Date.parse(this.state.dateStats[7])), y: this.state.transitStats[7]},
+          {x: new Date(Date.parse(this.state.dateStats[8])), y: this.state.transitStats[8]}
         ];
         return (
           <div className="parks">
-            <XYPlot height={300} width= {600}>
+            <XYPlot height={300} width= {900} xType="time">
               <VerticalGridLines />
               <HorizontalGridLines />
               <XAxis />
@@ -126,19 +131,19 @@ class MobilityTrends extends Component {
     
       showGraphResidential = () => {
         const data = [
-          {x: 0, y: this.state.residentialStats[0]},
-          {x: 1, y: this.state.residentialStats[1]},
-          {x: 2, y: this.state.residentialStats[2]},
-          {x: 3, y: this.state.residentialStats[3]},
-          {x: 4, y: this.state.residentialStats[4]},
-          {x: 5, y: this.state.residentialStats[5]},
-          {x: 6, y: this.state.residentialStats[6]},
-          {x: 7, y: this.state.residentialStats[7]},
-          {x: 8, y: this.state.residentialStats[8]}
+          {x: new Date(Date.parse(this.state.dateStats[0])), y: this.state.residentialStats[0]},
+          {x: new Date(Date.parse(this.state.dateStats[1])), y: this.state.residentialStats[1]},
+          {x: new Date(Date.parse(this.state.dateStats[2])), y: this.state.residentialStats[2]},
+          {x: new Date(Date.parse(this.state.dateStats[3])), y: this.state.residentialStats[3]},
+          {x: new Date(Date.parse(this.state.dateStats[4])), y: this.state.residentialStats[4]},
+          {x: new Date(Date.parse(this.state.dateStats[5])), y: this.state.residentialStats[5]},
+          {x: new Date(Date.parse(this.state.dateStats[6])), y: this.state.residentialStats[6]},
+          {x: new Date(Date.parse(this.state.dateStats[7])), y: this.state.residentialStats[7]},
+          {x: new Date(Date.parse(this.state.dateStats[8])), y: this.state.residentialStats[8]}
         ];
         return (
           <div className="parks">
-            <XYPlot height={300} width= {600}>
+            <XYPlot height={300} width= {900} xType="time">
               <VerticalGridLines />
               <HorizontalGridLines />
               <XAxis />
@@ -153,16 +158,16 @@ class MobilityTrends extends Component {
         console.log("sup", this.state.mobilityData)
         return this.state.mobilityData.map(eachDataPoint => {
           return( <li key={eachDataPoint._id}>
-              <h2>{eachDataPoint.sub_region_1} Keys</h2>
+              <h4>{eachDataPoint.sub_region_1} Keys</h4>
               <img className="geo_logo" alt="" src={flKeys}></img>
-              <h3>{eachDataPoint.sub_region_2}</h3>
-              <h4>Date: {eachDataPoint.date}</h4>
-              <h4>Grocery & Pharmacy Mobility: {eachDataPoint.grocery_and_pharmacy_percent_change_from_baseline}</h4>
-              <h4>Parks: {eachDataPoint.parks_percent_change_from_baseline}</h4>
-              {/* <h4>Residential: {eachDataPoint.residential_percent_change_from_baseline}</h4>
-              <h4>Shopping & Dining: {eachDataPoint.retail_and_recreation_percent_change_from_baseline}</h4>
-              <h4>Transit: {eachDataPoint.transit_stations_percent_change_from_baseline}</h4>
-              <h4>Work: {eachDataPoint.workplaces_percent_change_from_baseline}</h4> */}
+              <h6>{eachDataPoint.sub_region_2}</h6><br></br>
+              <h6>Date: {eachDataPoint.date}</h6><br></br>
+              <h6>Grocery Stores & Pharmacies Mobility: {eachDataPoint.grocery_and_pharmacy_percent_change_from_baseline}</h6><br></br>
+              <h6>Parks: {eachDataPoint.parks_percent_change_from_baseline}</h6><br></br>
+              <h6>Residential: {eachDataPoint.residential_percent_change_from_baseline}</h6><br></br>
+              <h6>Shopping & Dining: {eachDataPoint.retail_and_recreation_percent_change_from_baseline}</h6><br></br>
+              <h6>Transit: {eachDataPoint.transit_stations_percent_change_from_baseline}</h6><br></br>
+              <h6>Work: {eachDataPoint.workplaces_percent_change_from_baseline}</h6>
           </li>
           )
         })
@@ -176,14 +181,17 @@ class MobilityTrends extends Component {
             <Row>
               <Col>
                 <div>
-                  <h1>Mobility Trends (February to May)</h1>
-                  <h3>Grocery/Pharmacy Mobility</h3>
+                    Hello from allll the way from APP: {this.props.regionName}
+                  <h1>Mobility Trends (%, by day)</h1>
+                  
+                  
+                  <h3>Grocery Stores & Pharmacies</h3>
                   {this.showGraphGroceryPharmacy()}
-                  <h3>Parks Mobility</h3>
+                  <h3>Parks</h3>
                   {this.showGraphParks()}
-                  <h3>Transit Mobility</h3>
+                  <h3>Transit</h3>
                   {this.showGraphTransit()}
-                  <h3>Residential Mobility</h3>
+                  <h3>Residential</h3>
                   {this.showGraphResidential()}
                   <ul className="justify-content-center mobility-data-list">
                     {this.showMobilityData()}

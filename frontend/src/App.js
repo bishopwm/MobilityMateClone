@@ -32,6 +32,13 @@ class App extends Component {
     this.setUser({email:null, createdAt: null, updatedAt: null, _id: null });
   }
 
+  setRegion = (regionName) => {
+    console.log(regionName)
+    this.setState({
+      regionName
+    })
+  }
+
   render(){
 
     return (
@@ -74,11 +81,11 @@ class App extends Component {
         }
       </Nav>
       <Switch>
-        <Route exact path="/" render={(props) => <Home {...props} />} />
+        <Route exact path="/" render={(props) => <Home {...props} setRegion={this.setRegion}/>} />
         <Route exact path="/sign-up" render={(props)=><SignUp {...props} setUser={this.setUser} />} />
         <Route exact path="/log-in" render={(props) => <LogIn {...props} setUser={this.setUser}/>} />
         <Route exact path="/profile" render={(props) => <Profile {...props} user={this.state}/>} />
-        <Route exact path="/region" render={(props) => <Region {...props} user={this.state}/>} />
+        <Route exact path="/region" render={(props) => <Region {...props} user={this.state} regionName={this.state.regionName}/>} />
         <Route exact path="/mobility-trends" render={(props) => <MobilityTrends {...props} user={this.state}/>} />
         
         <Route component={NotFound} />

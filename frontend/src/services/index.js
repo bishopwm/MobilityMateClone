@@ -21,8 +21,12 @@ const actions = {
   logOut: async () => {
     return await service.get('/logout')
   },
-  returnMobilityData: async () => {
-    return await service.get('/mobilities')
+  returnMobilityData: async (regionName) => {
+    return await service.get('/mobilities', {params: 
+      {
+      region: regionName
+    }
+  })
   }
 };
 

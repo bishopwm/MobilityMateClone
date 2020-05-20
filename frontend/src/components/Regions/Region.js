@@ -1,10 +1,14 @@
 import React, { Component } from 'react';
+import MobilityTrends from '../Mobility/MobilityTrends';
 
 class Region extends Component {
-    render() {
+
+    
+    render() {    
         return (
             <div>
-                Hello from a region
+                <h1>{this.props.regionName}</h1>
+                <MobilityTrends regionName={this.props.regionName} />
             </div>
         );
     }
