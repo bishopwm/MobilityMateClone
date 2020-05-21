@@ -7,7 +7,6 @@ class Region extends Component {
     render() {    
         return (
             <div>
-                <h1>{this.props.regionName}</h1>
                 <MobilityTrends regionName={this.props.regionName} />
             </div>
         );

@@ -5,14 +5,17 @@
   "dependencies": {
     "axios": "^0.19.2",
     "bootstrap": "^4.5.0",
+    "chart.js": "^2.9.3",
     "react": "^16.13.1",
     "react-bootstrap": "^1.0.1",
+    "react-chartjs-2": "^2.9.0",
     "react-dom": "^16.13.1",
     "react-router-bootstrap": "^0.25.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
     "react-usa-map": "^1.4.0",
-    "react-vis": "^1.11.7"
+    "react-vis": "^1.11.7",
+    "victory": "^34.3.6"
   },
   "scripts": {
     "start": "react-scripts start",

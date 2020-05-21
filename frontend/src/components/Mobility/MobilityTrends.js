@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import actions from '../../services/index';
-import flKeys from '../../../src/assets/images/fl_keys.png';
 import './../home/Home.css';
 import Container from 'react-bootstrap/Container';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import '../../../node_modules/react-vis/dist/style.css';
-import {XYPlot, LineSeries, VerticalGridLines, HorizontalGridLines, XAxis, YAxis} from 'react-vis';
-
+import { VictoryBar, VictoryChart, VictoryAxis } from 'victory';
+import './MobilityTrends.css';
+import downArrow from '../../assets/images/down_arrow.png';
 
 class MobilityTrends extends Component {
 
@@ -18,145 +18,398 @@ class MobilityTrends extends Component {
         dateStats: [1, 1],
         parkStats: [1, 1],
         transitStats: [1, 1],
-        residentialStats: [1, 1]
-    
+        residentialStats: [1, 1],
+        chartReference: React.createRef()
       }
-    
       async componentDidMount() {
-        const MSEC_DAILY = 86400000;
-          console.log("hello", this.props.regionName)
+        console.log(this.chartReference);
+        
+        // Call backend to retrieve Google Mobility Data
         let res = await actions.returnMobilityData(this.props.regionName);
-        console.log("data", res);
         let rawData = [...res.data.mobilities]
-        let lastFew = rawData.slice(rawData.length-10, rawData.length-1)
-        let groceryStats = lastFew.map(eachDataPoint => {
-          return eachDataPoint.grocery_and_pharmacy_percent_change_from_baseline
+        let dataLastThirtyDays = rawData.slice(rawData.length-31, rawData.length-1)
+
+        // Map through each data point (i.e., mobility trends in parks, grocery stores, transit centers, etc.) and set values to state.
+        let groceryStats = dataLastThirtyDays.map(eachDataPoint => {
+          return parseInt(eachDataPoint.grocery_and_pharmacy_percent_change_from_baseline)
         });
-        let dateStats = lastFew.map(eachDataPoint => {
-            let formattedDate = new Date((new Date(eachDataPoint.date)).toString()).getTime();
-            console.log(formattedDate)
-          return formattedDate + MSEC_DAILY
+        let dateStats = dataLastThirtyDays.map(eachDataPoint => {
+          return eachDataPoint.date
         });
-        let parkStats = lastFew.map(eachDataPoint => {
+        let parkStats = dataLastThirtyDays.map(eachDataPoint => {
           return eachDataPoint.parks_percent_change_from_baseline
         });
-        let transitStats = lastFew.map(eachDataPoint => {
+        let transitStats = dataLastThirtyDays.map(eachDataPoint => {
           return eachDataPoint.transit_stations_percent_change_from_baseline
         });
-        let residentialStats = lastFew.map(eachDataPoint => {
+        let residentialStats = dataLastThirtyDays.map(eachDataPoint => {
           return eachDataPoint.residential_percent_change_from_baseline
+        });
+        let shoppingDiningStats = dataLastThirtyDays.map(eachDataPoint => {
+          return eachDataPoint.retail_and_recreation_percent_change_from_baseline
+        });
+        let workStats = dataLastThirtyDays.map(eachDataPoint => {
+          return eachDataPoint.workplaces_percent_change_from_baseline
         });
         
         this.setState({
           mobilityData: res.data.mobilities,
+          regionName: res.data.mobilities[0].sub_region_1,
           dateStats: dateStats,
           groceryStats: groceryStats,
           parkStats: parkStats,
           transitStats: transitStats,
-          residentialStats: residentialStats
+          residentialStats: residentialStats,
+          shoppingDiningStats: shoppingDiningStats,
+          workStats: workStats
         })
       }
+
+      displayRegionName = () =>{
+          console.log(this.state.mobilityData)
+          
+      }
     
+
+      // Calaculate average trend value, (+) or (-), for last 30 days data
+      getAverageGrocery = () => {
+          let copyGrocery = [...this.state.groceryStats];
+          let total=0;
+          for(let i=0; i<copyGrocery.length; i++){
+            total += Number(copyGrocery[i]);
+          }
+          let avg = total / copyGrocery.length;
+          console.log("average", avg);
+          return Math.round(avg)
+      }
+      getAverageParks = () => {
+        let copyParks = [...this.state.parkStats];
+        let total=0;
+        for(let i=0; i<copyParks.length; i++){
+          total += Number(copyParks[i]);
+        }
+        let avg = total / copyParks.length;
+        console.log("average", avg);
+        return Math.round(avg)
+      }
+      getAverageTransit = () => {
+        let copyTransit = [...this.state.transitStats];
+        let total=0;
+        for(let i=0; i<copyTransit.length; i++){
+          total += Number(copyTransit[i]);
+        }
+        let avg = total / copyTransit.length;
+        console.log("average", avg);
+        return Math.round(avg)
+      }
+      getAverageResidential = () => {
+        let copyResidential = [...this.state.residentialStats];
+        let total=0;
+        for(let i=0; i<copyResidential.length; i++){
+          total += Number(copyResidential[i]);
+        }
+        let avg = total / copyResidential.length;
+        console.log("average", avg);
+        return Math.round(avg)
+      }
+      getAverageShoppingDining = () => {
+        let copyShoppingDining = [...this.state.shoppingDiningStats];
+        let total=0;
+        for(let i=0; i<copyShoppingDining.length; i++){
+          total += Number(copyShoppingDining[i]);
+        }
+        let avg = total / copyShoppingDining.length;
+        console.log("average", avg);
+        return Math.round(avg)
+      }
+      getAverageWork = () => {
+        let copyWork = [...this.state.workStats];
+        let total=0;
+        for(let i=0; i<copyWork.length; i++){
+          total += Number(copyWork[i]);
+        }
+        let avg = total / copyWork.length;
+        console.log("average", avg);
+        return Math.round(avg)
+      }
+
+      // Construct individual graphs for last 30 days trends, for each type of place
       showGraphGroceryPharmacy = () => {
+        //console.log("grocery stats", this.state.groceryStats)
         const data = [
-          {x: this.state.dateStats[0], y: Number(this.state.groceryStats[0])},
-          {x: this.state.dateStats[1], y: Number(this.state.groceryStats[1])},
-          {x: this.state.dateStats[2], y: Number(this.state.groceryStats[2])},
-          {x: this.state.dateStats[3], y: Number(this.state.groceryStats[3])},
-          {x: this.state.dateStats[4], y: Number(this.state.groceryStats[4])},
-          {x: this.state.dateStats[5], y: Number(this.state.groceryStats[5])},
-          {x: this.state.dateStats[6], y: Number(this.state.groceryStats[6])},
-          {x: this.state.dateStats[7], y: Number(this.state.groceryStats[7])},
-          {x: this.state.dateStats[8], y: Number(this.state.groceryStats[8])},
-          {x: this.state.dateStats[9], y: Number(this.state.groceryStats[9])}
-        ];
+            {x: 1, y: Number(this.state.groceryStats[0])},
+            {x: 2, y: Number(this.state.groceryStats[1])},
+            {x: 3, y: Number(this.state.groceryStats[2])},
+            {x: 4, y: Number(this.state.groceryStats[3])},
+            {x: 5, y: Number(this.state.groceryStats[4])},
+            {x: 6, y: Number(this.state.groceryStats[5])},
+            {x: 7, y: Number(this.state.groceryStats[6])},
+            {x: 8, y: Number(this.state.groceryStats[7])},
+            {x: 9, y: Number(this.state.groceryStats[8])},
+            {x: 10, y: Number(this.state.groceryStats[9])},
+            {x: 11, y: Number(this.state.groceryStats[10])},
+            {x: 12, y: Number(this.state.groceryStats[11])},
+            {x: 13, y: Number(this.state.groceryStats[12])},
+            {x: 14, y: Number(this.state.groceryStats[13])},
+            {x: 15, y: Number(this.state.groceryStats[14])},
+            {x: 16, y: Number(this.state.groceryStats[15])},
+            {x: 17, y: Number(this.state.groceryStats[16])},
+            {x: 18, y: Number(this.state.groceryStats[17])},
+            {x: 19, y: Number(this.state.groceryStats[18])},
+            {x: 20, y: Number(this.state.groceryStats[19])},
+            {x: 21, y: Number(this.state.groceryStats[20])},
+            {x: 22, y: Number(this.state.groceryStats[21])},
+            {x: 23, y: Number(this.state.groceryStats[22])},
+            {x: 24, y: Number(this.state.groceryStats[23])},
+            {x: 25, y: Number(this.state.groceryStats[24])},
+            {x: 26, y: Number(this.state.groceryStats[25])},
+            {x: 27, y: Number(this.state.groceryStats[26])},
+            {x: 28, y: Number(this.state.groceryStats[27])},
+            {x: 29, y: Number(this.state.groceryStats[28])},
+            {x: 30, y: Number(this.state.groceryStats[29])},
+            {x: 31, y: Number(this.state.groceryStats[30])}
+            ];
+    
         return (
-          <div className="groceryPharmacy">
-            <XYPlot height={300} width= {900} xType="time" yType="ordinal">
-              <VerticalGridLines />
-              <HorizontalGridLines />
-              <XAxis />
-              <YAxis />
-              <LineSeries data={data} />
-            </XYPlot>
+          <div className="grocery-pharmacy">
+            <VictoryChart domainPadding={20}>
+                <VictoryAxis/>
+                <VictoryAxis dependentAxis tickFormat={(x) => (`%${x}`)}/>
+                <VictoryAxis dependentAxis={true}/>
+                <VictoryBar style={{ data: { fill: "#285f9fbb" } }} data={data} x="x" y="y" domain={{x: [0, 31], y: [-60, 20]}}/>
+            </VictoryChart>
           </div>
         );
       }
     
       showGraphParks = () => {
         const data = [
-          {x: this.state.dateStats[0], y: this.state.parkStats[0]},
-          {x: this.state.dateStats[1], y: this.state.parkStats[1]},
-          {x: this.state.dateStats[2], y: this.state.parkStats[2]},
-          {x: this.state.dateStats[3], y: this.state.parkStats[3]},
-          {x: this.state.dateStats[4], y: this.state.parkStats[4]},
-          {x: this.state.dateStats[5], y: this.state.parkStats[5]},
-          {x: this.state.dateStats[6], y: this.state.parkStats[6]},
-          {x: this.state.dateStats[7], y: this.state.parkStats[7]},
-          {x: this.state.dateStats[8], y: this.state.parkStats[8]}
+            {x: 1, y: Number(this.state.parkStats[0])},
+            {x: 2, y: Number(this.state.parkStats[1])},
+            {x: 3, y: Number(this.state.parkStats[2])},
+            {x: 4, y: Number(this.state.parkStats[3])},
+            {x: 5, y: Number(this.state.parkStats[4])},
+            {x: 6, y: Number(this.state.parkStats[5])},
+            {x: 7, y: Number(this.state.parkStats[6])},
+            {x: 8, y: Number(this.state.parkStats[7])},
+            {x: 9, y: Number(this.state.parkStats[8])},
+            {x: 10, y: Number(this.state.parkStats[9])},
+            {x: 11, y: Number(this.state.parkStats[10])},
+            {x: 12, y: Number(this.state.parkStats[11])},
+            {x: 13, y: Number(this.state.parkStats[12])},
+            {x: 14, y: Number(this.state.parkStats[13])},
+            {x: 15, y: Number(this.state.parkStats[14])},
+            {x: 16, y: Number(this.state.parkStats[15])},
+            {x: 17, y: Number(this.state.parkStats[16])},
+            {x: 18, y: Number(this.state.parkStats[17])},
+            {x: 19, y: Number(this.state.parkStats[18])},
+            {x: 20, y: Number(this.state.parkStats[19])},
+            {x: 21, y: Number(this.state.parkStats[20])},
+            {x: 22, y: Number(this.state.parkStats[21])},
+            {x: 23, y: Number(this.state.parkStats[22])},
+            {x: 24, y: Number(this.state.parkStats[23])},
+            {x: 25, y: Number(this.state.parkStats[24])},
+            {x: 26, y: Number(this.state.parkStats[25])},
+            {x: 27, y: Number(this.state.parkStats[26])},
+            {x: 28, y: Number(this.state.parkStats[27])},
+            {x: 29, y: Number(this.state.parkStats[28])},
+            {x: 30, y: Number(this.state.parkStats[29])},
+            {x: 31, y: Number(this.state.parkStats[30])}
         ];
         return (
-          <div className="parks">
-            <XYPlot height={300} width= {900} xType="time" yType="ordinal">
-              <VerticalGridLines />
-              <HorizontalGridLines />
-              <XAxis />
-              <YAxis />
-              <LineSeries data={data} />
-            </XYPlot>
-          </div>
-        );
+            <div className="parks">
+              <VictoryChart domainPadding={20}>
+                  <VictoryAxis/>
+                  <VictoryAxis dependentAxis tickFormat={(x) => (`%${x}`)}/>
+                  <VictoryAxis dependentAxis={true}/>
+                  <VictoryBar style={{ data: { fill: "#285f9fbb" } }} data={data} x="x" y="y" domain={{x: [0, 31], y: [-60, 20]}}/>
+              </VictoryChart>
+            </div>
+          );
       }
       showGraphTransit = () => {
         const data = [
-          {x: this.state.dateStats[0], y: this.state.transitStats[0]},
-          {x: this.state.dateStats[1], y: this.state.transitStats[1]},
-          {x: this.state.dateStats[2], y: this.state.transitStats[2]},
-          {x: this.state.dateStats[3], y: this.state.transitStats[3]},
-          {x: this.state.dateStats[4], y: this.state.transitStats[4]},
-          {x: this.state.dateStats[5], y: this.state.transitStats[5]},
-          {x: this.state.dateStats[6], y: this.state.transitStats[6]},
-          {x: this.state.dateStats[7], y: this.state.transitStats[7]},
-          {x: this.state.dateStats[8], y: this.state.transitStats[8]}
+            {x: 1, y: Number(this.state.transitStats[0])},
+            {x: 2, y: Number(this.state.transitStats[1])},
+            {x: 3, y: Number(this.state.transitStats[2])},
+            {x: 4, y: Number(this.state.transitStats[3])},
+            {x: 5, y: Number(this.state.transitStats[4])},
+            {x: 6, y: Number(this.state.transitStats[5])},
+            {x: 7, y: Number(this.state.transitStats[6])},
+            {x: 8, y: Number(this.state.transitStats[7])},
+            {x: 9, y: Number(this.state.transitStats[8])},
+            {x: 10, y: Number(this.state.transitStats[9])},
+            {x: 11, y: Number(this.state.transitStats[10])},
+            {x: 12, y: Number(this.state.transitStats[11])},
+            {x: 13, y: Number(this.state.transitStats[12])},
+            {x: 14, y: Number(this.state.transitStats[13])},
+            {x: 15, y: Number(this.state.transitStats[14])},
+            {x: 16, y: Number(this.state.transitStats[15])},
+            {x: 17, y: Number(this.state.transitStats[16])},
+            {x: 18, y: Number(this.state.transitStats[17])},
+            {x: 19, y: Number(this.state.transitStats[18])},
+            {x: 20, y: Number(this.state.transitStats[19])},
+            {x: 21, y: Number(this.state.transitStats[20])},
+            {x: 22, y: Number(this.state.transitStats[21])},
+            {x: 23, y: Number(this.state.transitStats[22])},
+            {x: 24, y: Number(this.state.transitStats[23])},
+            {x: 25, y: Number(this.state.transitStats[24])},
+            {x: 26, y: Number(this.state.transitStats[25])},
+            {x: 27, y: Number(this.state.transitStats[26])},
+            {x: 28, y: Number(this.state.transitStats[27])},
+            {x: 29, y: Number(this.state.transitStats[28])},
+            {x: 30, y: Number(this.state.transitStats[29])},
+            {x: 31, y: Number(this.state.transitStats[30])}
         ];
         return (
-          <div className="parks">
-            <XYPlot height={300} width= {900} xType="time" yType="ordinal">
-              <VerticalGridLines />
-              <HorizontalGridLines />
-              <XAxis />
-              <YAxis />
-              <LineSeries data={data} />
-            </XYPlot>
-          </div>
-        );
+            <div className="transit">
+              <VictoryChart domainPadding={20}>
+                  <VictoryAxis/>
+                  <VictoryAxis dependentAxis tickFormat={(x) => (`%${x}`)}/>
+                  <VictoryAxis dependentAxis={true}/>
+                  <VictoryBar style={{ data: { fill: "#285f9fbb" } }} data={data} x="x" y="y" domain={{x: [0, 31], y: [-60, 20]}}/>
+              </VictoryChart>
+            </div>
+          );
       }
     
       showGraphResidential = () => {
         const data = [
-          {x: this.state.dateStats[0], y: this.state.residentialStats[0]},
-          {x: this.state.dateStats[1], y: this.state.residentialStats[1]},
-          {x: this.state.dateStats[2], y: this.state.residentialStats[2]},
-          {x: this.state.dateStats[3], y: this.state.residentialStats[3]},
-          {x: this.state.dateStats[4], y: this.state.residentialStats[4]},
-          {x: this.state.dateStats[5], y: this.state.residentialStats[5]},
-          {x: this.state.dateStats[6], y: this.state.residentialStats[6]},
-          {x: this.state.dateStats[7], y: this.state.residentialStats[7]},
-          {x: this.state.dateStats[8], y: this.state.residentialStats[8]}
+            {x: 1, y: Number(this.state.residentialStats[0])},
+            {x: 2, y: Number(this.state.residentialStats[1])},
+            {x: 3, y: Number(this.state.residentialStats[2])},
+            {x: 4, y: Number(this.state.residentialStats[3])},
+            {x: 5, y: Number(this.state.residentialStats[4])},
+            {x: 6, y: Number(this.state.residentialStats[5])},
+            {x: 7, y: Number(this.state.residentialStats[6])},
+            {x: 8, y: Number(this.state.residentialStats[7])},
+            {x: 9, y: Number(this.state.residentialStats[8])},
+            {x: 10, y: Number(this.state.residentialStats[9])},
+            {x: 11, y: Number(this.state.residentialStats[10])},
+            {x: 12, y: Number(this.state.residentialStats[11])},
+            {x: 13, y: Number(this.state.residentialStats[12])},
+            {x: 14, y: Number(this.state.residentialStats[13])},
+            {x: 15, y: Number(this.state.residentialStats[14])},
+            {x: 16, y: Number(this.state.residentialStats[15])},
+            {x: 17, y: Number(this.state.residentialStats[16])},
+            {x: 18, y: Number(this.state.residentialStats[17])},
+            {x: 19, y: Number(this.state.residentialStats[18])},
+            {x: 20, y: Number(this.state.residentialStats[19])},
+            {x: 21, y: Number(this.state.residentialStats[20])},
+            {x: 22, y: Number(this.state.residentialStats[21])},
+            {x: 23, y: Number(this.state.residentialStats[22])},
+            {x: 24, y: Number(this.state.residentialStats[23])},
+            {x: 25, y: Number(this.state.residentialStats[24])},
+            {x: 26, y: Number(this.state.residentialStats[25])},
+            {x: 27, y: Number(this.state.residentialStats[26])},
+            {x: 28, y: Number(this.state.residentialStats[27])},
+            {x: 29, y: Number(this.state.residentialStats[28])},
+            {x: 30, y: Number(this.state.residentialStats[29])},
+            {x: 31, y: Number(this.state.residentialStats[30])}
         ];
         return (
-          <div className="parks">
-            <XYPlot height={300} width= {900} xType="time" yType="ordinal">
-              <VerticalGridLines />
-              <HorizontalGridLines />
-              <XAxis />
-              <YAxis />
-              <LineSeries data={data} />
-            </XYPlot>
-          </div>
-        );
+            <div className="residential">
+              <VictoryChart domainPadding={20}>
+                  <VictoryAxis/>
+                  <VictoryAxis dependentAxis tickFormat={(x) => (`%${x}`)}/>
+                  <VictoryAxis dependentAxis={true}/>
+                  <VictoryBar style={{ data: { fill: "#285f9fbb" } }} data={data} x="x" y="y" domain={{x: [0, 31], y: [-60, 20]}}/>
+              </VictoryChart>
+            </div>
+          );
       }
     
+      showGraphShoppingDining = () => {
+        const data = [
+            {x: 1, y: Number(this.state.shoppingDiningStats[0])},
+            {x: 2, y: Number(this.state.shoppingDiningStats[1])},
+            {x: 3, y: Number(this.state.shoppingDiningStats[2])},
+            {x: 4, y: Number(this.state.shoppingDiningStats[3])},
+            {x: 5, y: Number(this.state.shoppingDiningStats[4])},
+            {x: 6, y: Number(this.state.shoppingDiningStats[5])},
+            {x: 7, y: Number(this.state.shoppingDiningStats[6])},
+            {x: 8, y: Number(this.state.shoppingDiningStats[7])},
+            {x: 9, y: Number(this.state.shoppingDiningStats[8])},
+            {x: 10, y: Number(this.state.shoppingDiningStats[9])},
+            {x: 11, y: Number(this.state.shoppingDiningStats[10])},
+            {x: 12, y: Number(this.state.shoppingDiningStats[11])},
+            {x: 13, y: Number(this.state.shoppingDiningStats[12])},
+            {x: 14, y: Number(this.state.shoppingDiningStats[13])},
+            {x: 15, y: Number(this.state.shoppingDiningStats[14])},
+            {x: 16, y: Number(this.state.shoppingDiningStats[15])},
+            {x: 17, y: Number(this.state.shoppingDiningStats[16])},
+            {x: 18, y: Number(this.state.shoppingDiningStats[17])},
+            {x: 19, y: Number(this.state.shoppingDiningStats[18])},
+            {x: 20, y: Number(this.state.shoppingDiningStats[19])},
+            {x: 21, y: Number(this.state.shoppingDiningStats[20])},
+            {x: 22, y: Number(this.state.shoppingDiningStats[21])},
+            {x: 23, y: Number(this.state.shoppingDiningStats[22])},
+            {x: 24, y: Number(this.state.shoppingDiningStats[23])},
+            {x: 25, y: Number(this.state.shoppingDiningStats[24])},
+            {x: 26, y: Number(this.state.shoppingDiningStats[25])},
+            {x: 27, y: Number(this.state.shoppingDiningStats[26])},
+            {x: 28, y: Number(this.state.shoppingDiningStats[27])},
+            {x: 29, y: Number(this.state.shoppingDiningStats[28])},
+            {x: 30, y: Number(this.state.shoppingDiningStats[29])},
+            {x: 31, y: Number(this.state.shoppingDiningStats[30])}
+        ];
+        return (
+            <div className="shopping-dining">
+              <VictoryChart domainPadding={20}>
+                  <VictoryAxis/>
+                  <VictoryAxis dependentAxis tickFormat={(x) => (`%${x}`)}/>
+                  <VictoryAxis dependentAxis={true}/>
+                  <VictoryBar style={{ data: { fill: "#285f9fbb" } }} data={data} x="x" y="y" domain={{x: [0, 31], y: [-60, 20]}}/>
+              </VictoryChart>
+            </div>
+          );
+      }
+
+      showGraphWork = () => {
+        const data = [
+            {x: 1, y: Number(this.state.workStats[0])},
+            {x: 2, y: Number(this.state.workStats[1])},
+            {x: 3, y: Number(this.state.workStats[2])},
+            {x: 4, y: Number(this.state.workStats[3])},
+            {x: 5, y: Number(this.state.workStats[4])},
+            {x: 6, y: Number(this.state.workStats[5])},
+            {x: 7, y: Number(this.state.workStats[6])},
+            {x: 8, y: Number(this.state.workStats[7])},
+            {x: 9, y: Number(this.state.workStats[8])},
+            {x: 10, y: Number(this.state.workStats[9])},
+            {x: 11, y: Number(this.state.workStats[10])},
+            {x: 12, y: Number(this.state.workStats[11])},
+            {x: 13, y: Number(this.state.workStats[12])},
+            {x: 14, y: Number(this.state.workStats[13])},
+            {x: 15, y: Number(this.state.workStats[14])},
+            {x: 16, y: Number(this.state.workStats[15])},
+            {x: 17, y: Number(this.state.workStats[16])},
+            {x: 18, y: Number(this.state.workStats[17])},
+            {x: 19, y: Number(this.state.workStats[18])},
+            {x: 20, y: Number(this.state.workStats[19])},
+            {x: 21, y: Number(this.state.workStats[20])},
+            {x: 22, y: Number(this.state.workStats[21])},
+            {x: 23, y: Number(this.state.workStats[22])},
+            {x: 24, y: Number(this.state.workStats[23])},
+            {x: 25, y: Number(this.state.workStats[24])},
+            {x: 26, y: Number(this.state.workStats[25])},
+            {x: 27, y: Number(this.state.workStats[26])},
+            {x: 28, y: Number(this.state.workStats[27])},
+            {x: 29, y: Number(this.state.workStats[28])},
+            {x: 30, y: Number(this.state.workStats[29])},
+            {x: 31, y: Number(this.state.workStats[30])}
+        ];
+        return (
+            <div className="work">
+              <VictoryChart domainPadding={20}>
+                  <VictoryAxis/>
+                  <VictoryAxis dependentAxis tickFormat={(x) => (`%${x}`)}/>
+                  <VictoryAxis dependentAxis={true}/>
+                  <VictoryBar style={{ data: { fill: "#285f9fbb" } }} data={data} x="x" y="y" domain={{x: [0, 31], y: [-60, 20]}}/>
+              </VictoryChart>
+            </div>
+        );
+      }
       showMobilityData = () => {
         console.log("sup", this.state.mobilityData)
         return this.state.mobilityData.map(eachDataPoint => {
@@ -178,24 +431,102 @@ class MobilityTrends extends Component {
       render() {
         return (
         <div>
-          <br></br>
+            <div className="mobility-hero">
+                <div className="mobility-title-container">
+                    <h1 className="mobility-title">{this.state.regionName} Mobility Trends</h1>
+                </div>
+            </div>
           <Container fluid="md">
             <Row>
               <Col>
-                <div>
-                  <h1>Mobility Trends (%, by day)</h1>
-                  <h3>Grocery Stores & Pharmacies</h3>
-                  {this.showGraphGroceryPharmacy()}
-                  <h3>Parks</h3>
-                  {this.showGraphParks()}
-                  <h3>Transit</h3>
-                  {this.showGraphTransit()}
-                  <h3>Residential</h3>
-                  {this.showGraphResidential()}
-                  <ul className="justify-content-center mobility-data-list">
-                    {this.showMobilityData()}
-                  </ul>
+                <div className="places-trends-container">
+                    <div className="places-grocery">
+                        <div className="places-grocery-header">
+                            <h2 className="places-grocery-title">Grocery <br></br>& Pharmacy</h2>
+                        </div>
+                        <div className="places-grocery-content">
+                            <img className="down-arrow" src={downArrow}></img><span className="trend-percentage">{this.getAverageGrocery()} %</span>
+                            <h4>30 Day Average</h4>
+                            <br></br>
+                            <h4>30 Day Trend</h4>
+                            {this.showGraphGroceryPharmacy()}
+                        </div>
+                    </div>
+
+                    <div className="places-parks">
+                        <div className="places-parks-header">
+                            <h2 className="places-parks-title">Parks <br></br>& Outdoor Rec.</h2>
+                        </div>
+                        <div className="places-parks-content">
+                        <h3>30 Day Average</h3>
+                        <img className="down-arrow" src={downArrow}></img>{this.getAverageParks()}
+                        <h3>30 Day Trend (from Baseline of 0)</h3>
+                        <h3>{this.showGraphParks()}</h3>
+                        </div>
+                    </div>
+                    {/* <h2>Shopping & Dining</h2>
+                    <h3>30 Day Average</h3>
+                    {this.getAverageShoppingDining()}
+                    <h3>30 Day Trend (from Baseline of 0)</h3>
+                    {this.showGraphShoppingDining()} */}
+
+                    {/* <h2>Work</h2>
+                    <h3>30 Day Average</h3>
+                    {this.getAverageWork()}
+                    <h3>30 Day Trend (from Baseline of 0)</h3>
+                    {this.showGraphworkWork()} */}
+                    {/* <ul className="justify-content-center mobility-data-list">
+                        {this.showMobilityData()}
+                    </ul> */}
                 </div>
+              </Col>
+              <Col>
+              <div className="places-trends-container">
+                    <div className="places-transit">
+                        <div className="places-transit-header">
+                            <h2 className="places-transit-title">Transit <br></br>& Metro</h2>
+                        </div>
+                        <div className="places-transit-content">
+                            <div>
+                                <h3>30 Day Average</h3>
+                            <img className="down-arrow" src={downArrow}></img>{this.getAverageTransit()}
+
+                            </div>
+                            
+                            <h3>30 Day Trend (from Baseline of 0)</h3>
+                            <h3>{this.showGraphTransit()}</h3>
+                        </div>
+                    </div>
+
+                    <div className="places-work">
+                        <div className="places-work-header">
+                            <h2 className="places-work-title">Work <br></br>& Industry</h2>
+                        </div>
+                        <div className="places-work-content">
+                        <h3>30 Day Average</h3>
+                        {/* {this.getAverageWork()} */}
+                        <h3>30 Day Trend (from Baseline of 0)</h3>
+                        <h3>{/* {this.showGraphWork()} */}</h3>
+                        </div>
+                    </div>
+                    {/* <h2>Shopping & Dining</h2>
+                    <h3>30 Day Average</h3>
+                    {this.getAverageShoppingDining()}
+                    <h3>30 Day Trend (from Baseline of 0)</h3>
+                    {this.showGraphShoppingDining()} */}
+
+                    {/* <h2>Work</h2>
+                    <h3>30 Day Average</h3>
+                    {this.getAverageWork()}
+                    <h3>30 Day Trend (from Baseline of 0)</h3>
+                    {this.showGraphworkWork()} */}
+                    {/* <ul className="justify-content-center mobility-data-list">
+                        {this.showMobilityData()}
+                    </ul> */}
+                </div>
+                 <ul className="justify-content-center mobility-data-list">
+                    {/* {this.showMobilityData()} */}
+                  </ul>
               </Col>
             </Row>
           </Container>
@@ -204,6 +535,5 @@ class MobilityTrends extends Component {
         );
       }
     }
-    
 
 export default MobilityTrends;
