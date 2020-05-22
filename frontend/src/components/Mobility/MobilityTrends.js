@@ -8,6 +8,7 @@ import '../../../node_modules/react-vis/dist/style.css';
 import { VictoryBar, VictoryChart, VictoryAxis } from 'victory';
 import './MobilityTrends.css';
 import downArrow from '../../assets/images/down_arrow.png';
+import smallCalendar from '../../assets/images/small_calendar.jpg';
 
 class MobilityTrends extends Component {
 
@@ -55,6 +56,8 @@ class MobilityTrends extends Component {
         this.setState({
           mobilityData: res.data.mobilities,
           regionName: res.data.mobilities[0].sub_region_1,
+          dataStart: res.data.mobilities[55].date,
+          dataEnd: res.data.mobilities[84].date,
           dateStats: dateStats,
           groceryStats: groceryStats,
           parkStats: parkStats,
@@ -66,8 +69,7 @@ class MobilityTrends extends Component {
       }
 
       displayRegionName = () =>{
-          console.log(this.state.mobilityData)
-          
+          console.log(this.state.mobilityData[55])          
       }
     
 
@@ -429,6 +431,7 @@ class MobilityTrends extends Component {
       }
     
       render() {
+          {this.displayRegionName()}
         return (
         <div>
             <div className="mobility-hero">
@@ -445,70 +448,92 @@ class MobilityTrends extends Component {
                             <h2 className="places-grocery-title">Grocery <br></br>& Pharmacy</h2>
                         </div>
                         <div className="places-grocery-content">
-                            <img className="down-arrow" src={downArrow}></img><span className="trend-percentage">{this.getAverageGrocery()} %</span>
-                            <h4>30 Day Average</h4>
-                            <br></br>
-                            <h4>30 Day Trend</h4>
-                            {this.showGraphGroceryPharmacy()}
+                            <img className="down-arrow" src={downArrow}></img>
+                            <span className="trend-percentage">  {this.getAverageGrocery()} %</span>
+                            
+                            <div className="places-grocery-average">
+                                <img src={smallCalendar} id="small-calendar-icon"></img>
+                                <div className="average-description">30 Day Average, based on the latest available month provided by the <a href='https://www.google.com/covid19/mobility/'>Google Mobility Trends</a> report.</div>
+                            </div>
+                            <div className="graph-container">
+                                <h4>Movement Trends for Grocery/Pharmacy</h4>
+                                <info>{this.state.dataStart} - {this.state.dataEnd}</info>
+                                <div className="graph-subcontainer">
+                                    {this.showGraphGroceryPharmacy()}
+                                </div>   
+                            </div>
                         </div>
                     </div>
+
 
                     <div className="places-parks">
                         <div className="places-parks-header">
                             <h2 className="places-parks-title">Parks <br></br>& Outdoor Rec.</h2>
                         </div>
-                        <div className="places-parks-content">
-                        <h3>30 Day Average</h3>
-                        <img className="down-arrow" src={downArrow}></img>{this.getAverageParks()}
-                        <h3>30 Day Trend (from Baseline of 0)</h3>
-                        <h3>{this.showGraphParks()}</h3>
+                        <div className="places-grocery-content">
+                            <img className="down-arrow" src={downArrow}></img>
+                            <span className="trend-percentage">  {this.getAverageParks()} %</span>
+                            
+                            <div className="places-grocery-average">
+                                <img src={smallCalendar} id="small-calendar-icon"></img>
+                                <div className="average-description">30 Day Average, based on the latest available month provided by the <a href='https://www.google.com/covid19/mobility/'>Google Mobility Trends</a> report.</div>
+                            </div>
+                            <div className="graph-container">
+                                <h4>Movement Trends for Parks/Outdoors</h4>
+                                <info>{this.state.dataStart} - {this.state.dataEnd}</info>
+                                <div className="graph-subcontainer">
+                                    {this.showGraphParks()}
+                                </div>   
+                            </div>
                         </div>
                     </div>
-                    {/* <h2>Shopping & Dining</h2>
-                    <h3>30 Day Average</h3>
-                    {this.getAverageShoppingDining()}
-                    <h3>30 Day Trend (from Baseline of 0)</h3>
-                    {this.showGraphShoppingDining()} */}
-
-                    {/* <h2>Work</h2>
-                    <h3>30 Day Average</h3>
-                    {this.getAverageWork()}
-                    <h3>30 Day Trend (from Baseline of 0)</h3>
-                    {this.showGraphworkWork()} */}
-                    {/* <ul className="justify-content-center mobility-data-list">
-                        {this.showMobilityData()}
-                    </ul> */}
                 </div>
               </Col>
               <Col>
               <div className="places-trends-container">
-                    <div className="places-transit">
-                        <div className="places-transit-header">
-                            <h2 className="places-transit-title">Transit <br></br>& Metro</h2>
-                        </div>
-                        <div className="places-transit-content">
-                            <div>
-                                <h3>30 Day Average</h3>
-                            <img className="down-arrow" src={downArrow}></img>{this.getAverageTransit()}
-
+                        <div className="places-transit">
+                            <div className="places-transit-header">
+                                <h2 className="places-parks-title">Transit <br></br>& Metro</h2>
                             </div>
-                            
-                            <h3>30 Day Trend (from Baseline of 0)</h3>
-                            <h3>{this.showGraphTransit()}</h3>
+                            <div className="places-grocery-content">
+                                <img className="down-arrow" src={downArrow}></img>
+                                <span className="trend-percentage">  {this.getAverageTransit()} %</span>
+                                
+                                <div className="places-grocery-average">
+                                    <img src={smallCalendar} id="small-calendar-icon"></img>
+                                    <div className="average-description">30 Day Average, based on the latest available month provided by the <a href='https://www.google.com/covid19/mobility/'>Google Mobility Trends</a> report.</div>
+                                </div>
+                                <div className="graph-container">
+                                    <h4>Movement Trends for Parks/Outdoors</h4>
+                                    <info>{this.state.dataStart} - {this.state.dataEnd}</info>
+                                    <div className="graph-subcontainer">
+                                        {this.showGraphTransit()}
+                                    </div>   
+                                </div>
+                            </div>
                         </div>
-                    </div>
 
-                    <div className="places-work">
-                        <div className="places-work-header">
-                            <h2 className="places-work-title">Work <br></br>& Industry</h2>
-                        </div>
-                        <div className="places-work-content">
-                        <h3>30 Day Average</h3>
-                        {/* {this.getAverageWork()} */}
-                        <h3>30 Day Trend (from Baseline of 0)</h3>
-                        <h3>{/* {this.showGraphWork()} */}</h3>
-                        </div>
-                    </div>
+                        {/* <div className="places-work">
+                            <div className="places-work-header">
+                                <h2 className="places-parks-title">Work <br></br>& Industry</h2>
+                            </div>
+                            <div className="places-grocery-content">
+                                <img className="down-arrow" src={downArrow}></img>
+                                <span className="trend-percentage">  {this.getAverageWork()} %</span>
+                                
+                                <div className="places-grocery-average">
+                                    <img src={smallCalendar} id="small-calendar-icon"></img>
+                                    <div className="average-description">30 Day Average, based on the latest available month provided by the <a href='https://www.google.com/covid19/mobility/'>Google Mobility Trends</a> report.</div>
+                                </div>
+                                <div className="graph-container">
+                                    <h4>Movement Trends for Parks/Outdoors</h4>
+                                    <info>{this.state.dataStart} - {this.state.dataEnd}</info>
+                                    <div className="graph-subcontainer">
+                                        {this.showGraphWork()}
+                                    </div>   
+                                </div>
+                            </div>
+                        </div> */}
                     {/* <h2>Shopping & Dining</h2>
                     <h3>30 Day Average</h3>
                     {this.getAverageShoppingDining()}
