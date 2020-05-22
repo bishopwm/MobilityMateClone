@@ -118,13 +118,24 @@
     font-size: 3.5em;
 }
 
-.down-arrow {
+#down-arrow {
     width: 7%;
     margin-top: -1.75em;
 }
 
-.trend-percentage {
+#up-arrow {
+    width: 5.5%;
+    height: 9%;
+    margin-top: -1.95em;
+}
+
+#trend-percentage-negative {
     color: #f4242f;
+    font-size: 4em;
+}
+
+#trend-percentage-positive {
+    color: green;
     font-size: 4em;
 }
 

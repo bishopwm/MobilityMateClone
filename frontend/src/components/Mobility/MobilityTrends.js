@@ -11,6 +11,7 @@ import '../../../node_modules/react-vis/dist/style.css';
 import { VictoryBar, VictoryChart, VictoryAxis } from 'victory';
 import './MobilityTrends.css';
 import downArrow from '../../assets/images/down_arrow.png';
+import upArrow from '../../assets/images/up_arrow.png';
 import smallCalendar from '../../assets/images/small_calendar.jpg';
 
 class MobilityTrends extends Component {
@@ -96,7 +97,22 @@ class MobilityTrends extends Component {
           }
           let avg = total / copyGrocery.length;
           console.log("average", avg);
-          return Math.round(avg)
+          let roundedAvg = Math.round(avg);
+          if(roundedAvg <= 0){
+            return(
+                <div className="places-grocery-content">
+                <img id="down-arrow" src={downArrow}></img>
+                <span id="trend-percentage-negative">  {roundedAvg} %</span>
+                </div>
+              )
+          } else {
+            return(
+                <div className="places-grocery-content">
+                <img id="up-arrow" src={upArrow}></img>
+                <span id="trend-percentage-positive">  +{roundedAvg} %</span>
+                </div>
+            )
+          }
       }
       getAverageParks = () => {
         let copyParks = [...this.state.parkStats];
@@ -106,7 +122,22 @@ class MobilityTrends extends Component {
         }
         let avg = total / copyParks.length;
         console.log("average", avg);
-        return Math.round(avg)
+        let roundedAvg = Math.round(avg);
+        if(roundedAvg <= 0){
+          return(
+              <div className="places-grocery-content">
+              <img id="down-arrow" src={downArrow}></img>
+              <span id="trend-percentage-negative">  {roundedAvg} %</span>
+              </div>
+            )
+        } else {
+          return(
+              <div className="places-grocery-content">
+              <img id="up-arrow" src={upArrow}></img>
+              <span id="trend-percentage-positive">  +{roundedAvg} %</span>
+              </div>
+          )
+        }
       }
       getAverageTransit = () => {
         let copyTransit = [...this.state.transitStats];
@@ -116,7 +147,22 @@ class MobilityTrends extends Component {
         }
         let avg = total / copyTransit.length;
         console.log("average", avg);
-        return Math.round(avg)
+                  let roundedAvg = Math.round(avg);
+          if(roundedAvg <= 0){
+            return(
+                <div className="places-grocery-content">
+                <img id="down-arrow" src={downArrow}></img>
+                <span id="trend-percentage-negative">  {roundedAvg} %</span>
+                </div>
+              )
+          } else {
+            return(
+                <div className="places-grocery-content">
+                <img id="up-arrow" src={upArrow}></img>
+                <span id="trend-percentage-positive">  +{roundedAvg} %</span>
+                </div>
+            )
+          }
       }
       getAverageResidential = () => {
         let copyResidential = [...this.state.residentialStats];
@@ -126,7 +172,22 @@ class MobilityTrends extends Component {
         }
         let avg = total / copyResidential.length;
         console.log("average", avg);
-        return Math.round(avg)
+                  let roundedAvg = Math.round(avg);
+          if(roundedAvg <= 0){
+            return(
+                <div className="places-grocery-content">
+                <img id="down-arrow" src={downArrow}></img>
+                <span id="trend-percentage-negative">  {roundedAvg} %</span>
+                </div>
+              )
+          } else {
+            return(
+                <div className="places-grocery-content">
+                <img id="up-arrow" src={upArrow}></img>
+                <span id="trend-percentage-positive">  +{roundedAvg} %</span>
+                </div>
+            )
+          }
       }
       getAverageShoppingDining = () => {
         let copyShoppingDining = [...this.state.shoppingDiningStats];
@@ -136,7 +197,22 @@ class MobilityTrends extends Component {
         }
         let avg = total / copyShoppingDining.length;
         console.log("average", avg);
-        return Math.round(avg)
+                  let roundedAvg = Math.round(avg);
+          if(roundedAvg <= 0){
+            return(
+                <div className="places-grocery-content">
+                <img id="down-arrow" src={downArrow}></img>
+                <span id="trend-percentage-negative">  {roundedAvg} %</span>
+                </div>
+              )
+          } else {
+            return(
+                <div className="places-grocery-content">
+                <img id="up-arrow" src={upArrow}></img>
+                <span id="trend-percentage-positive">  +{roundedAvg} %</span>
+                </div>
+            )
+          }
       }
       getAverageWork = () => {
           console.log(this.state.workStats)
@@ -147,7 +223,22 @@ class MobilityTrends extends Component {
         }
         let avg = total / copyWork.length;
         console.log("average", avg);
-        return Math.round(avg)
+                  let roundedAvg = Math.round(avg);
+          if(roundedAvg <= 0){
+            return(
+                <div className="places-grocery-content">
+                <img id="down-arrow" src={downArrow}></img>
+                <span id="trend-percentage-negative">  {roundedAvg} %</span>
+                </div>
+              )
+          } else {
+            return(
+                <div className="places-grocery-content">
+                <img id="up-arrow" src={upArrow}></img>
+                <span id="trend-percentage-positive">  +{roundedAvg} %</span>
+                </div>
+            )
+          }
       }
 
       // Construct individual graphs for last 30 days trends, for each type of place
@@ -463,8 +554,9 @@ class MobilityTrends extends Component {
                             <h2 className="places-grocery-title">Grocery <br></br>& Pharmacy</h2>
                         </div>
                         <div className="places-grocery-content">
-                            <img className="down-arrow" src={downArrow}></img>
-                            <span className="trend-percentage">  {this.getAverageGrocery()} %</span>
+                            {/* <img className="down-arrow" src={downArrow}></img>
+                            <span className="trend-percentage">  {this.getAverageGrocery()} %</span> */}
+                            {this.getAverageGrocery()}
                             
                             <div className="places-grocery-average">
                                 <img src={smallCalendar} id="small-calendar-icon"></img>
@@ -472,7 +564,7 @@ class MobilityTrends extends Component {
                             </div>
                             <div className="graph-container">
                                 <h4>Movement Trends for Grocery/Pharmacy</h4>
-                                <span>{this.state.dataStart} - {this.state.dataEnd}</span>
+                                <span>{this.state.dataStart} through {this.state.dataEnd}</span>
                                 <div className="graph-subcontainer">
                                     {this.showGraphGroceryPharmacy()}
                                 </div>   
@@ -486,17 +578,18 @@ class MobilityTrends extends Component {
                             <h2 className="places-parks-title">Parks <br></br>& Outdoor Rec.</h2>
                         </div>
                         <div className="places-grocery-content">
-                            <img className="down-arrow" src={downArrow}></img>
-                            <span className="trend-percentage">  {this.getAverageParks()} %</span>
-                            
+                            {/* <img className="down-arrow" src={downArrow}></img>
+                            <span className="trend-percentage">  {this.getAverageParks()} %</span> */}
+                            {this.getAverageParks()}
                             <div className="places-grocery-average">
                                 <img src={smallCalendar} id="small-calendar-icon"></img>
                                 <div className="average-description">30 Day Average, based on the latest available month provided by the <a href='https://www.google.com/covid19/mobility/'>Google Mobility Trends</a> report.</div>
                             </div>
                             <div className="graph-container">
                                 <h4>Movement Trends for Parks/Outdoors</h4>
-                                <span>{this.state.dataStart} - {this.state.dataEnd}</span>
+                                <span>{this.state.dataStart} through {this.state.dataEnd}</span>
                                 <div className="graph-subcontainer">
+                                    <br></br>
                                     {this.showGraphParks()}
                                 </div>   
                             </div>
@@ -511,16 +604,16 @@ class MobilityTrends extends Component {
                                 <h2 className="places-parks-title">Transit <br></br>& Metro</h2>
                             </div>
                             <div className="places-grocery-content">
-                                <img className="down-arrow" src={downArrow}></img>
-                                <span className="trend-percentage">  {this.getAverageTransit()} %</span>
-                                
+                                {/* <img className="down-arrow" src={downArrow}></img>
+                                <span className="trend-percentage">  {this.getAverageTransit()} %</span> */}
+                                {this.getAverageTransit()}
                                 <div className="places-grocery-average">
                                     <img src={smallCalendar} id="small-calendar-icon"></img>
                                     <div className="average-description">30 Day Average, based on the latest available month provided by the <a href='https://www.google.com/covid19/mobility/'>Google Mobility Trends</a> report.</div>
                                 </div>
                                 <div className="graph-container">
                                     <h4>Movement Trends for Transit/Metro</h4>
-                                    <span>{this.state.dataStart} - {this.state.dataEnd}</span>
+                                    <span>{this.state.dataStart} through {this.state.dataEnd}</span>
                                     <div className="graph-subcontainer">
                                         {this.showGraphTransit()}
                                     </div>   
@@ -532,16 +625,16 @@ class MobilityTrends extends Component {
                                 <h2 className="places-parks-title">Work <br></br>& Industry</h2>
                             </div>
                             <div className="places-grocery-content">
-                                <img className="down-arrow" src={downArrow}></img>
-                                <span className="trend-percentage">  {this.getAverageWork()} %</span>
-                                
+                                {/* <img className="down-arrow" src={downArrow}></img>
+                                <span className="trend-percentage">  {this.getAverageWork()} %</span> */}
+                                {this.getAverageWork()}
                                 <div className="places-grocery-average">
                                     <img src={smallCalendar} id="small-calendar-icon"></img>
                                     <div className="average-description">30 Day Average, based on the latest available month provided by the <a href='https://www.google.com/covid19/mobility/'>Google Mobility Trends</a> report.</div>
                                 </div>
                                 <div className="graph-container">
                                     <h4>Movement Trends for Work/Industry</h4>
-                                    <span>{this.state.dataStart} - {this.state.dataEnd}</span>
+                                    <span>{this.state.dataStart} through {this.state.dataEnd}</span>
                                     <div className="graph-subcontainer">
                                         {this.showGraphWork()}
                                     </div>   
