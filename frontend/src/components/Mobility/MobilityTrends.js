@@ -4,6 +4,9 @@ import './../home/Home.css';
 import Container from 'react-bootstrap/Container';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
+import Accordion from 'react-bootstrap/Accordion';
+import Button from 'react-bootstrap/Button';
+import Card from 'react-bootstrap/Card';
 import '../../../node_modules/react-vis/dist/style.css';
 import { VictoryBar, VictoryChart, VictoryAxis } from 'victory';
 import './MobilityTrends.css';
@@ -20,7 +23,9 @@ class MobilityTrends extends Component {
         parkStats: [1, 1],
         transitStats: [1, 1],
         residentialStats: [1, 1],
-        chartReference: React.createRef()
+        chartReference: React.createRef(),
+        workStats: [],
+        shoppingDiningStats: []
       }
       async componentDidMount() {
         console.log(this.chartReference);
@@ -52,7 +57,13 @@ class MobilityTrends extends Component {
         let workStats = dataLastThirtyDays.map(eachDataPoint => {
           return eachDataPoint.workplaces_percent_change_from_baseline
         });
-        
+        if(res.data.mobilities[0] === undefined){
+            res.data.mobilities[0] = 'No region selected';
+            res.data.mobilities[55] = '2020-04-15';
+            res.data.mobilities[84] = '2020-05-15';
+
+        }
+        console.log(workStats)
         this.setState({
           mobilityData: res.data.mobilities,
           regionName: res.data.mobilities[0].sub_region_1,
@@ -66,6 +77,9 @@ class MobilityTrends extends Component {
           shoppingDiningStats: shoppingDiningStats,
           workStats: workStats
         })
+        // function isRegionThere() {
+        //    return(res.data.mobilities[0].sub_region_1 ? res.data.mobilities[0].sub_region_1 : 'No region selected' )
+        // }
       }
 
       displayRegionName = () =>{
@@ -125,6 +139,7 @@ class MobilityTrends extends Component {
         return Math.round(avg)
       }
       getAverageWork = () => {
+          console.log(this.state.workStats)
         let copyWork = [...this.state.workStats];
         let total=0;
         for(let i=0; i<copyWork.length; i++){
@@ -431,7 +446,7 @@ class MobilityTrends extends Component {
       }
     
       render() {
-          {this.displayRegionName()}
+          console.log("Stats: ", this.state)
         return (
         <div>
             <div className="mobility-hero">
@@ -457,7 +472,7 @@ class MobilityTrends extends Component {
                             </div>
                             <div className="graph-container">
                                 <h4>Movement Trends for Grocery/Pharmacy</h4>
-                                <info>{this.state.dataStart} - {this.state.dataEnd}</info>
+                                <span>{this.state.dataStart} - {this.state.dataEnd}</span>
                                 <div className="graph-subcontainer">
                                     {this.showGraphGroceryPharmacy()}
                                 </div>   
@@ -480,7 +495,7 @@ class MobilityTrends extends Component {
                             </div>
                             <div className="graph-container">
                                 <h4>Movement Trends for Parks/Outdoors</h4>
-                                <info>{this.state.dataStart} - {this.state.dataEnd}</info>
+                                <span>{this.state.dataStart} - {this.state.dataEnd}</span>
                                 <div className="graph-subcontainer">
                                     {this.showGraphParks()}
                                 </div>   
@@ -504,16 +519,15 @@ class MobilityTrends extends Component {
                                     <div className="average-description">30 Day Average, based on the latest available month provided by the <a href='https://www.google.com/covid19/mobility/'>Google Mobility Trends</a> report.</div>
                                 </div>
                                 <div className="graph-container">
-                                    <h4>Movement Trends for Parks/Outdoors</h4>
-                                    <info>{this.state.dataStart} - {this.state.dataEnd}</info>
+                                    <h4>Movement Trends for Transit/Metro</h4>
+                                    <span>{this.state.dataStart} - {this.state.dataEnd}</span>
                                     <div className="graph-subcontainer">
                                         {this.showGraphTransit()}
                                     </div>   
                                 </div>
                             </div>
                         </div>
-
-                        {/* <div className="places-work">
+                        <div className="places-work">
                             <div className="places-work-header">
                                 <h2 className="places-parks-title">Work <br></br>& Industry</h2>
                             </div>
@@ -526,32 +540,69 @@ class MobilityTrends extends Component {
                                     <div className="average-description">30 Day Average, based on the latest available month provided by the <a href='https://www.google.com/covid19/mobility/'>Google Mobility Trends</a> report.</div>
                                 </div>
                                 <div className="graph-container">
-                                    <h4>Movement Trends for Parks/Outdoors</h4>
-                                    <info>{this.state.dataStart} - {this.state.dataEnd}</info>
+                                    <h4>Movement Trends for Work/Industry</h4>
+                                    <span>{this.state.dataStart} - {this.state.dataEnd}</span>
                                     <div className="graph-subcontainer">
                                         {this.showGraphWork()}
                                     </div>   
                                 </div>
                             </div>
-                        </div> */}
+                        </div>
+
                     {/* <h2>Shopping & Dining</h2>
                     <h3>30 Day Average</h3>
                     {this.getAverageShoppingDining()}
                     <h3>30 Day Trend (from Baseline of 0)</h3>
                     {this.showGraphShoppingDining()} */}
 
-                    {/* <h2>Work</h2>
-                    <h3>30 Day Average</h3>
-                    {this.getAverageWork()}
-                    <h3>30 Day Trend (from Baseline of 0)</h3>
-                    {this.showGraphworkWork()} */}
-                    {/* <ul className="justify-content-center mobility-data-list">
-                        {this.showMobilityData()}
-                    </ul> */}
                 </div>
                  <ul className="justify-content-center mobility-data-list">
                     {/* {this.showMobilityData()} */}
                   </ul>
+              </Col>
+              <Col className="accordion-aside" xs={2}>
+                <Accordion defaultActiveKey="0">
+                    <Card>
+                        <Card.Header>
+                        <Accordion.Toggle as={Button} variant="link" eventKey="1">
+                            View Safe Dining & Shopping Options
+                        </Accordion.Toggle>
+                        </Card.Header>
+                        <Accordion.Collapse eventKey="1">
+                        <Card.Body>[WIP] Pull restaurants with outdoor space from Yelp/Google My Business</Card.Body>
+                        </Accordion.Collapse>
+                    </Card>
+                    <Card>
+                        <Card.Header>
+                        <Accordion.Toggle as={Button} variant="link" eventKey="1">
+                            Check out nearby parks
+                        </Accordion.Toggle>
+                        </Card.Header>
+                        <Accordion.Collapse eventKey="1">
+                        <Card.Body>[WIP] Pull nearby parks/green spaces</Card.Body>
+                        </Accordion.Collapse>
+                    </Card>
+                    <Card>
+                        <Card.Header>
+                        <Accordion.Toggle as={Button} variant="link" eventKey="1">
+                            View Google Mobility Reports
+                        </Accordion.Toggle>
+                        </Card.Header>
+                        <Accordion.Collapse eventKey="1">
+                        <Card.Body>[WIP] Link to Google Mobility Report</Card.Body>
+                        </Accordion.Collapse>
+                    </Card>
+                    <Card>
+                        <Card.Header>
+                        <Accordion.Toggle as={Button} variant="link" eventKey="1">
+                            Covid-19 Information
+                        </Accordion.Toggle>
+                        </Card.Header>
+                        <Accordion.Collapse eventKey="1">
+                        <Card.Body>[WIP] Display latest stats</Card.Body>
+                        </Accordion.Collapse>
+                    </Card>
+                    </Accordion>
               </Col>
             </Row>
           </Container>

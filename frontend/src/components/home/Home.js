@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import './Home.css';
 import Container from 'react-bootstrap/Container';
+import Jumbotron from 'react-bootstrap/Jumbotron';
+import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import USAMap from "react-usa-map";
@@ -36,6 +38,16 @@ class Home extends Component {
       <Container fluid="md">
         <Row>
           <Col>
+          <Jumbotron className="jumbotron">
+            <h1>Hello, world!</h1>
+            <p>
+              This is a simple hero unit, a simple jumbotron-style component for calling
+              extra attention to featured content or information.
+            </p>
+            <p>
+              <Button variant="primary">Learn more</Button>
+            </p>
+          </Jumbotron>
             <div>
               <div className="App">
                 <USAMap onClick={this.mapHandler} />
