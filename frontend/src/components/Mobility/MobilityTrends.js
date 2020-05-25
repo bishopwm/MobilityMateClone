@@ -349,6 +349,11 @@ class MobilityTrends extends Component {
           console.log("Stats: ", this.state)
         return (
         <div>
+            <div className="mobility-hero">
+                <div className="mobility-title-container">
+                    <h1 className="mobility-title">{this.state.regionName} Mobility Trends</h1>
+                </div>
+            </div>
             <div>
                 {!this.state.done ? (
                 <ReactLoading type={"bars"} color={"black"} />
@@ -507,11 +512,7 @@ class MobilityTrends extends Component {
                   </Container>
                 )}
             </div>
-            <div className="mobility-hero">
-                <div className="mobility-title-container">
-                    <h1 className="mobility-title">{this.state.regionName} Mobility Trends</h1>
-                </div>
-            </div>
+
         </div>
         );
       }
