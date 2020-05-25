@@ -13,6 +13,11 @@ import './MobilityTrends.css';
 import downArrow from '../../assets/images/down_arrow.png';
 import upArrow from '../../assets/images/up_arrow.png';
 import smallCalendar from '../../assets/images/small_calendar.jpg';
+// Loading Screen Imports
+import FadeIn from "react-fade-in";
+import Lottie from "react-lottie";
+import ReactLoading from "react-loading";
+import "bootstrap/dist/css/bootstrap.css";
 
 class MobilityTrends extends Component {
 
@@ -26,7 +31,8 @@ class MobilityTrends extends Component {
         residentialStats: [],
         workStats: [],
         shoppingDiningStats: [],
-        chartReference: React.createRef()
+        chartReference: React.createRef(),
+        done: undefined
       }
       async componentDidMount() {
         console.log(this.chartReference);
@@ -76,6 +82,9 @@ class MobilityTrends extends Component {
           shoppingDiningStats: shoppingDiningStats,
           workStats: workStats
         })
+        setTimeout(() => {
+            this.setState({ done: true })
+            }, 3000);
       }
       displayRegionName = () =>{
           console.log(this.state.mobilityData[55])          
@@ -340,164 +349,169 @@ class MobilityTrends extends Component {
           console.log("Stats: ", this.state)
         return (
         <div>
+            <div>
+                {!this.state.done ? (
+                <ReactLoading type={"bars"} color={"black"} />
+                ) : (
+                    <Container fluid="md">
+                    <Row>
+                      <Col>
+                        <div className="places-trends-container">
+                            <div className="places-grocery">
+                                <div className="places-grocery-header">
+                                    <h2 className="places-grocery-title">Grocery <br></br>& Pharmacy</h2>
+                                </div>
+                                <div className="places-grocery-content">    
+                                    {this.getAverageGrocery()}
+                                    <div className="places-grocery-average">
+                                        <img src={smallCalendar} id="small-calendar-icon"></img>
+                                        <div className="average-description">30 Day Average, based on the latest available month provided by the <a href='https://www.google.com/covid19/mobility/'>Google Mobility Trends</a> report.</div>
+                                    </div>
+                                    <div className="graph-container">
+                                        <h4>Movement Trends for Grocery/Pharmacy</h4>
+                                        <span>{this.state.dataStart} through {this.state.dataEnd}</span>
+                                        <div className="graph-subcontainer">
+                                            {this.showGraphGroceryPharmacy()}
+                                        </div>   
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="places-parks">
+                                <div className="places-parks-header">
+                                    <h2 className="places-parks-title">Parks <br></br>& Outdoor Rec.</h2>
+                                </div>
+                                <div className="places-grocery-content">
+                                    {this.getAverageParks()}
+                                    <div className="places-grocery-average">
+                                        <img src={smallCalendar} id="small-calendar-icon"></img>
+                                        <div className="average-description">30 Day Average, based on the latest available month provided by the <a href='https://www.google.com/covid19/mobility/'>Google Mobility Trends</a> report.</div>
+                                    </div>
+                                    <div className="graph-container">
+                                        <h4>Movement Trends for Parks/Outdoors</h4>
+                                        <span>{this.state.dataStart} through {this.state.dataEnd}</span>
+                                        <div className="graph-subcontainer">
+                                            <br></br>
+                                            {this.showGraphParks()}
+                                        </div>   
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="places-shopping-dining">
+                                    <div className="places-shopping-dining-header">
+                                        <h2 className="places-shopping-dining-title">Shopping <br></br>& Dining</h2>
+                                    </div>
+                                    <div className="places-grocery-content">
+                                        {this.getAverageShoppingDining()}
+                                        <div className="places-grocery-average">
+                                            <img src={smallCalendar} id="small-calendar-icon"></img>
+                                            <div className="average-description">30 Day Average, based on the latest available month provided by the <a href='https://www.google.com/covid19/mobility/'>Google Mobility Trends</a> report.</div>
+                                        </div>
+                                        <div className="graph-container">
+                                            <h4>Movement Trends for Work/Industry</h4>
+                                            <span>{this.state.dataStart} through {this.state.dataEnd}</span>
+                                            <div className="graph-subcontainer">
+                                                {this.showGraphShoppingDining()}
+                                            </div>   
+                                        </div>
+                                    </div>
+                                </div>
+                      </Col>
+                      <Col>
+                      <div className="places-trends-container">
+                                <div className="places-transit">
+                                    <div className="places-transit-header">
+                                        <h2 className="places-parks-title">Transit <br></br>& Metro</h2>
+                                    </div>
+                                    <div className="places-grocery-content">                                
+                                        {this.getAverageTransit()}
+                                        <div className="places-grocery-average">
+                                            <img src={smallCalendar} id="small-calendar-icon"></img>
+                                            <div className="average-description">30 Day Average, based on the latest available month provided by the <a href='https://www.google.com/covid19/mobility/'>Google Mobility Trends</a> report.</div>
+                                        </div>
+                                        <div className="graph-container">
+                                            <h4>Movement Trends for Transit/Metro</h4>
+                                            <span>{this.state.dataStart} through {this.state.dataEnd}</span>
+                                            <div className="graph-subcontainer">
+                                                {this.showGraphTransit()}
+                                            </div>   
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="places-work">
+                                    <div className="places-work-header">
+                                        <h2 className="places-parks-title">Work <br></br>& Industry</h2>
+                                    </div>
+                                    <div className="places-grocery-content">
+                                        {this.getAverageWork()}
+                                        <div className="places-grocery-average">
+                                            <img src={smallCalendar} id="small-calendar-icon"></img>
+                                            <div className="average-description">30 Day Average, based on the latest available month provided by the <a href='https://www.google.com/covid19/mobility/'>Google Mobility Trends</a> report.</div>
+                                        </div>
+                                        <div className="graph-container">
+                                            <h4>Movement Trends for Work/Industry</h4>
+                                            <span>{this.state.dataStart} through {this.state.dataEnd}</span>
+                                            <div className="graph-subcontainer">
+                                                {this.showGraphWork()}
+                                            </div>   
+                                        </div>
+                                    </div>
+                                </div>
+                        </div>
+                      </Col>
+                      <Col className="accordion-aside" xs={2}>
+                        <Accordion defaultActiveKey="0">
+                            <Card>
+                                <Card.Header>
+                                <Accordion.Toggle as={Button} variant="link" eventKey="1">
+                                    View Safe Dining & Shopping Options
+                                </Accordion.Toggle>
+                                </Card.Header>
+                                <Accordion.Collapse eventKey="1">
+                                <Card.Body>[WIP] Pull restaurants with outdoor space from Yelp/Google My Business</Card.Body>
+                                </Accordion.Collapse>
+                            </Card>
+                            <Card>
+                                <Card.Header>
+                                <Accordion.Toggle as={Button} variant="link" eventKey="1">
+                                    Check out nearby parks
+                                </Accordion.Toggle>
+                                </Card.Header>
+                                <Accordion.Collapse eventKey="1">
+                                <Card.Body>[WIP] Pull nearby parks/green spaces</Card.Body>
+                                </Accordion.Collapse>
+                            </Card>
+                            <Card>
+                                <Card.Header>
+                                <Accordion.Toggle as={Button} variant="link" eventKey="1">
+                                    View Google Mobility Reports
+                                </Accordion.Toggle>
+                                </Card.Header>
+                                <Accordion.Collapse eventKey="1">
+                                <Card.Body>[WIP] Link to Google Mobility Report</Card.Body>
+                                </Accordion.Collapse>
+                            </Card>
+                            <Card>
+                                <Card.Header>
+                                <Accordion.Toggle as={Button} variant="link" eventKey="1">
+                                    Covid-19 Information
+                                </Accordion.Toggle>
+                                </Card.Header>
+                                <Accordion.Collapse eventKey="1">
+                                <Card.Body>[WIP] Display latest stats</Card.Body>
+                                </Accordion.Collapse>
+                            </Card>
+                            </Accordion>
+                      </Col>
+                    </Row>
+                  </Container>
+                )}
+            </div>
             <div className="mobility-hero">
                 <div className="mobility-title-container">
                     <h1 className="mobility-title">{this.state.regionName} Mobility Trends</h1>
                 </div>
             </div>
-          <Container fluid="md">
-            <Row>
-              <Col>
-                <div className="places-trends-container">
-                    <div className="places-grocery">
-                        <div className="places-grocery-header">
-                            <h2 className="places-grocery-title">Grocery <br></br>& Pharmacy</h2>
-                        </div>
-                        <div className="places-grocery-content">    
-                            {this.getAverageGrocery()}
-                            <div className="places-grocery-average">
-                                <img src={smallCalendar} id="small-calendar-icon"></img>
-                                <div className="average-description">30 Day Average, based on the latest available month provided by the <a href='https://www.google.com/covid19/mobility/'>Google Mobility Trends</a> report.</div>
-                            </div>
-                            <div className="graph-container">
-                                <h4>Movement Trends for Grocery/Pharmacy</h4>
-                                <span>{this.state.dataStart} through {this.state.dataEnd}</span>
-                                <div className="graph-subcontainer">
-                                    {this.showGraphGroceryPharmacy()}
-                                </div>   
-                            </div>
-                        </div>
-                    </div>
-                    <div className="places-parks">
-                        <div className="places-parks-header">
-                            <h2 className="places-parks-title">Parks <br></br>& Outdoor Rec.</h2>
-                        </div>
-                        <div className="places-grocery-content">
-                            {this.getAverageParks()}
-                            <div className="places-grocery-average">
-                                <img src={smallCalendar} id="small-calendar-icon"></img>
-                                <div className="average-description">30 Day Average, based on the latest available month provided by the <a href='https://www.google.com/covid19/mobility/'>Google Mobility Trends</a> report.</div>
-                            </div>
-                            <div className="graph-container">
-                                <h4>Movement Trends for Parks/Outdoors</h4>
-                                <span>{this.state.dataStart} through {this.state.dataEnd}</span>
-                                <div className="graph-subcontainer">
-                                    <br></br>
-                                    {this.showGraphParks()}
-                                </div>   
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div className="places-shopping-dining">
-                            <div className="places-shopping-dining-header">
-                                <h2 className="places-shopping-dining-title">Shopping <br></br>& Dining</h2>
-                            </div>
-                            <div className="places-grocery-content">
-                                {this.getAverageShoppingDining()}
-                                <div className="places-grocery-average">
-                                    <img src={smallCalendar} id="small-calendar-icon"></img>
-                                    <div className="average-description">30 Day Average, based on the latest available month provided by the <a href='https://www.google.com/covid19/mobility/'>Google Mobility Trends</a> report.</div>
-                                </div>
-                                <div className="graph-container">
-                                    <h4>Movement Trends for Work/Industry</h4>
-                                    <span>{this.state.dataStart} through {this.state.dataEnd}</span>
-                                    <div className="graph-subcontainer">
-                                        {this.showGraphShoppingDining()}
-                                    </div>   
-                                </div>
-                            </div>
-                        </div>
-              </Col>
-              <Col>
-              <div className="places-trends-container">
-                        <div className="places-transit">
-                            <div className="places-transit-header">
-                                <h2 className="places-parks-title">Transit <br></br>& Metro</h2>
-                            </div>
-                            <div className="places-grocery-content">                                
-                                {this.getAverageTransit()}
-                                <div className="places-grocery-average">
-                                    <img src={smallCalendar} id="small-calendar-icon"></img>
-                                    <div className="average-description">30 Day Average, based on the latest available month provided by the <a href='https://www.google.com/covid19/mobility/'>Google Mobility Trends</a> report.</div>
-                                </div>
-                                <div className="graph-container">
-                                    <h4>Movement Trends for Transit/Metro</h4>
-                                    <span>{this.state.dataStart} through {this.state.dataEnd}</span>
-                                    <div className="graph-subcontainer">
-                                        {this.showGraphTransit()}
-                                    </div>   
-                                </div>
-                            </div>
-                        </div>
-                        <div className="places-work">
-                            <div className="places-work-header">
-                                <h2 className="places-parks-title">Work <br></br>& Industry</h2>
-                            </div>
-                            <div className="places-grocery-content">
-                                {this.getAverageWork()}
-                                <div className="places-grocery-average">
-                                    <img src={smallCalendar} id="small-calendar-icon"></img>
-                                    <div className="average-description">30 Day Average, based on the latest available month provided by the <a href='https://www.google.com/covid19/mobility/'>Google Mobility Trends</a> report.</div>
-                                </div>
-                                <div className="graph-container">
-                                    <h4>Movement Trends for Work/Industry</h4>
-                                    <span>{this.state.dataStart} through {this.state.dataEnd}</span>
-                                    <div className="graph-subcontainer">
-                                        {this.showGraphWork()}
-                                    </div>   
-                                </div>
-                            </div>
-                        </div>
-                </div>
-              </Col>
-              <Col className="accordion-aside" xs={2}>
-                <Accordion defaultActiveKey="0">
-                    <Card>
-                        <Card.Header>
-                        <Accordion.Toggle as={Button} variant="link" eventKey="1">
-                            View Safe Dining & Shopping Options
-                        </Accordion.Toggle>
-                        </Card.Header>
-                        <Accordion.Collapse eventKey="1">
-                        <Card.Body>[WIP] Pull restaurants with outdoor space from Yelp/Google My Business</Card.Body>
-                        </Accordion.Collapse>
-                    </Card>
-                    <Card>
-                        <Card.Header>
-                        <Accordion.Toggle as={Button} variant="link" eventKey="1">
-                            Check out nearby parks
-                        </Accordion.Toggle>
-                        </Card.Header>
-                        <Accordion.Collapse eventKey="1">
-                        <Card.Body>[WIP] Pull nearby parks/green spaces</Card.Body>
-                        </Accordion.Collapse>
-                    </Card>
-                    <Card>
-                        <Card.Header>
-                        <Accordion.Toggle as={Button} variant="link" eventKey="1">
-                            View Google Mobility Reports
-                        </Accordion.Toggle>
-                        </Card.Header>
-                        <Accordion.Collapse eventKey="1">
-                        <Card.Body>[WIP] Link to Google Mobility Report</Card.Body>
-                        </Accordion.Collapse>
-                    </Card>
-                    <Card>
-                        <Card.Header>
-                        <Accordion.Toggle as={Button} variant="link" eventKey="1">
-                            Covid-19 Information
-                        </Accordion.Toggle>
-                        </Card.Header>
-                        <Accordion.Collapse eventKey="1">
-                        <Card.Body>[WIP] Display latest stats</Card.Body>
-                        </Accordion.Collapse>
-                    </Card>
-                    </Accordion>
-              </Col>
-            </Row>
-          </Container>
-    
         </div>
         );
       }

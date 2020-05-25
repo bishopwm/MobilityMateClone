@@ -11,6 +11,7 @@ import { LinkContainer } from 'react-router-bootstrap';
 import Region from './components/Regions/Region';
 import MobilityTrends from './components/Mobility/MobilityTrends';
 
+
 class App extends Component {
   
   state = { }
