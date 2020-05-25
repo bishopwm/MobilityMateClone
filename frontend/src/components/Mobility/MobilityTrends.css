@@ -1,5 +1,4 @@
 .mobility-hero {
-    margin-top: -0.1em;
     width: 100%;
     height: 400px;
     background-image: url('../../assets/images/movement.jpg');
@@ -170,4 +169,20 @@
 
 .graph-subcontainer {
     margin-left: -2em;
+}
+
+.places-shopping-dining-header {
+    width: 75%;
+    height: 200px;
+    background-image: url('../../assets/images/shopping_dining.jpg');
+    filter: grayscale(40%);
+    background-repeat: none;
+    background-size: cover;
+    display: flex;
+    flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: center;
+	align-items: center;
+    align-content: stretch;
+    color: white;
 }

@@ -19,14 +19,14 @@ class MobilityTrends extends Component {
 
     state = {
         mobilityData: [],
-        groceryStats: [1, 1],
-        dateStats: [1, 1],
-        parkStats: [1, 1],
-        transitStats: [1, 1],
-        residentialStats: [1, 1],
-        chartReference: React.createRef(),
+        groceryStats: [],
+        dateStats: [],
+        parkStats: [],
+        transitStats: [],
+        residentialStats: [],
         workStats: [],
-        shoppingDiningStats: []
+        shoppingDiningStats: [],
+        chartReference: React.createRef()
       }
       async componentDidMount() {
         console.log(this.chartReference);
@@ -58,13 +58,11 @@ class MobilityTrends extends Component {
         let workStats = dataLastThirtyDays.map(eachDataPoint => {
           return eachDataPoint.workplaces_percent_change_from_baseline
         });
-        if(res.data.mobilities[0] === undefined){
+        if( res.data.mobilities[0] === undefined){
             res.data.mobilities[0] = 'No region selected';
             res.data.mobilities[55] = '2020-04-15';
             res.data.mobilities[84] = '2020-05-15';
-
         }
-        console.log(workStats)
         this.setState({
           mobilityData: res.data.mobilities,
           regionName: res.data.mobilities[0].sub_region_1,
@@ -78,16 +76,11 @@ class MobilityTrends extends Component {
           shoppingDiningStats: shoppingDiningStats,
           workStats: workStats
         })
-        // function isRegionThere() {
-        //    return(res.data.mobilities[0].sub_region_1 ? res.data.mobilities[0].sub_region_1 : 'No region selected' )
-        // }
       }
-
       displayRegionName = () =>{
           console.log(this.state.mobilityData[55])          
       }
     
-
       // Calaculate average trend value, (+) or (-), for last 30 days data
       getAverageGrocery = () => {
           let copyGrocery = [...this.state.groceryStats];
@@ -243,87 +236,27 @@ class MobilityTrends extends Component {
 
       // Construct individual graphs for last 30 days trends, for each type of place
       showGraphGroceryPharmacy = () => {
-        //console.log("grocery stats", this.state.groceryStats)
-        const data = [
-            {x: 1, y: Number(this.state.groceryStats[0])},
-            {x: 2, y: Number(this.state.groceryStats[1])},
-            {x: 3, y: Number(this.state.groceryStats[2])},
-            {x: 4, y: Number(this.state.groceryStats[3])},
-            {x: 5, y: Number(this.state.groceryStats[4])},
-            {x: 6, y: Number(this.state.groceryStats[5])},
-            {x: 7, y: Number(this.state.groceryStats[6])},
-            {x: 8, y: Number(this.state.groceryStats[7])},
-            {x: 9, y: Number(this.state.groceryStats[8])},
-            {x: 10, y: Number(this.state.groceryStats[9])},
-            {x: 11, y: Number(this.state.groceryStats[10])},
-            {x: 12, y: Number(this.state.groceryStats[11])},
-            {x: 13, y: Number(this.state.groceryStats[12])},
-            {x: 14, y: Number(this.state.groceryStats[13])},
-            {x: 15, y: Number(this.state.groceryStats[14])},
-            {x: 16, y: Number(this.state.groceryStats[15])},
-            {x: 17, y: Number(this.state.groceryStats[16])},
-            {x: 18, y: Number(this.state.groceryStats[17])},
-            {x: 19, y: Number(this.state.groceryStats[18])},
-            {x: 20, y: Number(this.state.groceryStats[19])},
-            {x: 21, y: Number(this.state.groceryStats[20])},
-            {x: 22, y: Number(this.state.groceryStats[21])},
-            {x: 23, y: Number(this.state.groceryStats[22])},
-            {x: 24, y: Number(this.state.groceryStats[23])},
-            {x: 25, y: Number(this.state.groceryStats[24])},
-            {x: 26, y: Number(this.state.groceryStats[25])},
-            {x: 27, y: Number(this.state.groceryStats[26])},
-            {x: 28, y: Number(this.state.groceryStats[27])},
-            {x: 29, y: Number(this.state.groceryStats[28])},
-            {x: 30, y: Number(this.state.groceryStats[29])},
-            {x: 31, y: Number(this.state.groceryStats[30])}
-            ];
-    
+        let data = []
+        for(let i=0; i<31; i++){
+            data.push({x: i, y: Number(this.state.groceryStats[i])})
+        }
         return (
-          <div className="grocery-pharmacy">
-            <VictoryChart domainPadding={20}>
-                <VictoryAxis/>
-                <VictoryAxis dependentAxis tickFormat={(x) => (`%${x}`)}/>
-                <VictoryAxis dependentAxis={true}/>
-                <VictoryBar style={{ data: { fill: "#285f9fbb" } }} data={data} x="x" y="y" domain={{x: [0, 31], y: [-60, 20]}}/>
-            </VictoryChart>
-          </div>
-        );
+            <div className="grocery">
+              <VictoryChart domainPadding={20}>
+                  <VictoryAxis/>
+                  <VictoryAxis dependentAxis tickFormat={(x) => (`%${x}`)}/>
+                  <VictoryAxis dependentAxis={true}/>
+                  <VictoryBar style={{ data: { fill: "#285f9fbb" } }} data={data} x="x" y="y" domain={{x: [0, 31], y: [-60, 20]}}/>
+              </VictoryChart>
+            </div>
+          );
       }
     
       showGraphParks = () => {
-        const data = [
-            {x: 1, y: Number(this.state.parkStats[0])},
-            {x: 2, y: Number(this.state.parkStats[1])},
-            {x: 3, y: Number(this.state.parkStats[2])},
-            {x: 4, y: Number(this.state.parkStats[3])},
-            {x: 5, y: Number(this.state.parkStats[4])},
-            {x: 6, y: Number(this.state.parkStats[5])},
-            {x: 7, y: Number(this.state.parkStats[6])},
-            {x: 8, y: Number(this.state.parkStats[7])},
-            {x: 9, y: Number(this.state.parkStats[8])},
-            {x: 10, y: Number(this.state.parkStats[9])},
-            {x: 11, y: Number(this.state.parkStats[10])},
-            {x: 12, y: Number(this.state.parkStats[11])},
-            {x: 13, y: Number(this.state.parkStats[12])},
-            {x: 14, y: Number(this.state.parkStats[13])},
-            {x: 15, y: Number(this.state.parkStats[14])},
-            {x: 16, y: Number(this.state.parkStats[15])},
-            {x: 17, y: Number(this.state.parkStats[16])},
-            {x: 18, y: Number(this.state.parkStats[17])},
-            {x: 19, y: Number(this.state.parkStats[18])},
-            {x: 20, y: Number(this.state.parkStats[19])},
-            {x: 21, y: Number(this.state.parkStats[20])},
-            {x: 22, y: Number(this.state.parkStats[21])},
-            {x: 23, y: Number(this.state.parkStats[22])},
-            {x: 24, y: Number(this.state.parkStats[23])},
-            {x: 25, y: Number(this.state.parkStats[24])},
-            {x: 26, y: Number(this.state.parkStats[25])},
-            {x: 27, y: Number(this.state.parkStats[26])},
-            {x: 28, y: Number(this.state.parkStats[27])},
-            {x: 29, y: Number(this.state.parkStats[28])},
-            {x: 30, y: Number(this.state.parkStats[29])},
-            {x: 31, y: Number(this.state.parkStats[30])}
-        ];
+        let data = []
+        for(let i=0; i<31; i++){
+            data.push({x: i, y: Number(this.state.parkStats[i])})
+        }
         return (
             <div className="parks">
               <VictoryChart domainPadding={20}>
@@ -336,39 +269,10 @@ class MobilityTrends extends Component {
           );
       }
       showGraphTransit = () => {
-        const data = [
-            {x: 1, y: Number(this.state.transitStats[0])},
-            {x: 2, y: Number(this.state.transitStats[1])},
-            {x: 3, y: Number(this.state.transitStats[2])},
-            {x: 4, y: Number(this.state.transitStats[3])},
-            {x: 5, y: Number(this.state.transitStats[4])},
-            {x: 6, y: Number(this.state.transitStats[5])},
-            {x: 7, y: Number(this.state.transitStats[6])},
-            {x: 8, y: Number(this.state.transitStats[7])},
-            {x: 9, y: Number(this.state.transitStats[8])},
-            {x: 10, y: Number(this.state.transitStats[9])},
-            {x: 11, y: Number(this.state.transitStats[10])},
-            {x: 12, y: Number(this.state.transitStats[11])},
-            {x: 13, y: Number(this.state.transitStats[12])},
-            {x: 14, y: Number(this.state.transitStats[13])},
-            {x: 15, y: Number(this.state.transitStats[14])},
-            {x: 16, y: Number(this.state.transitStats[15])},
-            {x: 17, y: Number(this.state.transitStats[16])},
-            {x: 18, y: Number(this.state.transitStats[17])},
-            {x: 19, y: Number(this.state.transitStats[18])},
-            {x: 20, y: Number(this.state.transitStats[19])},
-            {x: 21, y: Number(this.state.transitStats[20])},
-            {x: 22, y: Number(this.state.transitStats[21])},
-            {x: 23, y: Number(this.state.transitStats[22])},
-            {x: 24, y: Number(this.state.transitStats[23])},
-            {x: 25, y: Number(this.state.transitStats[24])},
-            {x: 26, y: Number(this.state.transitStats[25])},
-            {x: 27, y: Number(this.state.transitStats[26])},
-            {x: 28, y: Number(this.state.transitStats[27])},
-            {x: 29, y: Number(this.state.transitStats[28])},
-            {x: 30, y: Number(this.state.transitStats[29])},
-            {x: 31, y: Number(this.state.transitStats[30])}
-        ];
+        let data = []
+        for(let i=0; i<31; i++){
+            data.push({x: i, y: Number(this.state.transitStats[i])})
+        }
         return (
             <div className="transit">
               <VictoryChart domainPadding={20}>
@@ -382,39 +286,10 @@ class MobilityTrends extends Component {
       }
     
       showGraphResidential = () => {
-        const data = [
-            {x: 1, y: Number(this.state.residentialStats[0])},
-            {x: 2, y: Number(this.state.residentialStats[1])},
-            {x: 3, y: Number(this.state.residentialStats[2])},
-            {x: 4, y: Number(this.state.residentialStats[3])},
-            {x: 5, y: Number(this.state.residentialStats[4])},
-            {x: 6, y: Number(this.state.residentialStats[5])},
-            {x: 7, y: Number(this.state.residentialStats[6])},
-            {x: 8, y: Number(this.state.residentialStats[7])},
-            {x: 9, y: Number(this.state.residentialStats[8])},
-            {x: 10, y: Number(this.state.residentialStats[9])},
-            {x: 11, y: Number(this.state.residentialStats[10])},
-            {x: 12, y: Number(this.state.residentialStats[11])},
-            {x: 13, y: Number(this.state.residentialStats[12])},
-            {x: 14, y: Number(this.state.residentialStats[13])},
-            {x: 15, y: Number(this.state.residentialStats[14])},
-            {x: 16, y: Number(this.state.residentialStats[15])},
-            {x: 17, y: Number(this.state.residentialStats[16])},
-            {x: 18, y: Number(this.state.residentialStats[17])},
-            {x: 19, y: Number(this.state.residentialStats[18])},
-            {x: 20, y: Number(this.state.residentialStats[19])},
-            {x: 21, y: Number(this.state.residentialStats[20])},
-            {x: 22, y: Number(this.state.residentialStats[21])},
-            {x: 23, y: Number(this.state.residentialStats[22])},
-            {x: 24, y: Number(this.state.residentialStats[23])},
-            {x: 25, y: Number(this.state.residentialStats[24])},
-            {x: 26, y: Number(this.state.residentialStats[25])},
-            {x: 27, y: Number(this.state.residentialStats[26])},
-            {x: 28, y: Number(this.state.residentialStats[27])},
-            {x: 29, y: Number(this.state.residentialStats[28])},
-            {x: 30, y: Number(this.state.residentialStats[29])},
-            {x: 31, y: Number(this.state.residentialStats[30])}
-        ];
+        let data = []
+        for(let i=0; i<31; i++){
+            data.push({x: i, y: Number(this.state.residentialStats[i])})
+        }
         return (
             <div className="residential">
               <VictoryChart domainPadding={20}>
@@ -428,39 +303,10 @@ class MobilityTrends extends Component {
       }
     
       showGraphShoppingDining = () => {
-        const data = [
-            {x: 1, y: Number(this.state.shoppingDiningStats[0])},
-            {x: 2, y: Number(this.state.shoppingDiningStats[1])},
-            {x: 3, y: Number(this.state.shoppingDiningStats[2])},
-            {x: 4, y: Number(this.state.shoppingDiningStats[3])},
-            {x: 5, y: Number(this.state.shoppingDiningStats[4])},
-            {x: 6, y: Number(this.state.shoppingDiningStats[5])},
-            {x: 7, y: Number(this.state.shoppingDiningStats[6])},
-            {x: 8, y: Number(this.state.shoppingDiningStats[7])},
-            {x: 9, y: Number(this.state.shoppingDiningStats[8])},
-            {x: 10, y: Number(this.state.shoppingDiningStats[9])},
-            {x: 11, y: Number(this.state.shoppingDiningStats[10])},
-            {x: 12, y: Number(this.state.shoppingDiningStats[11])},
-            {x: 13, y: Number(this.state.shoppingDiningStats[12])},
-            {x: 14, y: Number(this.state.shoppingDiningStats[13])},
-            {x: 15, y: Number(this.state.shoppingDiningStats[14])},
-            {x: 16, y: Number(this.state.shoppingDiningStats[15])},
-            {x: 17, y: Number(this.state.shoppingDiningStats[16])},
-            {x: 18, y: Number(this.state.shoppingDiningStats[17])},
-            {x: 19, y: Number(this.state.shoppingDiningStats[18])},
-            {x: 20, y: Number(this.state.shoppingDiningStats[19])},
-            {x: 21, y: Number(this.state.shoppingDiningStats[20])},
-            {x: 22, y: Number(this.state.shoppingDiningStats[21])},
-            {x: 23, y: Number(this.state.shoppingDiningStats[22])},
-            {x: 24, y: Number(this.state.shoppingDiningStats[23])},
-            {x: 25, y: Number(this.state.shoppingDiningStats[24])},
-            {x: 26, y: Number(this.state.shoppingDiningStats[25])},
-            {x: 27, y: Number(this.state.shoppingDiningStats[26])},
-            {x: 28, y: Number(this.state.shoppingDiningStats[27])},
-            {x: 29, y: Number(this.state.shoppingDiningStats[28])},
-            {x: 30, y: Number(this.state.shoppingDiningStats[29])},
-            {x: 31, y: Number(this.state.shoppingDiningStats[30])}
-        ];
+        let data = []
+        for(let i=0; i<31; i++){
+            data.push({x: i, y: Number(this.state.shoppingDiningStats[i])})
+        }
         return (
             <div className="shopping-dining">
               <VictoryChart domainPadding={20}>
@@ -474,39 +320,10 @@ class MobilityTrends extends Component {
       }
 
       showGraphWork = () => {
-        const data = [
-            {x: 1, y: Number(this.state.workStats[0])},
-            {x: 2, y: Number(this.state.workStats[1])},
-            {x: 3, y: Number(this.state.workStats[2])},
-            {x: 4, y: Number(this.state.workStats[3])},
-            {x: 5, y: Number(this.state.workStats[4])},
-            {x: 6, y: Number(this.state.workStats[5])},
-            {x: 7, y: Number(this.state.workStats[6])},
-            {x: 8, y: Number(this.state.workStats[7])},
-            {x: 9, y: Number(this.state.workStats[8])},
-            {x: 10, y: Number(this.state.workStats[9])},
-            {x: 11, y: Number(this.state.workStats[10])},
-            {x: 12, y: Number(this.state.workStats[11])},
-            {x: 13, y: Number(this.state.workStats[12])},
-            {x: 14, y: Number(this.state.workStats[13])},
-            {x: 15, y: Number(this.state.workStats[14])},
-            {x: 16, y: Number(this.state.workStats[15])},
-            {x: 17, y: Number(this.state.workStats[16])},
-            {x: 18, y: Number(this.state.workStats[17])},
-            {x: 19, y: Number(this.state.workStats[18])},
-            {x: 20, y: Number(this.state.workStats[19])},
-            {x: 21, y: Number(this.state.workStats[20])},
-            {x: 22, y: Number(this.state.workStats[21])},
-            {x: 23, y: Number(this.state.workStats[22])},
-            {x: 24, y: Number(this.state.workStats[23])},
-            {x: 25, y: Number(this.state.workStats[24])},
-            {x: 26, y: Number(this.state.workStats[25])},
-            {x: 27, y: Number(this.state.workStats[26])},
-            {x: 28, y: Number(this.state.workStats[27])},
-            {x: 29, y: Number(this.state.workStats[28])},
-            {x: 30, y: Number(this.state.workStats[29])},
-            {x: 31, y: Number(this.state.workStats[30])}
-        ];
+        let data = []
+        for(let i=0; i<31; i++){
+            data.push({x: i, y: Number(this.state.workStats[i])})
+        }
         return (
             <div className="work">
               <VictoryChart domainPadding={20}>
@@ -516,24 +333,7 @@ class MobilityTrends extends Component {
                   <VictoryBar style={{ data: { fill: "#285f9fbb" } }} data={data} x="x" y="y" domain={{x: [0, 31], y: [-60, 20]}}/>
               </VictoryChart>
             </div>
-        );
-      }
-      showMobilityData = () => {
-        console.log("sup", this.state.mobilityData)
-        return this.state.mobilityData.map(eachDataPoint => {
-          return( <li key={eachDataPoint._id}>
-              <h4>{eachDataPoint.sub_region_1}</h4>
-              <h6>{eachDataPoint.sub_region_2}</h6><br></br>
-              <h6>Date: {eachDataPoint.date}</h6><br></br>
-              <h6>Grocery Stores & Pharmacies Mobility: {eachDataPoint.grocery_and_pharmacy_percent_change_from_baseline}</h6><br></br>
-              <h6>Parks: {eachDataPoint.parks_percent_change_from_baseline}</h6><br></br>
-              <h6>Residential: {eachDataPoint.residential_percent_change_from_baseline}</h6><br></br>
-              <h6>Shopping & Dining: {eachDataPoint.retail_and_recreation_percent_change_from_baseline}</h6><br></br>
-              <h6>Transit: {eachDataPoint.transit_stations_percent_change_from_baseline}</h6><br></br>
-              <h6>Work: {eachDataPoint.workplaces_percent_change_from_baseline}</h6>
-          </li>
-          )
-        })
+          );
       }
     
       render() {
@@ -553,11 +353,8 @@ class MobilityTrends extends Component {
                         <div className="places-grocery-header">
                             <h2 className="places-grocery-title">Grocery <br></br>& Pharmacy</h2>
                         </div>
-                        <div className="places-grocery-content">
-                            {/* <img className="down-arrow" src={downArrow}></img>
-                            <span className="trend-percentage">  {this.getAverageGrocery()} %</span> */}
+                        <div className="places-grocery-content">    
                             {this.getAverageGrocery()}
-                            
                             <div className="places-grocery-average">
                                 <img src={smallCalendar} id="small-calendar-icon"></img>
                                 <div className="average-description">30 Day Average, based on the latest available month provided by the <a href='https://www.google.com/covid19/mobility/'>Google Mobility Trends</a> report.</div>
@@ -571,15 +368,11 @@ class MobilityTrends extends Component {
                             </div>
                         </div>
                     </div>
-
-
                     <div className="places-parks">
                         <div className="places-parks-header">
                             <h2 className="places-parks-title">Parks <br></br>& Outdoor Rec.</h2>
                         </div>
                         <div className="places-grocery-content">
-                            {/* <img className="down-arrow" src={downArrow}></img>
-                            <span className="trend-percentage">  {this.getAverageParks()} %</span> */}
                             {this.getAverageParks()}
                             <div className="places-grocery-average">
                                 <img src={smallCalendar} id="small-calendar-icon"></img>
@@ -596,6 +389,25 @@ class MobilityTrends extends Component {
                         </div>
                     </div>
                 </div>
+                <div className="places-shopping-dining">
+                            <div className="places-shopping-dining-header">
+                                <h2 className="places-shopping-dining-title">Shopping <br></br>& Dining</h2>
+                            </div>
+                            <div className="places-grocery-content">
+                                {this.getAverageShoppingDining()}
+                                <div className="places-grocery-average">
+                                    <img src={smallCalendar} id="small-calendar-icon"></img>
+                                    <div className="average-description">30 Day Average, based on the latest available month provided by the <a href='https://www.google.com/covid19/mobility/'>Google Mobility Trends</a> report.</div>
+                                </div>
+                                <div className="graph-container">
+                                    <h4>Movement Trends for Work/Industry</h4>
+                                    <span>{this.state.dataStart} through {this.state.dataEnd}</span>
+                                    <div className="graph-subcontainer">
+                                        {this.showGraphShoppingDining()}
+                                    </div>   
+                                </div>
+                            </div>
+                        </div>
               </Col>
               <Col>
               <div className="places-trends-container">
@@ -603,9 +415,7 @@ class MobilityTrends extends Component {
                             <div className="places-transit-header">
                                 <h2 className="places-parks-title">Transit <br></br>& Metro</h2>
                             </div>
-                            <div className="places-grocery-content">
-                                {/* <img className="down-arrow" src={downArrow}></img>
-                                <span className="trend-percentage">  {this.getAverageTransit()} %</span> */}
+                            <div className="places-grocery-content">                                
                                 {this.getAverageTransit()}
                                 <div className="places-grocery-average">
                                     <img src={smallCalendar} id="small-calendar-icon"></img>
@@ -625,8 +435,6 @@ class MobilityTrends extends Component {
                                 <h2 className="places-parks-title">Work <br></br>& Industry</h2>
                             </div>
                             <div className="places-grocery-content">
-                                {/* <img className="down-arrow" src={downArrow}></img>
-                                <span className="trend-percentage">  {this.getAverageWork()} %</span> */}
                                 {this.getAverageWork()}
                                 <div className="places-grocery-average">
                                     <img src={smallCalendar} id="small-calendar-icon"></img>
@@ -641,17 +449,7 @@ class MobilityTrends extends Component {
                                 </div>
                             </div>
                         </div>
-
-                    {/* <h2>Shopping & Dining</h2>
-                    <h3>30 Day Average</h3>
-                    {this.getAverageShoppingDining()}
-                    <h3>30 Day Trend (from Baseline of 0)</h3>
-                    {this.showGraphShoppingDining()} */}
-
                 </div>
-                 <ul className="justify-content-center mobility-data-list">
-                    {/* {this.showMobilityData()} */}
-                  </ul>
               </Col>
               <Col className="accordion-aside" xs={2}>
                 <Accordion defaultActiveKey="0">
