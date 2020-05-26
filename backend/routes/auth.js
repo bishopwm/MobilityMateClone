@@ -39,6 +39,25 @@ router.get('/profile', isAuth, (req, res, next) => {
     .catch((err) => res.status(500).json({ err }));
 });
 
+router.post('/saved-data', isAuth, (req, res, next) => {
+
+  const today = new Date();
+
+  const query = { _id: req.user._id };
+  // Set some fields in that document
+  const update = {
+    userGroceryData: {
+      data: req.body,
+      savedDate: today
+    }
+  };
+  const options = {upsert: true};
+
+  User.findOneAndUpdate(query, update, options).then(response => {
+    res.json({message:"success", lastUpdatedUserId: response._id}) 
+  }).catch(err => res.json({err}))  
+})
+
 function isAuth(req, res, next) {
   req.isAuthenticated() ? next() : res.status(401).json({ msg: 'Log in first' });
 }

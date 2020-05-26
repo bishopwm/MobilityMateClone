@@ -343,7 +343,18 @@ class MobilityTrends extends Component {
             </div>
           );
       }
-    
+
+      saveData = async () => {
+        //console.log(this.state.groceryStats);
+           let res = await actions.updateUserData(this.state.groceryStats)
+            console.log("updated user:", res);
+
+            
+            this.setState({
+                lastUpdatedUserId: res.data
+            })
+      }
+
       render() {
           console.log("Stats: ", this.state)
         return (
@@ -375,6 +386,7 @@ class MobilityTrends extends Component {
                                     </div>
                                     <div className="graph-container">
                                         <h4>Movement Trends for Grocery/Pharmacy</h4>
+                                        <button id="save-button" onClick={() => this.saveData()}>Save Data</button>
                                         <span>{this.state.dataStart} through {this.state.dataEnd}</span>
                                         <div className="graph-subcontainer">
                                             {this.showGraphGroceryPharmacy()}

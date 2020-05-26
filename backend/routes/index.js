@@ -70,7 +70,11 @@ router.get('/mobilities', (req, res, next) => {
   })
 });
 
+// router.post("/saved-data", (req, res, next)=> {
+//   Movie.create(req.body).then(response => {
+//     res.json({message:"success", newMovieId: response._id}) //Back to the front end sending another message 7
+//   }).catch(err => res.json({err}))
+// })
+
 
 module.exports = router;
-
-// options: use a switch statement OR, create a const = {}, where each property is the abrev. of the state. i.e., FL: "Florida" --> query could be object.req.query.region (FL)

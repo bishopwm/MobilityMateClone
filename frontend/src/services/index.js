@@ -23,10 +23,11 @@ const actions = {
   },
   returnMobilityData: async (regionName) => {
     return await service.get('/mobilities', {params: 
-      {
-      region: regionName
-    }
-  })
+      { region: regionName }
+    })
+  },
+  updateUserData: async (user) => {
+    return await service.post('/saved-data', user)
   }
 };
 
