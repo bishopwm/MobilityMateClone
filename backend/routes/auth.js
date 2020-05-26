@@ -47,8 +47,9 @@ router.post('/saved-data', isAuth, (req, res, next) => {
   // Set some fields in that document
   const update = {
     userGroceryData: {
-      data: req.body,
-      savedDate: today
+      data: req.body[0],
+      savedDate: today,
+      savedLocation: req.body[1]
     }
   };
   const options = {upsert: true};

@@ -81,6 +81,7 @@ class App extends Component {
         </Fragment>
         }
       </Nav>
+      
       <Switch>
         <Route exact path="/" render={(props) => <Home {...props} setRegion={this.setRegion}/>} />
         <Route exact path="/sign-up" render={(props)=><SignUp {...props} setUser={this.setUser} />} />

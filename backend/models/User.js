@@ -7,7 +7,8 @@ const userSchema = new Schema(
     name: String,
     userGroceryData: {
       data: [ String ],
-      savedDate: Date
+      savedDate: Date,
+      savedLocation: String
     }
   },
   {
