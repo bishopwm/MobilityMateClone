@@ -14,10 +14,9 @@ import downArrow from '../../assets/images/down_arrow.png';
 import upArrow from '../../assets/images/up_arrow.png';
 import smallCalendar from '../../assets/images/small_calendar.jpg';
 // Loading Screen Imports
-import FadeIn from "react-fade-in";
-import Lottie from "react-lottie";
 import ReactLoading from "react-loading";
 import "bootstrap/dist/css/bootstrap.css";
+
 
 class MobilityTrends extends Component {
 
@@ -353,10 +352,12 @@ class MobilityTrends extends Component {
                 <div className="mobility-title-container">
                     <h1 className="mobility-title">{this.state.regionName} Mobility Trends</h1>
                 </div>
+                <div className="image-preload1"></div>
+                <div className="image-preload2"></div>
             </div>
             <div>
                 {!this.state.done ? (
-                <ReactLoading type={"bars"} color={"black"} />
+                <ReactLoading id="loading-div" type={"bars"} color={"black"} />
                 ) : (
                     <Container fluid="md">
                     <Row>

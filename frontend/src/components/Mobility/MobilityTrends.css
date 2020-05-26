@@ -20,6 +20,16 @@
     align-content: stretch;
 }
 
+.image-preload1 {
+    background-image: url('../../assets/images/grocery.jpg');
+    display: none;
+}
+
+.image-preload2 {
+    background-image: url('../../assets/images/transit.jpg');
+    display: none;
+}
+
 .mobility-title {
     padding-top: 2em;
     font-size: 8em;
@@ -185,4 +195,10 @@
 	align-items: center;
     align-content: stretch;
     color: white;
+}
+
+#loading-div {
+    position: fixed;
+    top: 50%;
+    left: 50%;
 }
