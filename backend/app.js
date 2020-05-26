@@ -28,7 +28,7 @@ const app = express();
 app.use(
   cors({
     credentials: true,
-    origin: ["http://localhost:3000", "https://jovial-fermat-a8f2b2.netlify.app"] //Swap this with the client url 
+    origin: ["http://localhost:3000", "https://covid-mobility-trends.netlify.app/"] //Swap this with the client url 
   })
 );
 
