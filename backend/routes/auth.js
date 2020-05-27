@@ -39,20 +39,9 @@ router.get('/profile', isAuth, (req, res, next) => {
     .catch((err) => res.status(500).json({ err }));
 });
 
-router.post('/saved-data', isAuth, (req, res, next) => {
-
+router.post('/saved-grocery-data', isAuth, (req, res, next) => {
   const today = new Date();
-
   const query = { _id: req.user._id };
-  
-  // const update = {
-  //   userGroceryData: {
-  //     data: req.body[0],
-  //     savedDate: today,
-  //     savedLocation: req.body[1]
-  //   }
-  // };
-
   let groceryData = {
       data: req.body[0],
       savedDate: today,
@@ -60,10 +49,24 @@ router.post('/saved-data', isAuth, (req, res, next) => {
       dataStartDate: req.body[2],
       dataEndDate: req.body[3]
   }
-
   const options = {upsert: true};
-
   User.findOneAndUpdate(query, { "$push": { "userGroceryData": groceryData } }, options).then(response => {
+    res.json({message:"success", lastUpdatedUserId: response._id}) 
+  }).catch(err => res.json({err}))  
+})
+
+router.post('/saved-parks-data', isAuth, (req, res, next) => {
+  const today = new Date();
+  const query = { _id: req.user._id };
+  let parksData = {
+      data: req.body[0],
+      savedDate: today,
+      savedLocation: req.body[1],
+      dataStartDate: req.body[2],
+      dataEndDate: req.body[3]
+  }
+  const options = {upsert: true};
+  User.findOneAndUpdate(query, { "$push": { "userParksData": parksData } }, options).then(response => {
     res.json({message:"success", lastUpdatedUserId: response._id}) 
   }).catch(err => res.json({err}))  
 })

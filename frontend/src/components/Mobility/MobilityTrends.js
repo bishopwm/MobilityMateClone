@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import actions from '../../services/index';
 import './../home/Home.css';
 import Container from 'react-bootstrap/Container';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
-import Accordion from 'react-bootstrap/Accordion';
 import Button from 'react-bootstrap/Button';
-import Card from 'react-bootstrap/Card';
 import '../../../node_modules/react-vis/dist/style.css';
 import { VictoryBar, VictoryChart, VictoryAxis } from 'victory';
 import './MobilityTrends.css';
@@ -340,189 +339,180 @@ class MobilityTrends extends Component {
           );
       }
 
-      saveData = async () => {
-        //console.log(this.state.groceryStats);
+      saveGroceryData = async () => {
         let groceryData = [this.state.groceryStats, this.state.regionName, this.state.dataStart, this.state.dataEnd];
-           let res = await actions.updateUserData(groceryData);
-            console.log("Updated user with saved data:", res);
+           let res = await actions.updateUserGroceryData(groceryData);
+            console.log("Updated user with saved grocery data:", res);
+            this.setState({
+                lastUpdatedUserId: res.data
+            })
+      }
+
+      saveParksData = async () => {
+        let parksData = [this.state.parkStats, this.state.regionName, this.state.dataStart, this.state.dataEnd];
+           let res = await actions.updateUserParksData(parksData);
+            console.log("Updated user with saved parks data:", res);
             this.setState({
                 lastUpdatedUserId: res.data
             })
       }
 
       render() {
-          console.log("Mobility Stats from database (Grocery, Transit, Etc.): ", this.state)
-        return (
-        <div>
-            <div className="mobility-hero">
-                <div className="mobility-title-container">
-                    <h1 className="mobility-title">{this.state.regionName} Mobility Trends</h1>
-                </div>
-                <div className="image-preload1"></div>
-                <div className="image-preload2"></div>
-            </div>
-            <div>
-                {!this.state.done ? (
-                <ReactLoading id="loading-div" type={"bars"} color={"black"} />
-                ) : (
-                    <Container fluid="md">
-                    <Row>
-                      <Col>
-                        <div className="places-trends-container">
-                            <div className="places-grocery">
-                                <div className="places-grocery-header">
-                                    <h2 className="places-grocery-title">Grocery <br></br>& Pharmacy</h2>
-                                </div>
-                                <div className="places-grocery-content">    
-                                    {this.getAverageGrocery()}
-                                    <div className="places-grocery-average">
-                                        <img alt=" " src={smallCalendar} id="small-calendar-icon"></img>
-                                        <div className="average-description">30 Day Average, based on the latest available month provided by the <a href='https://www.google.com/covid19/mobility/'>Google Mobility Trends</a> report.</div>
-                                    </div>
-                                    <div className="graph-container">
-                                        <h4>Movement Trends for Grocery/Pharmacy</h4>
-                                        <span>{this.state.dataStart} through {this.state.dataEnd}</span><br></br>
-                                        <button id="save-button" onClick={() => this.saveData()}>Save Data</button>
-                                        <div className="graph-subcontainer">
-                                            {this.showGraphGroceryPharmacy()}
-                                        </div>   
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="places-parks">
-                                <div className="places-parks-header">
-                                    <h2 className="places-parks-title">Parks <br></br>& Outdoor Rec.</h2>
-                                </div>
-                                <div className="places-grocery-content">
-                                    {this.getAverageParks()}
-                                    <div className="places-grocery-average">
-                                        <img alt=" " src={smallCalendar} id="small-calendar-icon"></img>
-                                        <div className="average-description">30 Day Average, based on the latest available month provided by the <a href='https://www.google.com/covid19/mobility/'>Google Mobility Trends</a> report.</div>
-                                    </div>
-                                    <div className="graph-container">
-                                        <h4>Movement Trends for Parks/Outdoors</h4>
-                                        <span>{this.state.dataStart} through {this.state.dataEnd}</span>
-                                        <div className="graph-subcontainer">
-                                            <br></br>
-                                            {this.showGraphParks()}
-                                        </div>   
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="places-shopping-dining">
-                                    <div className="places-shopping-dining-header">
-                                        <h2 className="places-shopping-dining-title">Shopping <br></br>& Dining</h2>
-                                    </div>
-                                    <div className="places-grocery-content">
-                                        {this.getAverageShoppingDining()}
-                                        <div className="places-grocery-average">
-                                            <img alt=" " src={smallCalendar} id="small-calendar-icon"></img>
-                                            <div className="average-description">30 Day Average, based on the latest available month provided by the <a href='https://www.google.com/covid19/mobility/'>Google Mobility Trends</a> report.</div>
-                                        </div>
-                                        <div className="graph-container">
-                                            <h4>Movement Trends for Work/Industry</h4>
-                                            <span>{this.state.dataStart} through {this.state.dataEnd}</span>
-                                            <div className="graph-subcontainer">
-                                                {this.showGraphShoppingDining()}
-                                            </div>   
-                                        </div>
-                                    </div>
-                                </div>
-                      </Col>
-                      <Col>
-                      <div className="places-trends-container">
-                                <div className="places-transit">
-                                    <div className="places-transit-header">
-                                        <h2 className="places-parks-title">Transit <br></br>& Metro</h2>
-                                    </div>
-                                    <div className="places-grocery-content">                                
-                                        {this.getAverageTransit()}
-                                        <div className="places-grocery-average">
-                                            <img alt=" " src={smallCalendar} id="small-calendar-icon"></img>
-                                            <div className="average-description">30 Day Average, based on the latest available month provided by the <a href='https://www.google.com/covid19/mobility/'>Google Mobility Trends</a> report.</div>
-                                        </div>
-                                        <div className="graph-container">
-                                            <h4>Movement Trends for Transit/Metro</h4>
-                                            <span>{this.state.dataStart} through {this.state.dataEnd}</span>
-                                            <div className="graph-subcontainer">
-                                                {this.showGraphTransit()}
-                                            </div>   
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="places-work">
-                                    <div className="places-work-header">
-                                        <h2 className="places-parks-title">Work <br></br>& Industry</h2>
-                                    </div>
-                                    <div className="places-grocery-content">
-                                        {this.getAverageWork()}
-                                        <div className="places-grocery-average">
-                                            <img alt=" " src={smallCalendar} id="small-calendar-icon"></img>
-                                            <div className="average-description">30 Day Average, based on the latest available month provided by the <a href='https://www.google.com/covid19/mobility/'>Google Mobility Trends</a> report.</div>
-                                        </div>
-                                        <div className="graph-container">
-                                            <h4>Movement Trends for Work/Industry</h4>
-                                            <span>{this.state.dataStart} through {this.state.dataEnd}</span>
-                                            <div className="graph-subcontainer">
-                                                {this.showGraphWork()}
-                                            </div>   
-                                        </div>
-                                    </div>
-                                </div>
-                        </div>
-                      </Col>
-                      <Col className="accordion-aside" xs={2}>
-                        <Accordion defaultActiveKey="0">
-                            <Card>
-                                <Card.Header>
-                                <Accordion.Toggle as={Button} variant="link" eventKey="1">
-                                    View Safe Dining & Shopping Options
-                                </Accordion.Toggle>
-                                </Card.Header>
-                                <Accordion.Collapse eventKey="1">
-                                <Card.Body>[WIP] Pull restaurants with outdoor space from Yelp/Google My Business</Card.Body>
-                                </Accordion.Collapse>
-                            </Card>
-                            <Card>
-                                <Card.Header>
-                                <Accordion.Toggle as={Button} variant="link" eventKey="1">
-                                    Check out nearby parks
-                                </Accordion.Toggle>
-                                </Card.Header>
-                                <Accordion.Collapse eventKey="1">
-                                <Card.Body>[WIP] Pull nearby parks/green spaces</Card.Body>
-                                </Accordion.Collapse>
-                            </Card>
-                            <Card>
-                                <Card.Header>
-                                <Accordion.Toggle as={Button} variant="link" eventKey="1">
-                                    View Google Mobility Reports
-                                </Accordion.Toggle>
-                                </Card.Header>
-                                <Accordion.Collapse eventKey="1">
-                                <Card.Body>[WIP] Link to Google Mobility Report</Card.Body>
-                                </Accordion.Collapse>
-                            </Card>
-                            <Card>
-                                <Card.Header>
-                                <Accordion.Toggle as={Button} variant="link" eventKey="1">
-                                    Covid-19 Information
-                                </Accordion.Toggle>
-                                </Card.Header>
-                                <Accordion.Collapse eventKey="1">
-                                <Card.Body>[WIP] Display latest stats</Card.Body>
-                                </Accordion.Collapse>
-                            </Card>
-                            </Accordion>
-                      </Col>
-                    </Row>
-                  </Container>
-                )}
-            </div>
+        console.log("Mobility Stats from database (Grocery, Transit, Etc.): ", this.state)
 
-        </div>
-        );
+        if(this.state.regionName){
+            return (
+                <div>
+                    <div className="mobility-hero">
+                        <div className="mobility-title-container">
+                            <h1 className="mobility-title">{this.state.regionName} Mobility Trends</h1>
+                        </div>
+                        <div className="image-preload1"></div>
+                        <div className="image-preload2"></div>
+                    </div>
+                    <div>
+                        {!this.state.done ? (
+                        <ReactLoading id="loading-div" type={"bars"} color={"black"} />
+                        ) : (
+                            <Container fluid="md">
+                            <Row>
+                              <Col>
+                                <div className="places-trends-container">
+                                    <div className="places-grocery">
+                                        <div className="places-grocery-header">
+                                            <h2 className="places-grocery-title">Grocery <br></br>& Pharmacy</h2>
+                                        </div>
+                                        <div className="places-grocery-content">    
+                                            {this.getAverageGrocery()}
+                                            <div className="places-grocery-average">
+                                                <img alt=" " src={smallCalendar} id="small-calendar-icon"></img>
+                                                <div className="average-description">30 Day Average, based on the latest available month provided by the <a href='https://www.google.com/covid19/mobility/'>Google Mobility Trends</a> report.</div>
+                                            </div>
+                                            <div className="graph-container">
+                                                <h4>Movement Trends for Grocery/Pharmacy</h4>
+                                                <span>{this.state.dataStart} through {this.state.dataEnd}</span>
+                                                <br></br>
+                                                <Button id="save-button" size="sm" variant="success" onClick={() => this.saveGroceryData()}>Save Data</Button>{' '}
+                                                <div className="graph-subcontainer">
+                                                    {this.showGraphGroceryPharmacy()}
+                                                </div>   
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="places-parks">
+                                        <div className="places-parks-header">
+                                            <h2 className="places-parks-title">Parks <br></br>& Outdoor Rec.</h2>
+                                        </div>
+                                        <div className="places-grocery-content">
+                                            {this.getAverageParks()}
+                                            <div className="places-grocery-average">
+                                                <img alt=" " src={smallCalendar} id="small-calendar-icon"></img>
+                                                <div className="average-description">30 Day Average, based on the latest available month provided by the <a href='https://www.google.com/covid19/mobility/'>Google Mobility Trends</a> report.</div>
+                                            </div>
+                                            <div className="graph-container">
+                                                <h4>Movement Trends for Parks/Outdoors</h4>
+                                                <span>{this.state.dataStart} through {this.state.dataEnd}</span>
+                                                <br></br>
+                                                <Button id="save-button" size="sm" variant="success" onClick={() => this.saveParksData()}>Save Data</Button>{' '}
+                                                <div className="graph-subcontainer">
+                                                    <br></br>
+                                                    {this.showGraphParks()}
+                                                </div>   
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="places-shopping-dining">
+                                            <div className="places-shopping-dining-header">
+                                                <h2 className="places-shopping-dining-title">Shopping <br></br>& Dining</h2>
+                                            </div>
+                                            <div className="places-grocery-content">
+                                                {this.getAverageShoppingDining()}
+                                                <div className="places-grocery-average">
+                                                    <img alt=" " src={smallCalendar} id="small-calendar-icon"></img>
+                                                    <div className="average-description">30 Day Average, based on the latest available month provided by the <a href='https://www.google.com/covid19/mobility/'>Google Mobility Trends</a> report.</div>
+                                                </div>
+                                                <div className="graph-container">
+                                                    <h4>Movement Trends for Work/Industry</h4>
+                                                    <span>{this.state.dataStart} through {this.state.dataEnd}</span>
+                                                    <br></br>
+                                                    <Button id="save-button" size="sm" variant="success">Save Data</Button>{' '}
+                                                    <div className="graph-subcontainer">
+                                                        {this.showGraphShoppingDining()}
+                                                    </div>   
+                                                </div>
+                                            </div>
+                                        </div>
+                              </Col>
+                              <Col>
+                              <div className="places-trends-container">
+                                        <div className="places-transit">
+                                            <div className="places-transit-header">
+                                                <h2 className="places-parks-title">Transit <br></br>& Metro</h2>
+                                            </div>
+                                            <div className="places-grocery-content">                                
+                                                {this.getAverageTransit()}
+                                                <div className="places-grocery-average">
+                                                    <img alt=" " src={smallCalendar} id="small-calendar-icon"></img>
+                                                    <div className="average-description">30 Day Average, based on the latest available month provided by the <a href='https://www.google.com/covid19/mobility/'>Google Mobility Trends</a> report.</div>
+                                                </div>
+                                                <div className="graph-container">
+                                                    <h4>Movement Trends for Transit/Metro</h4>
+                                                    <span>{this.state.dataStart} through {this.state.dataEnd}</span>
+                                                    <br></br>
+                                                    <Button id="save-button" size="sm" variant="success">Save Data</Button>{' '}
+                                                    <div className="graph-subcontainer">
+                                                        {this.showGraphTransit()}
+                                                    </div>   
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="places-work">
+                                            <div className="places-work-header">
+                                                <h2 className="places-parks-title">Work <br></br>& Industry</h2>
+                                            </div>
+                                            <div className="places-grocery-content">
+                                                {this.getAverageWork()}
+                                                <div className="places-grocery-average">
+                                                    <img alt=" " src={smallCalendar} id="small-calendar-icon"></img>
+                                                    <div className="average-description">30 Day Average, based on the latest available month provided by the <a href='https://www.google.com/covid19/mobility/'>Google Mobility Trends</a> report.</div>
+                                                </div>
+                                                <div className="graph-container">
+                                                    <h4>Movement Trends for Work/Industry</h4>
+                                                    <span>{this.state.dataStart} through {this.state.dataEnd}</span>
+                                                    <br></br>
+                                                    <Button id="save-button" size="sm" variant="success">Save Data</Button>{' '}
+                                                    <div className="graph-subcontainer">
+                                                        {this.showGraphWork()}
+                                                    </div>   
+                                                </div>
+                                            </div>
+                                        </div>
+                                </div>
+                              </Col>
+                            </Row>
+                          </Container>
+                        )}
+                    </div>
+        
+                </div>
+                );
+        } else {
+            return(
+                <div>
+                    <div className="mobility-hero">
+                        <div className="mobility-title-container">
+                            <h1 className="mobility-title">{this.state.regionName} Mobility Trends</h1>
+                        </div>
+                    </div>
+                    <div className="failsafe-screen-mobility-trends">
+                        <h3>Select <Link to="/">a region</Link> to see Mobility Trends</h3>
+                    </div>
+                </div>
+            )
+        }
+
+        
       }
     }
 

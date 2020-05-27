@@ -11,6 +11,13 @@ const userSchema = new Schema(
       savedLocation: String,
       dataStartDate: String,
       dataEndDate: String
+    }],
+    userParksData: [{
+      data: [ String ],
+      savedDate: Date,
+      savedLocation: String,
+      dataStartDate: String,
+      dataEndDate: String
     }]
   },
   {

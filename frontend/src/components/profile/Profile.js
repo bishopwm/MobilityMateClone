@@ -6,33 +6,71 @@ import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 
 const Profile = (props) => {
-    // if(!props.user.email){ 
-    //     props.history.push('/log-in');
-    // };
-    // if(props.user.userGroceryData ){
-    //     let groceryProps = props.user.userGroceryData
     console.log(props.user.userGroceryData)
+   
     let grocery = props.user.userGroceryData
+    let parks = props.user.userParksData
         if(grocery !== undefined){
             return (
-                <div>
-                    <h3 className="saved-reports-header">Saved Reports: Grocery & Pharmacy</h3>
-                    <hr className="saved-reports-baseline"></hr>
+            <>
+            <h1>My Saved Reports</h1>
+            <Container fluid="md">
+                <Row>
                     <div>
-                        {grocery.map(eachStat => {
+                        <h3 className="saved-reports-header">Grocery & Pharmacy</h3>
+                        <hr className="saved-reports-baseline"></hr>
+                        {grocery.map(eachGroceryStat => {
                             return (
-                                <Container fluid="md">
-                                    <Row>
-                                        <Col>
-                                            <> 
-                                                <div className="saved-location">
-                                                    <h2>{eachStat.savedLocation}</h2>
-                                                </div>
-                                                <div className="saved-date">
-                                                    <h5>Snapshot taken on <strong>{eachStat.savedDate}</strong></h5>
-                                                </div>
-                                                <div className="daily-stats">
-                                                <h5>Data Range: <em>{eachStat.dataStartDate}</em> through <em>{eachStat.dataEndDate}</em></h5>
+                                <Col>
+                                    <> 
+                                        <div className="saved-location">
+                                            <h2>{eachGroceryStat.savedLocation}</h2>
+                                        </div>
+                                        <div className="saved-date">
+                                            <h5>Snapshot taken on <strong>{eachGroceryStat.savedDate}</strong></h5>
+                                        </div>
+                                        <div className="daily-stats">
+                                            <h5>Data Range: <em>{eachGroceryStat.dataStartDate}</em> through <em>{eachGroceryStat.dataEndDate}</em></h5>
+                                            <Table striped bordered hover size="sm">
+                                                    <thead>
+                                                        <tr>
+                                                            <td>Day</td>
+                                                            <td>Change from Baseline</td>
+                                                        </tr>
+                                                    </thead>
+                                                    {eachGroceryStat.data.map((eachDay, i) => {
+                                                    return(
+                                                        <>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td colSpan="1">{i}</td>
+                                                                    <td colSpan="1">{eachDay}</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </>
+                                                    )})}
+                                            </Table>
+                                        </div>
+                                    </>
+                                </Col>
+                            ) 
+                        })}
+                    </div>
+                    <div>
+                        <h3 className="saved-reports-header">Parks & Outdoor Rec</h3>
+                        <hr className="saved-reports-baseline"></hr>
+                            {parks.map(eachParkStat => {
+                                return (
+                                    <Col>
+                                        <> 
+                                            <div className="saved-location">
+                                                <h2>{eachParkStat.savedLocation}</h2>
+                                            </div>
+                                            <div className="saved-date">
+                                                <h5>Snapshot taken on <strong>{eachParkStat.savedDate}</strong></h5>
+                                            </div>
+                                            <div className="daily-stats">
+                                                <h5>Data Range: <em>{eachParkStat.dataStartDate}</em> through <em>{eachParkStat.dataEndDate}</em></h5>
                                                 <Table striped bordered hover size="sm">
                                                         <thead>
                                                             <tr>
@@ -40,7 +78,7 @@ const Profile = (props) => {
                                                                 <td>Change from Baseline</td>
                                                             </tr>
                                                         </thead>
-                                                        {eachStat.data.map((eachDay, i) => {
+                                                        {eachParkStat.data.map((eachDay, i) => {
                                                         return(
                                                             <>
                                                                 <tbody>
@@ -50,18 +88,17 @@ const Profile = (props) => {
                                                                     </tr>
                                                                 </tbody>
                                                             </>
-                                                        )
-                                                    })}
+                                                        )})}
                                                 </Table>
-                                                </div>
-                                            </>
-                                        </Col>
-                                    </Row>
-                                </Container>
-                            ) 
-                        })}
+                                            </div>
+                                        </>
+                                    </Col>
+                                ) 
+                            })}
                     </div>
-                </div>
+                </Row>
+            </Container>
+            </>
             );
     } else if(!props.user.email){
         return <h1><a href='/log-in'>Log in</a> to view Profile</h1>

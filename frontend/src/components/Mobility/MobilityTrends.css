@@ -30,6 +30,20 @@
     display: none;
 }
 
+#save-button {
+    margin-top: 0.5em;
+}
+
+.failsafe-screen-mobility-trends {
+    margin-top: 2em;
+    display: flex;
+    flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: center;
+	align-items: center;
+    align-content: stretch;
+}
+
 .mobility-title {
     margin-top: 2em;
     font-size: 8em;

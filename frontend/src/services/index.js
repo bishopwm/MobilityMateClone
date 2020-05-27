@@ -26,8 +26,11 @@ const actions = {
       { region: regionName }
     })
   },
-  updateUserData: async (user) => {
-    return await service.post('/saved-data', user)
+  updateUserGroceryData: async (user) => {
+    return await service.post('/saved-grocery-data', user)
+  },
+  updateUserParksData: async (user) => {
+    return await service.post('/saved-parks-data', user)
   }
 };
 
