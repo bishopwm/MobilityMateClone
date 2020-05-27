@@ -37,8 +37,8 @@ class App extends Component {
   render(){
     return (
     <BrowserRouter>
-    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Raleway:wght@300&display=swap" rel="stylesheet">
-    </link>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Raleway:wght@300&display=swap" rel="stylesheet"></link>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet"></link>
       <link
         rel="stylesheet"
         href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
@@ -46,7 +46,7 @@ class App extends Component {
         crossOrigin="anonymous"
       />
       <Navbar bg="light" expand="lg">
-        <Navbar.Brand href="/">MobilityMate</Navbar.Brand>
+        <Navbar.Brand href="/" id="mobility-mate">MobilityMate</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">

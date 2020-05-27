@@ -17,5 +17,35 @@ path {
 
 .jumbotron {
   width: 85%;
-  height: 30%;
+  height: 38%;
+  background-color: white;
+}
+
+.about-mobility-mate {
+  width: 70%;
+  font-size: 1em;
+  
+}
+
+.mobility-mate-header {
+  margin-top: -1em;
+}
+
+.mobility-container {
+  float: right;
+}
+
+#mobility-logo {
+  width: 40%;
+  float: left;
+  margin-right: 10em;
+}
+
+.jumbotron-elements-container {
+  display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: space-between;
+	align-items: stretch;
+	align-content: stretch;
 }
