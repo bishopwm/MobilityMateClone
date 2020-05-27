@@ -37,13 +37,15 @@ class Home extends Component {
         <Row>
           <Col>
           <Jumbotron className="jumbotron">
-            <h1>Hello, world!</h1>
+            <h1>MobilityMate</h1>
             <p>
-              This is a simple hero unit, a simple jumbotron-style component for calling
-              extra attention to featured content or information.
-            </p>
-            <p>
-              <Button variant="primary">Learn more</Button>
+              MobilityMate is a visualization tool based on Google's Mobility Trends report, which details changes in people's movement over time to various public venues such as parks, grocery stores, transit, and more. 
+              <br></br>
+              <br></br>
+              We've visualized the ever-changing data to make trends visible at a glance! 
+              <br></br> 
+              <br></br>
+              <a href="https://www.google.com/covid19/mobility/">Learn more</a>
             </p>
           </Jumbotron>
             <div>

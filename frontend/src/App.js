@@ -1,5 +1,6 @@
 import React, {Component, Fragment} from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import '../src/App.css';
 import Home from './components/home/Home';
 import NotFound from './components/404/NotFound.js';
 import SignUp from './components/auth/SignUp';
@@ -44,6 +45,8 @@ class App extends Component {
 
     return (
     <BrowserRouter>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Raleway:wght@300&display=swap" rel="stylesheet">
+    </link>
       <link
         rel="stylesheet"
         href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
