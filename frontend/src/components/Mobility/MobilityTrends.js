@@ -81,7 +81,11 @@ class MobilityTrends extends Component {
           shoppingDiningStats: shoppingDiningStats,
           workStats: workStats
         })
+        console.log(
+            "before timeout"
+        )
         setTimeout(() => {
+            console.log("during timeout")
             this.setState({ done: true })
             }, 3000);
       }
@@ -349,7 +353,7 @@ class MobilityTrends extends Component {
         let groceryData = [this.state.groceryStats, this.state.regionName]
            let res = await actions.updateUserData(groceryData)
             console.log("updated user:", res);
-            
+
             this.setState({
                 lastUpdatedUserId: res.data
             })

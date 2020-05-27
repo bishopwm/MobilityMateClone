@@ -44,7 +44,7 @@ router.post('/saved-data', isAuth, (req, res, next) => {
   const today = new Date();
 
   const query = { _id: req.user._id };
-  // Set some fields in that document
+  
   const update = {
     userGroceryData: {
       data: req.body[0],
