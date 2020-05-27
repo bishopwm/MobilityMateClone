@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import './Home.css';
 import Container from 'react-bootstrap/Container';
 import Jumbotron from 'react-bootstrap/Jumbotron';
-import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import USAMap from "react-usa-map";
@@ -19,7 +18,7 @@ class Home extends Component {
 
   mapHandler = (event) => {
     console.log(event.target.dataset.name);
-    console.log(this.props.match.path);
+    // console.log(this.props.match.path);
     this.props.setRegion(event.target.dataset.name);
     this.setState({
       redirect: '/region'

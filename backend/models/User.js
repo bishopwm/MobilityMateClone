@@ -5,11 +5,13 @@ const userSchema = new Schema(
   {
     email: String,
     name: String,
-    userGroceryData: {
+    userGroceryData: [{
       data: [ String ],
       savedDate: Date,
-      savedLocation: String
-    }
+      savedLocation: String,
+      dataStartDate: String,
+      dataEndDate: String
+    }]
   },
   {
     timestamps: true,

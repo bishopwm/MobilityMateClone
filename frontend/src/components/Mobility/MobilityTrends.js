@@ -81,13 +81,10 @@ class MobilityTrends extends Component {
           shoppingDiningStats: shoppingDiningStats,
           workStats: workStats
         })
-        console.log(
-            "before timeout"
-        )
+
         setTimeout(() => {
-            console.log("during timeout")
             this.setState({ done: true })
-            }, 3000);
+            }, 2000);
       }
       displayRegionName = () =>{
           console.log(this.state.mobilityData[55])          
@@ -151,8 +148,7 @@ class MobilityTrends extends Component {
           total += Number(copyTransit[i]);
         }
         let avg = total / copyTransit.length;
-        console.log("average", avg);
-                  let roundedAvg = Math.round(avg);
+            let roundedAvg = Math.round(avg);
           if(roundedAvg <= 0){
             return(
                 <div className="places-grocery-content">
@@ -176,8 +172,7 @@ class MobilityTrends extends Component {
           total += Number(copyResidential[i]);
         }
         let avg = total / copyResidential.length;
-        console.log("average", avg);
-                  let roundedAvg = Math.round(avg);
+                let roundedAvg = Math.round(avg);
           if(roundedAvg <= 0){
             return(
                 <div className="places-grocery-content">
@@ -201,8 +196,7 @@ class MobilityTrends extends Component {
           total += Number(copyShoppingDining[i]);
         }
         let avg = total / copyShoppingDining.length;
-        console.log("average", avg);
-                  let roundedAvg = Math.round(avg);
+            let roundedAvg = Math.round(avg);
           if(roundedAvg <= 0){
             return(
                 <div className="places-grocery-content">
@@ -220,15 +214,13 @@ class MobilityTrends extends Component {
           }
       }
       getAverageWork = () => {
-          console.log(this.state.workStats)
         let copyWork = [...this.state.workStats];
         let total=0;
         for(let i=0; i<copyWork.length; i++){
           total += Number(copyWork[i]);
         }
         let avg = total / copyWork.length;
-        console.log("average", avg);
-                  let roundedAvg = Math.round(avg);
+            let roundedAvg = Math.round(avg);
           if(roundedAvg <= 0){
             return(
                 <div className="places-grocery-content">
@@ -350,17 +342,16 @@ class MobilityTrends extends Component {
 
       saveData = async () => {
         //console.log(this.state.groceryStats);
-        let groceryData = [this.state.groceryStats, this.state.regionName]
-           let res = await actions.updateUserData(groceryData)
-            console.log("updated user:", res);
-
+        let groceryData = [this.state.groceryStats, this.state.regionName, this.state.dataStart, this.state.dataEnd];
+           let res = await actions.updateUserData(groceryData);
+            console.log("Updated user with saved data:", res);
             this.setState({
                 lastUpdatedUserId: res.data
             })
       }
 
       render() {
-          console.log("Stats: ", this.state)
+          console.log("Mobility Stats from database (Grocery, Transit, Etc.): ", this.state)
         return (
         <div>
             <div className="mobility-hero">

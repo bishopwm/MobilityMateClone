@@ -45,16 +45,25 @@ router.post('/saved-data', isAuth, (req, res, next) => {
 
   const query = { _id: req.user._id };
   
-  const update = {
-    userGroceryData: {
+  // const update = {
+  //   userGroceryData: {
+  //     data: req.body[0],
+  //     savedDate: today,
+  //     savedLocation: req.body[1]
+  //   }
+  // };
+
+  let groceryData = {
       data: req.body[0],
       savedDate: today,
-      savedLocation: req.body[1]
-    }
-  };
+      savedLocation: req.body[1],
+      dataStartDate: req.body[2],
+      dataEndDate: req.body[3]
+  }
+
   const options = {upsert: true};
 
-  User.findOneAndUpdate(query, update, options).then(response => {
+  User.findOneAndUpdate(query, { "$push": { "userGroceryData": groceryData } }, options).then(response => {
     res.json({message:"success", lastUpdatedUserId: response._id}) 
   }).catch(err => res.json({err}))  
 })

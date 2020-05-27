@@ -22,8 +22,6 @@ class App extends Component {
     // This is coming from index.js
     // same as --> await Axios.get('http:localhost:5000/is-logged-in', { withCredentials: true }
     this.setState({...user.data})
-    console.log('coolest ')
-
   }
 
   setUser = (user) => this.setState(user)
