@@ -1,5 +1,5 @@
 import React, {Component, Fragment} from 'react';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { BrowserRouter, Switch, Route, NavLink } from 'react-router-dom';
 import '../src/App.css';
 import Home from './components/home/Home';
 import NotFound from './components/404/NotFound.js';
@@ -76,10 +76,10 @@ class App extends Component {
         :
         <Fragment>
           <Nav.Item>
-            <Nav.Link to="/sign-up">Sign Up</Nav.Link>
+            <NavLink to="/sign-up">Sign Up</NavLink>
           </Nav.Item>
           <Nav.Item>
-            <Nav.Link to="/log-in">Log In</Nav.Link>
+            <NavLink to="/log-in">Log In</NavLink>
           </Nav.Item>
         </Fragment>
         }
