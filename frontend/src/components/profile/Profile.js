@@ -1,6 +1,5 @@
 import React from 'react';
 import '../profile/Profile.css';
-import ListGroup from 'react-bootstrap/ListGroup';
 import Table from 'react-bootstrap/Table';
 import Container from 'react-bootstrap/Container';
 import Col from 'react-bootstrap/Col';

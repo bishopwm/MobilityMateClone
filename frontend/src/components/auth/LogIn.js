@@ -8,11 +8,12 @@ class LogIn extends Component {
     } 
     handleChange = e => this.setState({[e.target.name]: e.target.value})
 
-    handleSubmit = e => {
+    handleSubmit = (e) => {
         e.preventDefault()
          actions.logIn(this.state).then(user => {
             this.props.setUser({...user.data})  
         }).catch(({ response }) => console.error(response.data));
+        this.props.history.push('/');
     }
     render() {
         return (
