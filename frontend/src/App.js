@@ -76,10 +76,10 @@ class App extends Component {
         :
         <Fragment>
           <Nav.Item>
-            <Nav.Link href="/sign-up">Sign Up</Nav.Link>
+            <Nav.Link to="/sign-up">Sign Up</Nav.Link>
           </Nav.Item>
           <Nav.Item>
-            <Nav.Link href="/log-in">Log In</Nav.Link>
+            <Nav.Link to="/log-in">Log In</Nav.Link>
           </Nav.Item>
         </Fragment>
         }
