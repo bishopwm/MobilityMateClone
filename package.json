@@ -25,6 +25,6 @@
     "react-charts": "^2.0.0-beta.6",
     "react-csv": "^2.0.3",
     "react-dom": "^16.13.1",
-    "zingchart-react": "^2.1.0"
+    "zingchart-react": "^2.1.2"
   }
 }
