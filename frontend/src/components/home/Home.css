@@ -16,14 +16,16 @@ path {
   }
 
 .jumbotron {
-  width: 85%;
-  height: 38%;
+  width: 65%;
+  height: 29%;
   background-color: white;
+  margin-left: 6.5em;
 }
 
 .about-mobility-mate {
-  width: 70%;
-  font-size: 1em;
+  width: 100%;
+  font-size: 0.9em;
+  margin-top: -2.5em;
   
 }
 
@@ -38,7 +40,8 @@ path {
 #mobility-logo {
   width: 40%;
   float: left;
-  margin-right: 10em;
+  margin-right: 4em;
+  margin-top: -2em;
 }
 
 .jumbotron-elements-container {
@@ -48,4 +51,14 @@ path {
 	justify-content: space-between;
 	align-items: stretch;
 	align-content: stretch;
+}
+
+#google-link {
+  text-decoration: none;
+  color: #17a2b8;
+}
+
+#google-link:hover {
+  text-decoration: none;
+  color: white;
 }

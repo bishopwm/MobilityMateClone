@@ -7,6 +7,7 @@ import Row from 'react-bootstrap/Row';
 import USAMap from "react-usa-map";
 import { Redirect } from 'react-router-dom';
 import mobilityLogo from '../../assets/images/mobilityLogo.png';
+import Button from 'react-bootstrap/Button';
 
 
 
@@ -41,13 +42,14 @@ class Home extends Component {
             <div className="jumbotron-elements-container">
               
               <div className="mobility-container">
-                <h1 className="mobility-mate-header">MobilityMate</h1>
+                {/* <h1 className="mobility-mate-header">MobilityMate</h1> */}
                 <p className="about-mobility-mate">
                   MobilityMate is a visualization tool based on Google's Mobility Trends report, which details changes in people's movement over time to various public venues such as parks, grocery stores, transit, and more. 
                   <br></br>
                   <br></br>
-                  We've visualized the ever-changing data to make trends visible at a glance! <a href="https://www.google.com/covid19/mobility/">Learn more</a>
+                  We've visualized the ever-changing data to make trends visible at a glance!
                 </p>
+                <Button variant="outline-info" size="sm"><a id="google-link" target='_blank' href="https://www.google.com/covid19/mobility/">Learn more</a></Button>{' '}
               </div>
             </div>
             

@@ -249,7 +249,7 @@ class MobilityTrends extends Component {
                   <VictoryAxis/>
                   <VictoryAxis dependentAxis tickFormat={(x) => (`%${x}`)}/>
                   <VictoryAxis dependentAxis={true}/>
-                  <VictoryBar style={{ data: { fill: "#285f9fbb" } }} data={data} x="x" y="y" domain={{x: [0, 31], y: [-60, 20]}}/>
+                  <VictoryBar style={{ data: { fill: "#17a2b8" } }} alignment="start" data={data} x="x" y="y" domain={{x: [0, 31], y: [-60, 20]}}/>
               </VictoryChart>
             </div>
           );
@@ -266,7 +266,7 @@ class MobilityTrends extends Component {
                   <VictoryAxis/>
                   <VictoryAxis dependentAxis tickFormat={(x) => (`%${x}`)}/>
                   <VictoryAxis dependentAxis={true}/>
-                  <VictoryBar style={{ data: { fill: "#285f9fbb" } }} data={data} x="x" y="y" domain={{x: [0, 31], y: [-60, 20]}}/>
+                  <VictoryBar style={{ data: { fill: "#17a2b8" } }} alignment="start" data={data} x="x" y="y" domain={{x: [0, 31], y: [-60, 20]}}/>
               </VictoryChart>
             </div>
           );
@@ -282,7 +282,7 @@ class MobilityTrends extends Component {
                   <VictoryAxis/>
                   <VictoryAxis dependentAxis tickFormat={(x) => (`%${x}`)}/>
                   <VictoryAxis dependentAxis={true}/>
-                  <VictoryBar style={{ data: { fill: "#285f9fbb" } }} data={data} x="x" y="y" domain={{x: [0, 31], y: [-60, 20]}}/>
+                  <VictoryBar style={{ data: { fill: "#17a2b8" } }} alignment="start" data={data} x="x" y="y" domain={{x: [0, 31], y: [-60, 20]}}/>
               </VictoryChart>
             </div>
           );
@@ -299,7 +299,7 @@ class MobilityTrends extends Component {
                   <VictoryAxis/>
                   <VictoryAxis dependentAxis tickFormat={(x) => (`%${x}`)}/>
                   <VictoryAxis dependentAxis={true}/>
-                  <VictoryBar style={{ data: { fill: "#285f9fbb" } }} data={data} x="x" y="y" domain={{x: [0, 31], y: [-60, 20]}}/>
+                  <VictoryBar style={{ data: { fill: "#17a2b8" } }} alignment="start" data={data} x="x" y="y" domain={{x: [0, 31], y: [-60, 20]}}/>
               </VictoryChart>
             </div>
           );
@@ -316,7 +316,7 @@ class MobilityTrends extends Component {
                   <VictoryAxis/>
                   <VictoryAxis dependentAxis tickFormat={(x) => (`%${x}`)}/>
                   <VictoryAxis dependentAxis={true}/>
-                  <VictoryBar style={{ data: { fill: "#285f9fbb" } }} data={data} x="x" y="y" domain={{x: [0, 31], y: [-60, 20]}}/>
+                  <VictoryBar style={{ data: { fill: "#17a2b8" } }} alignment="start" data={data} x="x" y="y" domain={{x: [0, 31], y: [-60, 20]}}/>
               </VictoryChart>
             </div>
           );
@@ -333,7 +333,7 @@ class MobilityTrends extends Component {
                   <VictoryAxis/>
                   <VictoryAxis dependentAxis tickFormat={(x) => (`%${x}`)}/>
                   <VictoryAxis dependentAxis={true}/>
-                  <VictoryBar style={{ data: { fill: "#285f9fbb" } }} data={data} x="x" y="y" domain={{x: [0, 31], y: [-60, 20]}}/>
+                  <VictoryBar style={{ data: { fill: "#17a2b8" } }} alignment="start" data={data} x="x" y="y" domain={{x: [0, 31], y: [-60, 20]}}/>
               </VictoryChart>
             </div>
           );
@@ -388,11 +388,16 @@ class MobilityTrends extends Component {
                                                 <img alt=" " src={smallCalendar} id="small-calendar-icon"></img>
                                                 <div className="average-description">30 Day Average, based on the latest available month provided by the <a href='https://www.google.com/covid19/mobility/'>Google Mobility Trends</a> report.</div>
                                             </div>
+                                            
                                             <div className="graph-container">
-                                                <h4>Movement Trends for Grocery/Pharmacy</h4>
-                                                <span>{this.state.dataStart} through {this.state.dataEnd}</span>
+                                            <hr className="content-divider"></hr>
+                                            <div className="sub-header-save-container">
+                                                <h4 className="trends-header">Movement Trends for Grocery/Pharmacy</h4>
+                                                <span className="date-span">{this.state.dataStart} through {this.state.dataEnd}</span>
                                                 <br></br>
-                                                <Button id="save-button" size="sm" variant="success" onClick={() => this.saveGroceryData()}>Save Data</Button>{' '}
+                                                <Button id="save-button" size="sm" variant="outline-info" onClick={() => this.saveGroceryData()}>Save Data</Button>{' '}
+                                            </div>
+                                                
                                                 <div className="graph-subcontainer">
                                                     {this.showGraphGroceryPharmacy()}
                                                 </div>   
@@ -410,10 +415,13 @@ class MobilityTrends extends Component {
                                                 <div className="average-description">30 Day Average, based on the latest available month provided by the <a href='https://www.google.com/covid19/mobility/'>Google Mobility Trends</a> report.</div>
                                             </div>
                                             <div className="graph-container">
-                                                <h4>Movement Trends for Parks/Outdoors</h4>
-                                                <span>{this.state.dataStart} through {this.state.dataEnd}</span>
-                                                <br></br>
-                                                <Button id="save-button" size="sm" variant="success" onClick={() => this.saveParksData()}>Save Data</Button>{' '}
+                                                <hr className="content-divider"></hr>
+                                                <div className="sub-header-save-container">
+                                                    <h4 className="trends-header">Movement Trends for Parks/Outdoors</h4>
+                                                    <span className="date-span">{this.state.dataStart} through {this.state.dataEnd}</span>
+                                                    <br></br>
+                                                    <Button id="save-button" size="sm" variant="outline-info" onClick={() => this.saveParksData()}>Save Data</Button>{' '}
+                                                </div>
                                                 <div className="graph-subcontainer">
                                                     <br></br>
                                                     {this.showGraphParks()}
@@ -433,10 +441,13 @@ class MobilityTrends extends Component {
                                                     <div className="average-description">30 Day Average, based on the latest available month provided by the <a href='https://www.google.com/covid19/mobility/'>Google Mobility Trends</a> report.</div>
                                                 </div>
                                                 <div className="graph-container">
-                                                    <h4>Movement Trends for Work/Industry</h4>
-                                                    <span>{this.state.dataStart} through {this.state.dataEnd}</span>
-                                                    <br></br>
-                                                    <Button id="save-button" size="sm" variant="success">Save Data</Button>{' '}
+                                                    <hr className="content-divider"></hr>
+                                                    <div className="sub-header-save-container">
+                                                        <h4 className="trends-header">Movement Trends for Shopping/Dining</h4>
+                                                        <span className="date-span">{this.state.dataStart} through {this.state.dataEnd}</span>
+                                                        <br></br>
+                                                        <Button id="save-button" size="sm" variant="outline-info">Save Data</Button>{' '}
+                                                    </div>
                                                     <div className="graph-subcontainer">
                                                         {this.showGraphShoppingDining()}
                                                     </div>   
@@ -457,10 +468,13 @@ class MobilityTrends extends Component {
                                                     <div className="average-description">30 Day Average, based on the latest available month provided by the <a href='https://www.google.com/covid19/mobility/'>Google Mobility Trends</a> report.</div>
                                                 </div>
                                                 <div className="graph-container">
-                                                    <h4>Movement Trends for Transit/Metro</h4>
-                                                    <span>{this.state.dataStart} through {this.state.dataEnd}</span>
-                                                    <br></br>
-                                                    <Button id="save-button" size="sm" variant="success">Save Data</Button>{' '}
+                                                    <hr className="content-divider"></hr>
+                                                    <div className="sub-header-save-container">
+                                                        <h4 className="trends-header">Movement Trends for Transit/Metro</h4>
+                                                        <span className="date-span">{this.state.dataStart} through {this.state.dataEnd}</span>
+                                                        <br></br>
+                                                        <Button id="save-button" size="sm" variant="outline-info">Save Data</Button>{' '}
+                                                    </div>
                                                     <div className="graph-subcontainer">
                                                         {this.showGraphTransit()}
                                                     </div>   
@@ -478,10 +492,13 @@ class MobilityTrends extends Component {
                                                     <div className="average-description">30 Day Average, based on the latest available month provided by the <a href='https://www.google.com/covid19/mobility/'>Google Mobility Trends</a> report.</div>
                                                 </div>
                                                 <div className="graph-container">
-                                                    <h4>Movement Trends for Work/Industry</h4>
-                                                    <span>{this.state.dataStart} through {this.state.dataEnd}</span>
-                                                    <br></br>
-                                                    <Button id="save-button" size="sm" variant="success">Save Data</Button>{' '}
+                                                    <hr className="content-divider"></hr>
+                                                    <div className="sub-header-save-container">
+                                                        <h4 className="trends-header">Movement Trends for Work/Industry</h4>
+                                                        <span className="date-span">{this.state.dataStart} through {this.state.dataEnd}</span>
+                                                        <br></br>
+                                                        <Button id="save-button" size="sm" variant="outline-info">Save Data</Button>{' '}
+                                                    </div>
                                                     <div className="graph-subcontainer">
                                                         {this.showGraphWork()}
                                                     </div>   
