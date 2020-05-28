@@ -7,6 +7,7 @@ import Row from 'react-bootstrap/Row';
 import Button from 'react-bootstrap/Button';
 import Accordion from 'react-bootstrap/Accordion';
 import Card from 'react-bootstrap/Card';
+import { CSVLink, CSVDownload } from "react-csv";
 
 
 const Profile = (props) => {
@@ -17,6 +18,14 @@ const Profile = (props) => {
 
     let grocery = props.user.userGroceryData
     let parks = props.user.userParksData
+
+    // const csvData = [
+    //     ["day", "change"],
+    //     ["Ahmed", "Tomi", "ah@smthing.co.com"],
+    //     ["Raed", "Labes", "rl@smthing.co.com"],
+    //     ["Yezzi", "Min l3b", "ymin@cocococo.com"]
+    //   ];
+
         if(grocery !== undefined){
             return (
             <>
