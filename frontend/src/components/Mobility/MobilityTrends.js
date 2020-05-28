@@ -7,7 +7,7 @@ import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Button from 'react-bootstrap/Button';
 import '../../../node_modules/react-vis/dist/style.css';
-import { VictoryBar, VictoryChart, VictoryAxis } from 'victory';
+import { VictoryBar, VictoryChart, VictoryAxis, VictoryTooltip } from 'victory';
 import './MobilityTrends.css';
 import downArrow from '../../assets/images/down_arrow.png';
 import upArrow from '../../assets/images/up_arrow.png';
@@ -241,7 +241,7 @@ class MobilityTrends extends Component {
       showGraphGroceryPharmacy = () => {
         let data = []
         for(let i=0; i<31; i++){
-            data.push({x: i, y: Number(this.state.groceryStats[i])})
+            data.push({x: i, y: Number(this.state.groceryStats[i]), label: `${Number(this.state.groceryStats[i])}`})
         }
         return (
             <div className="grocery">
@@ -249,7 +249,36 @@ class MobilityTrends extends Component {
                   <VictoryAxis/>
                   <VictoryAxis dependentAxis tickFormat={(x) => (`%${x}`)}/>
                   <VictoryAxis dependentAxis={true}/>
-                  <VictoryBar style={{ data: { fill: "#17a2b8" } }} alignment="start" data={data} x="x" y="y" domain={{x: [0, 31], y: [-60, 20]}}/>
+                  <VictoryBar style={{ data: { fill: "#17a2b8" } }} alignment="start" data={data} x="x" y="y" domain={{x: [0, 31], y: [-60, 20]}}
+                  labelComponent={<VictoryTooltip/>}
+                  events={[{
+                    target: "data",
+                    eventHandlers: {
+                      onMouseOver: () => {
+                        return [
+                          {
+                            target: "data",
+                            mutation: () => ({style: {fill: "black"}})
+                          }, {
+                            target: "labels",
+                            mutation: () => ({ active: true })
+                          }
+                        ];
+                      },
+                      onMouseOut: () => {
+                        return [
+                          {
+                            target: "data",
+                            mutation: () => {}
+                          }, {
+                            target: "labels",
+                            mutation: () => ({ active: false })
+                          }
+                        ];
+                      }
+                    }
+                  }]}
+                  />
               </VictoryChart>
             </div>
           );
@@ -258,7 +287,7 @@ class MobilityTrends extends Component {
       showGraphParks = () => {
         let data = []
         for(let i=0; i<31; i++){
-            data.push({x: i, y: Number(this.state.parkStats[i])})
+            data.push({x: i, y: Number(this.state.parkStats[i]), label: `${Number(this.state.parkStats[i])}`})
         }
         return (
             <div className="parks">
@@ -266,7 +295,36 @@ class MobilityTrends extends Component {
                   <VictoryAxis/>
                   <VictoryAxis dependentAxis tickFormat={(x) => (`%${x}`)}/>
                   <VictoryAxis dependentAxis={true}/>
-                  <VictoryBar style={{ data: { fill: "#17a2b8" } }} alignment="start" data={data} x="x" y="y" domain={{x: [0, 31], y: [-60, 20]}}/>
+                  <VictoryBar style={{ data: { fill: "#17a2b8" } }} alignment="start" data={data} x="x" y="y" domain={{x: [0, 31], y: [-60, 20]}}
+                  labelComponent={<VictoryTooltip/>}
+                  events={[{
+                    target: "data",
+                    eventHandlers: {
+                      onMouseOver: () => {
+                        return [
+                          {
+                            target: "data",
+                            mutation: () => ({style: {fill: "black"}})
+                          }, {
+                            target: "labels",
+                            mutation: () => ({ active: true })
+                          }
+                        ];
+                      },
+                      onMouseOut: () => {
+                        return [
+                          {
+                            target: "data",
+                            mutation: () => {}
+                          }, {
+                            target: "labels",
+                            mutation: () => ({ active: false })
+                          }
+                        ];
+                      }
+                    }
+                  }]}
+                  />
               </VictoryChart>
             </div>
           );
@@ -274,7 +332,7 @@ class MobilityTrends extends Component {
       showGraphTransit = () => {
         let data = []
         for(let i=0; i<31; i++){
-            data.push({x: i, y: Number(this.state.transitStats[i])})
+            data.push({x: i, y: Number(this.state.transitStats[i]), label: `${Number(this.state.transitStats[i])}`})
         }
         return (
             <div className="transit">
@@ -282,7 +340,36 @@ class MobilityTrends extends Component {
                   <VictoryAxis/>
                   <VictoryAxis dependentAxis tickFormat={(x) => (`%${x}`)}/>
                   <VictoryAxis dependentAxis={true}/>
-                  <VictoryBar style={{ data: { fill: "#17a2b8" } }} alignment="start" data={data} x="x" y="y" domain={{x: [0, 31], y: [-60, 20]}}/>
+                  <VictoryBar style={{ data: { fill: "#17a2b8" } }} alignment="start" data={data} x="x" y="y" domain={{x: [0, 31], y: [-60, 20]}}
+                  labelComponent={<VictoryTooltip/>}
+                  events={[{
+                    target: "data",
+                    eventHandlers: {
+                      onMouseOver: () => {
+                        return [
+                          {
+                            target: "data",
+                            mutation: () => ({style: {fill: "black"}})
+                          }, {
+                            target: "labels",
+                            mutation: () => ({ active: true })
+                          }
+                        ];
+                      },
+                      onMouseOut: () => {
+                        return [
+                          {
+                            target: "data",
+                            mutation: () => {}
+                          }, {
+                            target: "labels",
+                            mutation: () => ({ active: false })
+                          }
+                        ];
+                      }
+                    }
+                  }]}
+                  />
               </VictoryChart>
             </div>
           );
@@ -291,7 +378,7 @@ class MobilityTrends extends Component {
       showGraphResidential = () => {
         let data = []
         for(let i=0; i<31; i++){
-            data.push({x: i, y: Number(this.state.residentialStats[i])})
+            data.push({x: i, y: Number(this.state.residentialStats[i]), label: `${Number(this.state.residentialStats[i])}`})
         }
         return (
             <div className="residential">
@@ -299,7 +386,36 @@ class MobilityTrends extends Component {
                   <VictoryAxis/>
                   <VictoryAxis dependentAxis tickFormat={(x) => (`%${x}`)}/>
                   <VictoryAxis dependentAxis={true}/>
-                  <VictoryBar style={{ data: { fill: "#17a2b8" } }} alignment="start" data={data} x="x" y="y" domain={{x: [0, 31], y: [-60, 20]}}/>
+                  <VictoryBar style={{ data: { fill: "#17a2b8" } }} alignment="start" data={data} x="x" y="y" domain={{x: [0, 31], y: [-60, 20]}}
+                  labelComponent={<VictoryTooltip/>}
+                  events={[{
+                    target: "data",
+                    eventHandlers: {
+                      onMouseOver: () => {
+                        return [
+                          {
+                            target: "data",
+                            mutation: () => ({style: {fill: "black"}})
+                          }, {
+                            target: "labels",
+                            mutation: () => ({ active: true })
+                          }
+                        ];
+                      },
+                      onMouseOut: () => {
+                        return [
+                          {
+                            target: "data",
+                            mutation: () => {}
+                          }, {
+                            target: "labels",
+                            mutation: () => ({ active: false })
+                          }
+                        ];
+                      }
+                    }
+                  }]}
+                  />
               </VictoryChart>
             </div>
           );
@@ -308,7 +424,7 @@ class MobilityTrends extends Component {
       showGraphShoppingDining = () => {
         let data = []
         for(let i=0; i<31; i++){
-            data.push({x: i, y: Number(this.state.shoppingDiningStats[i])})
+            data.push({x: i, y: Number(this.state.shoppingDiningStats[i]), label: `${Number(this.state.shoppingDiningStats[i])}`})
         }
         return (
             <div className="shopping-dining">
@@ -316,7 +432,36 @@ class MobilityTrends extends Component {
                   <VictoryAxis/>
                   <VictoryAxis dependentAxis tickFormat={(x) => (`%${x}`)}/>
                   <VictoryAxis dependentAxis={true}/>
-                  <VictoryBar style={{ data: { fill: "#17a2b8" } }} alignment="start" data={data} x="x" y="y" domain={{x: [0, 31], y: [-60, 20]}}/>
+                  <VictoryBar style={{ data: { fill: "#17a2b8" } }} alignment="start" data={data} x="x" y="y" domain={{x: [0, 31], y: [-60, 20]}}
+                  labelComponent={<VictoryTooltip/>}
+                  events={[{
+                    target: "data",
+                    eventHandlers: {
+                      onMouseOver: () => {
+                        return [
+                          {
+                            target: "data",
+                            mutation: () => ({style: {fill: "black"}})
+                          }, {
+                            target: "labels",
+                            mutation: () => ({ active: true })
+                          }
+                        ];
+                      },
+                      onMouseOut: () => {
+                        return [
+                          {
+                            target: "data",
+                            mutation: () => {}
+                          }, {
+                            target: "labels",
+                            mutation: () => ({ active: false })
+                          }
+                        ];
+                      }
+                    }
+                  }]}
+                  />
               </VictoryChart>
             </div>
           );
@@ -325,7 +470,7 @@ class MobilityTrends extends Component {
       showGraphWork = () => {
         let data = []
         for(let i=0; i<31; i++){
-            data.push({x: i, y: Number(this.state.workStats[i])})
+            data.push({x: i, y: Number(this.state.workStats[i]), label: `${Number(this.state.workStats[i])}`})
         }
         return (
             <div className="work">
@@ -333,7 +478,36 @@ class MobilityTrends extends Component {
                   <VictoryAxis/>
                   <VictoryAxis dependentAxis tickFormat={(x) => (`%${x}`)}/>
                   <VictoryAxis dependentAxis={true}/>
-                  <VictoryBar style={{ data: { fill: "#17a2b8" } }} alignment="start" data={data} x="x" y="y" domain={{x: [0, 31], y: [-60, 20]}}/>
+                  <VictoryBar style={{ data: { fill: "#17a2b8" } }} alignment="start" data={data} x="x" y="y" domain={{x: [0, 31], y: [-60, 20]}}
+                  labelComponent={<VictoryTooltip/>}
+                  events={[{
+                    target: "data",
+                    eventHandlers: {
+                      onMouseOver: () => {
+                        return [
+                          {
+                            target: "data",
+                            mutation: () => ({style: {fill: "black"}})
+                          }, {
+                            target: "labels",
+                            mutation: () => ({ active: true })
+                          }
+                        ];
+                      },
+                      onMouseOut: () => {
+                        return [
+                          {
+                            target: "data",
+                            mutation: () => {}
+                          }, {
+                            target: "labels",
+                            mutation: () => ({ active: false })
+                          }
+                        ];
+                      }
+                    }
+                  }]}
+                  />
               </VictoryChart>
             </div>
           );

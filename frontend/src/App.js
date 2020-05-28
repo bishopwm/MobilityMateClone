@@ -74,7 +74,7 @@ class App extends Component {
       </Nav>
         {this.state.email ?
             <Nav inline>
-              <div>Logged in as <a href='/profile'>{this.state.email}</a></div>
+              <div>Logged in as <NavLink to='/profile'>{this.state.email}</NavLink></div>
             </Nav>
           :
           <div></div>
