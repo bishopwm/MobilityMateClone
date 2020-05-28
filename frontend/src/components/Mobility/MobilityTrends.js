@@ -4,6 +4,7 @@ import actions from '../../services/index';
 import './../home/Home.css';
 import Container from 'react-bootstrap/Container';
 import Col from 'react-bootstrap/Col';
+import Alert from 'react-bootstrap/Alert';
 import Row from 'react-bootstrap/Row';
 import Button from 'react-bootstrap/Button';
 import '../../../node_modules/react-vis/dist/style.css';
@@ -30,7 +31,8 @@ class MobilityTrends extends Component {
         workStats: [],
         shoppingDiningStats: [],
         chartReference: React.createRef(),
-        done: undefined
+        done: undefined,
+        showAlert: false
       }
       async componentDidMount() {
         console.log(this.chartReference);
@@ -520,6 +522,9 @@ class MobilityTrends extends Component {
             this.setState({
                 lastUpdatedUserId: res.data
             })
+            this.setState({
+                showAlert: true
+            })
       }
 
       saveParksData = async () => {
@@ -529,7 +534,16 @@ class MobilityTrends extends Component {
             this.setState({
                 lastUpdatedUserId: res.data
             })
+            this.setState({
+                showAlert: true
+            })
       }
+
+      closeAlert = () => {
+        this.setState({
+            showAlert: false
+        })
+    }
 
       render() {
         console.log("Mobility Stats from database (Grocery, Transit, Etc.): ", this.state)
@@ -564,6 +578,7 @@ class MobilityTrends extends Component {
                                             </div>
                                             
                                             <div className="graph-container">
+                                            <Alert className="save-alert" show={this.state.showAlert} dismissible variant='success' onClick={this.closeAlert}>Saved! <Link to='/profile'>View All Saved Reports</Link></Alert>
                                             <hr className="content-divider"></hr>
                                             <div className="sub-header-save-container">
                                                 <h4 className="trends-header">Movement Trends for Grocery/Pharmacy</h4>
@@ -589,6 +604,7 @@ class MobilityTrends extends Component {
                                                 <div className="average-description">30 Day Average, based on the latest available month provided by the <a href='https://www.google.com/covid19/mobility/'>Google Mobility Trends</a> report.</div>
                                             </div>
                                             <div className="graph-container">
+                                            <Alert className="save-alert" show={this.state.showAlert} dismissible variant='success' onClick={this.closeAlert}>Saved</Alert>
                                                 <hr className="content-divider"></hr>
                                                 <div className="sub-header-save-container">
                                                     <h4 className="trends-header">Movement Trends for Parks/Outdoors</h4>

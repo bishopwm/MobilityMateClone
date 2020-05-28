@@ -35,6 +35,10 @@
     margin-left: 1em;
 }
 
+.save-alert {
+    width: 80%;
+}
+
 .sub-header-save-container {
     border: solid 1px rgba(23, 164, 186, 1);
     color: rgba(23, 164, 186, 1);
