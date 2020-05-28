@@ -1,19 +1,30 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import '../profile/Profile.css';
 import Table from 'react-bootstrap/Table';
 import Container from 'react-bootstrap/Container';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
+import Button from 'react-bootstrap/Button';
+import Accordion from 'react-bootstrap/Accordion';
+import Card from 'react-bootstrap/Card';
+
 
 const Profile = (props) => {
-    console.log(props.user.userGroceryData)
-   
+
+    function refreshPage() {
+        window.location.reload(false);
+      }
+
     let grocery = props.user.userGroceryData
     let parks = props.user.userParksData
         if(grocery !== undefined){
             return (
             <>
-            <h1>My Saved Reports</h1>
+            <div className="reports-header">
+                <h1>My Snapshots</h1>
+                <Button className="refresh-button" size="sm" variant="outline-info" onClick={refreshPage}>Refresh</Button>
+            </div>
+            
             <Container fluid="md">
                 <Row>
                     <div>
@@ -22,16 +33,33 @@ const Profile = (props) => {
                         {grocery.map(eachGroceryStat => {
                             return (
                                 <Col>
-                                    <> 
-                                        <div className="saved-location">
-                                            <h2>{eachGroceryStat.savedLocation}</h2>
+                                    <>
+                                    <div className="saved-location">
+                                            <div className="delete-container">
+                                                <h2>{eachGroceryStat.savedLocation}</h2>
+                                                <Button className="delete-button" size="sm" variant="outline-danger">Delete Snapshot</Button>
+                                            </div>
+                                            <div className="export-container">
+                                                
+                                                <Button className="export-button" size="sm" variant="outline-info">Export Snapshot</Button>
+                                            </div>
                                         </div>
                                         <div className="saved-date">
                                             <h5>Snapshot taken on <strong>{eachGroceryStat.savedDate}</strong></h5>
                                         </div>
                                         <div className="daily-stats">
                                             <h5>Data Range: <em>{eachGroceryStat.dataStartDate}</em> through <em>{eachGroceryStat.dataEndDate}</em></h5>
-                                            <Table striped bordered hover size="sm">
+                                    </div>
+                                    <Accordion defaultActiveKey="1">
+                                    <Card>
+                                        <Card.Header>
+                                        <Accordion.Toggle as={Button} variant="link" eventKey="0">
+                                            View daily data for Snapshot
+                                        </Accordion.Toggle>
+                                        </Card.Header>
+                                        <Accordion.Collapse eventKey="0">
+                                        <Card.Body>
+                                        <Table striped bordered hover size="sm">
                                                     <thead>
                                                         <tr>
                                                             <td>Day</td>
@@ -50,7 +78,10 @@ const Profile = (props) => {
                                                         </>
                                                     )})}
                                             </Table>
-                                        </div>
+                                        </Card.Body>
+                                        </Accordion.Collapse>
+                                    </Card>
+                                    </Accordion>
                                     </>
                                 </Col>
                             ) 
@@ -63,15 +94,31 @@ const Profile = (props) => {
                                 return (
                                     <Col>
                                         <> 
-                                            <div className="saved-location">
-                                                <h2>{eachParkStat.savedLocation}</h2>
-                                            </div>
+                                        <div className="saved-location">
+                                                <div className="delete-container">
+                                                    <h2>{eachParkStat.savedLocation}</h2>
+                                                    <Button className="delete-button" size="sm" variant="outline-danger">Delete Snapshot</Button>
+                                                </div>
+                                                <div className="export-container">
+                                                    
+                                                    <Button className="export-button" size="sm" variant="outline-info">Export Snapshot</Button>
+                                                </div>
+                                                </div>
                                             <div className="saved-date">
                                                 <h5>Snapshot taken on <strong>{eachParkStat.savedDate}</strong></h5>
                                             </div>
                                             <div className="daily-stats">
                                                 <h5>Data Range: <em>{eachParkStat.dataStartDate}</em> through <em>{eachParkStat.dataEndDate}</em></h5>
-                                                <Table striped bordered hover size="sm">
+                                                <Accordion defaultActiveKey="1">
+                                                <Card>
+                                                    <Card.Header>
+                                                    <Accordion.Toggle as={Button} variant="link" eventKey="0">
+                                                        View daily data for Snapshot
+                                                    </Accordion.Toggle>
+                                                    </Card.Header>
+                                                    <Accordion.Collapse eventKey="0">
+                                                    <Card.Body>
+                                                    <Table striped bordered hover size="sm">
                                                         <thead>
                                                             <tr>
                                                                 <td>Day</td>
@@ -89,7 +136,11 @@ const Profile = (props) => {
                                                                 </tbody>
                                                             </>
                                                         )})}
-                                                </Table>
+                                                    </Table>
+                                                    </Card.Body>
+                                                    </Accordion.Collapse>
+                                                </Card>
+                                                </Accordion>
                                             </div>
                                         </>
                                     </Col>
@@ -108,6 +159,4 @@ const Profile = (props) => {
 }
 
 export default Profile;
-
-
 

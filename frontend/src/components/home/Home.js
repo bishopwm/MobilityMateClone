@@ -49,7 +49,7 @@ class Home extends Component {
                   <br></br>
                   We've visualized the ever-changing data to make trends visible at a glance!
                 </p>
-                <Button variant="outline-info" size="sm"><a id="google-link" target='_blank' href="https://www.google.com/covid19/mobility/">Learn more</a></Button>{' '}
+                <Button variant="outline-info" size="sm"><a id="google-link" target='_blank' rel="noopener noreferrer" href="https://www.google.com/covid19/mobility/">Learn more</a></Button>{' '}
               </div>
             </div>
             

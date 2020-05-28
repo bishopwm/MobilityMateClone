@@ -32,7 +32,8 @@ class MobilityTrends extends Component {
         shoppingDiningStats: [],
         chartReference: React.createRef(),
         done: undefined,
-        showAlert: false
+        showAlertGrocery: false,
+        showAlertParks: false
       }
       async componentDidMount() {
         console.log(this.chartReference);
@@ -520,10 +521,8 @@ class MobilityTrends extends Component {
            let res = await actions.updateUserGroceryData(groceryData);
             console.log("Updated user with saved grocery data:", res);
             this.setState({
-                lastUpdatedUserId: res.data
-            })
-            this.setState({
-                showAlert: true
+                lastUpdatedUserId: res.data,
+                showAlertGrocery: true
             })
       }
 
@@ -532,16 +531,19 @@ class MobilityTrends extends Component {
            let res = await actions.updateUserParksData(parksData);
             console.log("Updated user with saved parks data:", res);
             this.setState({
-                lastUpdatedUserId: res.data
-            })
-            this.setState({
-                showAlert: true
+                lastUpdatedUserId: res.data,
+                showAlertParks: true
             })
       }
 
-      closeAlert = () => {
+      closeAlertGrocery = () => {
         this.setState({
-            showAlert: false
+            showAlertGrocery: false
+        })
+    }
+      closeAlertParks = () => {
+        this.setState({
+            showAlertParks: false
         })
     }
 
@@ -578,13 +580,13 @@ class MobilityTrends extends Component {
                                             </div>
                                             
                                             <div className="graph-container">
-                                            <Alert className="save-alert" show={this.state.showAlert} dismissible variant='success' onClick={this.closeAlert}>Saved! <Link to='/profile'>View All Saved Reports</Link></Alert>
+                                            <Alert className="save-alert" show={this.state.showAlertGrocery} dismissible variant='success' onClick={this.closeAlertGrocery}>Saved! <Link to='/profile'>View All Saved Snapshots</Link></Alert>
                                             <hr className="content-divider"></hr>
                                             <div className="sub-header-save-container">
                                                 <h4 className="trends-header">Movement Trends for Grocery/Pharmacy</h4>
                                                 <span className="date-span">{this.state.dataStart} through {this.state.dataEnd}</span>
                                                 <br></br>
-                                                <Button id="save-button" size="sm" variant="outline-info" onClick={() => this.saveGroceryData()}>Save Data</Button>{' '}
+                                                <Button id="save-button" size="sm" variant="outline-info" onClick={() => this.saveGroceryData()}>Save Snapshot</Button>{' '}
                                             </div>
                                                 
                                                 <div className="graph-subcontainer">
@@ -604,13 +606,13 @@ class MobilityTrends extends Component {
                                                 <div className="average-description">30 Day Average, based on the latest available month provided by the <a href='https://www.google.com/covid19/mobility/'>Google Mobility Trends</a> report.</div>
                                             </div>
                                             <div className="graph-container">
-                                            <Alert className="save-alert" show={this.state.showAlert} dismissible variant='success' onClick={this.closeAlert}>Saved</Alert>
+                                            <Alert className="save-alert" show={this.state.showAlertParks} dismissible variant='success' onClick={this.closeAlertParks}>Saved! <Link to='/profile'>View All Saved Snapshots</Link></Alert>
                                                 <hr className="content-divider"></hr>
                                                 <div className="sub-header-save-container">
                                                     <h4 className="trends-header">Movement Trends for Parks/Outdoors</h4>
                                                     <span className="date-span">{this.state.dataStart} through {this.state.dataEnd}</span>
                                                     <br></br>
-                                                    <Button id="save-button" size="sm" variant="outline-info" onClick={() => this.saveParksData()}>Save Data</Button>{' '}
+                                                    <Button id="save-button" size="sm" variant="outline-info" onClick={() => this.saveParksData()}>Save Snapshot</Button>{' '}
                                                 </div>
                                                 <div className="graph-subcontainer">
                                                     <br></br>
@@ -636,7 +638,7 @@ class MobilityTrends extends Component {
                                                         <h4 className="trends-header">Movement Trends for Shopping/Dining</h4>
                                                         <span className="date-span">{this.state.dataStart} through {this.state.dataEnd}</span>
                                                         <br></br>
-                                                        <Button id="save-button" size="sm" variant="outline-info">Save Data</Button>{' '}
+                                                        <Button id="save-button" size="sm" variant="outline-info">Save Snapshot</Button>{' '}
                                                     </div>
                                                     <div className="graph-subcontainer">
                                                         {this.showGraphShoppingDining()}
@@ -663,7 +665,7 @@ class MobilityTrends extends Component {
                                                         <h4 className="trends-header">Movement Trends for Transit/Metro</h4>
                                                         <span className="date-span">{this.state.dataStart} through {this.state.dataEnd}</span>
                                                         <br></br>
-                                                        <Button id="save-button" size="sm" variant="outline-info">Save Data</Button>{' '}
+                                                        <Button id="save-button" size="sm" variant="outline-info">Save Snapshot</Button>{' '}
                                                     </div>
                                                     <div className="graph-subcontainer">
                                                         {this.showGraphTransit()}
@@ -687,7 +689,7 @@ class MobilityTrends extends Component {
                                                         <h4 className="trends-header">Movement Trends for Work/Industry</h4>
                                                         <span className="date-span">{this.state.dataStart} through {this.state.dataEnd}</span>
                                                         <br></br>
-                                                        <Button id="save-button" size="sm" variant="outline-info">Save Data</Button>{' '}
+                                                        <Button id="save-button" size="sm" variant="outline-info">Save Snapshot</Button>{' '}
                                                     </div>
                                                     <div className="graph-subcontainer">
                                                         {this.showGraphWork()}

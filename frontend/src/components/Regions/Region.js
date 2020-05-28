@@ -7,7 +7,7 @@ class Region extends Component {
     render() {    
         return (
             <div>
-                <MobilityTrends regionName={this.props.regionName} />
+                <MobilityTrends regionName={this.props.regionName} setUser={this.props.setUser()} user={this.props.user}/>
             </div>
         );
     }
