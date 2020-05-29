@@ -67,14 +67,14 @@ class MobilityTrends extends Component {
         });
         if( res.data.mobilities[0] === undefined){
             res.data.mobilities[0] = 'No region selected';
-            res.data.mobilities[55] = '2020-04-15';
+            res.data.mobilities[54] = '2020-04-15';
             res.data.mobilities[84] = '2020-05-15';
         }
         this.setState({
           mobilityData: res.data.mobilities,
           regionName: res.data.mobilities[0].sub_region_1,
-          dataStart: res.data.mobilities[55].date,
-          dataEnd: res.data.mobilities[84].date,
+          dataStart: 'April 15',
+          dataEnd: 'May 15',
           dateStats: dateStats,
           groceryStats: groceryStats,
           parkStats: parkStats,
@@ -252,7 +252,7 @@ class MobilityTrends extends Component {
                   <VictoryAxis/>
                   <VictoryAxis dependentAxis tickFormat={(x) => (`%${x}`)}/>
                   <VictoryAxis dependentAxis={true}/>
-                  <VictoryBar style={{ data: { fill: "#17a2b8" } }} alignment="start" data={data} x="x" y="y" domain={{x: [0, 31], y: [-60, 20]}}
+                  <VictoryBar style={{ data: { fill: "#285a84" } }} alignment="start" data={data} x="x" y="y" domain={{x: [0, 31], y: [-60, 20]}}
                   labelComponent={<VictoryTooltip/>}
                   events={[{
                     target: "data",
@@ -298,7 +298,7 @@ class MobilityTrends extends Component {
                   <VictoryAxis/>
                   <VictoryAxis dependentAxis tickFormat={(x) => (`%${x}`)}/>
                   <VictoryAxis dependentAxis={true}/>
-                  <VictoryBar style={{ data: { fill: "#17a2b8" } }} alignment="start" data={data} x="x" y="y" domain={{x: [0, 31], y: [-60, 20]}}
+                  <VictoryBar style={{ data: { fill: "#285a84" } }} alignment="start" data={data} x="x" y="y" domain={{x: [0, 31], y: [-60, 20]}}
                   labelComponent={<VictoryTooltip/>}
                   events={[{
                     target: "data",
@@ -343,7 +343,7 @@ class MobilityTrends extends Component {
                   <VictoryAxis/>
                   <VictoryAxis dependentAxis tickFormat={(x) => (`%${x}`)}/>
                   <VictoryAxis dependentAxis={true}/>
-                  <VictoryBar style={{ data: { fill: "#17a2b8" } }} alignment="start" data={data} x="x" y="y" domain={{x: [0, 31], y: [-60, 20]}}
+                  <VictoryBar style={{ data: { fill: "#285a84" } }} alignment="start" data={data} x="x" y="y" domain={{x: [0, 31], y: [-60, 20]}}
                   labelComponent={<VictoryTooltip/>}
                   events={[{
                     target: "data",
@@ -389,7 +389,7 @@ class MobilityTrends extends Component {
                   <VictoryAxis/>
                   <VictoryAxis dependentAxis tickFormat={(x) => (`%${x}`)}/>
                   <VictoryAxis dependentAxis={true}/>
-                  <VictoryBar style={{ data: { fill: "#17a2b8" } }} alignment="start" data={data} x="x" y="y" domain={{x: [0, 31], y: [-60, 20]}}
+                  <VictoryBar style={{ data: { fill: "#285a84" } }} alignment="start" data={data} x="x" y="y" domain={{x: [0, 31], y: [-60, 20]}}
                   labelComponent={<VictoryTooltip/>}
                   events={[{
                     target: "data",
@@ -435,7 +435,7 @@ class MobilityTrends extends Component {
                   <VictoryAxis/>
                   <VictoryAxis dependentAxis tickFormat={(x) => (`%${x}`)}/>
                   <VictoryAxis dependentAxis={true}/>
-                  <VictoryBar style={{ data: { fill: "#17a2b8" } }} alignment="start" data={data} x="x" y="y" domain={{x: [0, 31], y: [-60, 20]}}
+                  <VictoryBar style={{ data: { fill: "#285a84" } }} alignment="start" data={data} x="x" y="y" domain={{x: [0, 31], y: [-60, 20]}}
                   labelComponent={<VictoryTooltip/>}
                   events={[{
                     target: "data",
@@ -481,7 +481,7 @@ class MobilityTrends extends Component {
                   <VictoryAxis/>
                   <VictoryAxis dependentAxis tickFormat={(x) => (`%${x}`)}/>
                   <VictoryAxis dependentAxis={true}/>
-                  <VictoryBar style={{ data: { fill: "#17a2b8" } }} alignment="start" data={data} x="x" y="y" domain={{x: [0, 31], y: [-60, 20]}}
+                  <VictoryBar style={{ data: { fill: "#285a84" } }} alignment="start" data={data} x="x" y="y" domain={{x: [0, 31], y: [-60, 20]}}
                   labelComponent={<VictoryTooltip/>}
                   events={[{
                     target: "data",
@@ -586,7 +586,7 @@ class MobilityTrends extends Component {
                                                 <h4 className="trends-header">Movement Trends for Grocery/Pharmacy</h4>
                                                 <span className="date-span">{this.state.dataStart} through {this.state.dataEnd}</span>
                                                 <br></br>
-                                                <Button id="save-button" size="sm" variant="outline-info" onClick={() => this.saveGroceryData()}>Save Snapshot</Button>{' '}
+                                                <Button id="save-button" size="sm" variant="outline-success" onClick={() => this.saveGroceryData()}>Save Snapshot</Button>{' '}
                                             </div>
                                                 
                                                 <div className="graph-subcontainer">
@@ -612,7 +612,7 @@ class MobilityTrends extends Component {
                                                     <h4 className="trends-header">Movement Trends for Parks/Outdoors</h4>
                                                     <span className="date-span">{this.state.dataStart} through {this.state.dataEnd}</span>
                                                     <br></br>
-                                                    <Button id="save-button" size="sm" variant="outline-info" onClick={() => this.saveParksData()}>Save Snapshot</Button>{' '}
+                                                    <Button id="save-button" size="sm" variant="outline-success" onClick={() => this.saveParksData()}>Save Snapshot</Button>{' '}
                                                 </div>
                                                 <div className="graph-subcontainer">
                                                     <br></br>
@@ -638,7 +638,7 @@ class MobilityTrends extends Component {
                                                         <h4 className="trends-header">Movement Trends for Shopping/Dining</h4>
                                                         <span className="date-span">{this.state.dataStart} through {this.state.dataEnd}</span>
                                                         <br></br>
-                                                        <Button id="save-button" size="sm" variant="outline-info">Save Snapshot</Button>{' '}
+                                                        <Button id="save-button" size="sm" variant="outline-success">Save Snapshot</Button>{' '}
                                                     </div>
                                                     <div className="graph-subcontainer">
                                                         {this.showGraphShoppingDining()}
@@ -665,7 +665,7 @@ class MobilityTrends extends Component {
                                                         <h4 className="trends-header">Movement Trends for Transit/Metro</h4>
                                                         <span className="date-span">{this.state.dataStart} through {this.state.dataEnd}</span>
                                                         <br></br>
-                                                        <Button id="save-button" size="sm" variant="outline-info">Save Snapshot</Button>{' '}
+                                                        <Button id="save-button" size="sm" variant="outline-success">Save Snapshot</Button>{' '}
                                                     </div>
                                                     <div className="graph-subcontainer">
                                                         {this.showGraphTransit()}
@@ -689,7 +689,7 @@ class MobilityTrends extends Component {
                                                         <h4 className="trends-header">Movement Trends for Work/Industry</h4>
                                                         <span className="date-span">{this.state.dataStart} through {this.state.dataEnd}</span>
                                                         <br></br>
-                                                        <Button id="save-button" size="sm" variant="outline-info">Save Snapshot</Button>{' '}
+                                                        <Button id="save-button" size="sm" variant="outline-success">Save Snapshot</Button>{' '}
                                                     </div>
                                                     <div className="graph-subcontainer">
                                                         {this.showGraphWork()}

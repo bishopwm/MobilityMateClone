@@ -6,7 +6,7 @@ import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import USAMap from "react-usa-map";
 import { Redirect } from 'react-router-dom';
-import mobilityLogo from '../../assets/images/mobilityLogo.png';
+import mobilityLogo from '../../assets/images/Original.png';
 import Button from 'react-bootstrap/Button';
 
 
@@ -37,24 +37,23 @@ class Home extends Component {
       <Container fluid="md">
         <Row>
           <Col>
-          <Jumbotron className="jumbotron">
           <img alt=" " src={mobilityLogo} id="mobility-logo"></img>
+          <div className="big-div">
             <div className="jumbotron-elements-container">
-              
-              <div className="mobility-container">
-                {/* <h1 className="mobility-mate-header">MobilityMate</h1> */}
-                <p className="about-mobility-mate">
-                  MobilityMate is a visualization tool based on Google's Mobility Trends report, which details changes in people's movement over time to various public venues such as parks, grocery stores, transit, and more. 
-                  <br></br>
-                  <br></br>
-                  We've visualized the ever-changing data to make trends visible at a glance!
-                </p>
-                <Button variant="outline-info" size="sm"><a id="google-link" target='_blank' rel="noopener noreferrer" href="https://www.google.com/covid19/mobility/">Learn more</a></Button>{' '}
+              <div className="intro-container">
+                <div className="mobility-container">
+                  {/* <h1 className="mobility-mate-header">MobilityMate</h1> */}
+                  <p className="about-mobility-mate">
+                    <span id="mobility-word">MobilityMate</span> is a visualization tool based on Google's Mobility Trends report, which details changes in people's movement over time to various public venues such as parks, grocery stores, transit, and more. 
+                    <br></br>
+                    <br></br>
+                    We've visualized the ever-changing data to make trends visible at a glance!
+                  </p>
+                  <Button variant="outline-info" size="sm"><a id="google-link" target='_blank' rel="noopener noreferrer" href="https://www.google.com/covid19/mobility/">Learn more</a></Button>{' '}
+                </div>
               </div>
             </div>
-            
-            
-          </Jumbotron>
+          </div>
             <div>
               <div className="App">
                 <USAMap onClick={this.mapHandler} />

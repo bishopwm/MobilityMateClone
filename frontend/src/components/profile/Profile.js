@@ -54,10 +54,10 @@ const Profile = (props) => {
                                             </div>
                                         </div>
                                         <div className="saved-date">
-                                            <h5>Snapshot taken on <strong>{eachGroceryStat.savedDate}</strong></h5>
+                                            <h5>Snapshot from <strong>{eachGroceryStat.savedDate}</strong></h5>
                                         </div>
                                         <div className="daily-stats">
-                                            <h5>Data Range: <em>{eachGroceryStat.dataStartDate}</em> through <em>{eachGroceryStat.dataEndDate}</em></h5>
+                                            <h5 className='date-header'><span className="date-span">{eachGroceryStat.dataStartDate}</span>  through<span className="date-span">{eachGroceryStat.dataEndDate}</span></h5>
                                     </div>
                                     <Accordion defaultActiveKey="1">
                                     <Card>
@@ -114,10 +114,10 @@ const Profile = (props) => {
                                                 </div>
                                                 </div>
                                             <div className="saved-date">
-                                                <h5>Snapshot taken on <strong>{eachParkStat.savedDate}</strong></h5>
+                                                <h5 className='date-header'>Snapshot from <strong>{eachParkStat.savedDate}</strong></h5>
                                             </div>
                                             <div className="daily-stats">
-                                                <h5>Data Range: <em>{eachParkStat.dataStartDate}</em> through <em>{eachParkStat.dataEndDate}</em></h5>
+                                                <h5 className='date-header'><span className="date-span">{eachParkStat.dataStartDate}</span>  through<span className="date-span">{eachParkStat.dataEndDate}</span></h5>
                                                 <Accordion defaultActiveKey="1">
                                                 <Card>
                                                     <Card.Header>

@@ -15,18 +15,18 @@ path {
     cursor: pointer;
   }
 
-.jumbotron {
-  width: 65%;
-  height: 29%;
+.big-div {
+  width: 35%;
+  height: 25%;
+  margin-top: 6em;
+  margin-left: 30em;
   background-color: white;
-  margin-left: 6.5em;
 }
 
 .about-mobility-mate {
   width: 100%;
   font-size: 0.9em;
-  margin-top: -2.5em;
-  
+  color: #285a84;
 }
 
 .mobility-mate-header {
@@ -41,8 +41,14 @@ path {
   width: 40%;
   float: left;
   margin-right: 4em;
-  margin-top: -2em;
+  margin-top: -1em;
 }
+  
+  #mobility-word {
+    color: #285a84;
+    font-weight: bolder;
+    font-family: 'Pacifico';
+  }
 
 .jumbotron-elements-container {
   display: flex;
@@ -61,4 +67,13 @@ path {
 #google-link:hover {
   text-decoration: none;
   color: white;
+}
+
+.intro-container {
+  margin-top: -2em;
+  border: solid 1px #285a84;
+  height: 16em;
+  padding: 1.5em;
+  width: 200%;
+  border-radius: 0.5em;
 }
