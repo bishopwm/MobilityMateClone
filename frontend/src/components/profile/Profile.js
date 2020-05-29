@@ -7,10 +7,21 @@ import Row from 'react-bootstrap/Row';
 import Button from 'react-bootstrap/Button';
 import Accordion from 'react-bootstrap/Accordion';
 import Card from 'react-bootstrap/Card';
+import CsvDownloader from 'react-csv-downloader';
 
 
 
 const Profile = (props) => {
+
+    const columns = [{
+        id: 'day',
+        displayName: 'Day'
+      }, {
+        id: 'baseline-change',
+        displayName: 'Change from Baseline'
+      }];
+     
+      const dadatas = [];
 
     function refreshPage() {
         window.location.reload(false);
@@ -24,12 +35,6 @@ const Profile = (props) => {
     let grocery = props.user.userGroceryData
     let parks = props.user.userParksData
 
-    // const csvData = [
-    //     ["day", "change"],
-    //     ["Ahmed", "Tomi", "ah@smthing.co.com"],
-    //     ["Raed", "Labes", "rl@smthing.co.com"],
-    //     ["Yezzi", "Min l3b", "ymin@cocococo.com"]
-    //   ];
 
         if(grocery !== undefined){
             return (
@@ -54,8 +59,27 @@ const Profile = (props) => {
                                                 <Button className="delete-button" size="sm" variant="outline-danger" onClick={(e) => hideDiv(e)}>Cache Snapshot</Button>
                                             </div>
                                             <div className="export-container">
-                                                
+                                            <CsvDownloader
+                                                filename="myfile"
+                                                separator=";"
+                                                wrapColumnChar="'"
+                                                columns={columns}
+                                                datas={eachGroceryStat.data.map((i, eachDay) => {
+                                                    dadatas.push(({
+                                                        first: i,
+                                                        second: eachDay
+                                                      }))
+                                                      let myData = []
+                                                      for(let i=0; i<30; i++){
+                                                        myData.push(i)
+                                                      }
+                                                    return myData
+                                                })}
+                                                text="Export Snapshot"
+                                            >
                                                 <Button className="export-button" size="sm" variant="outline-info">Export Snapshot</Button>
+                                            </CsvDownloader>
+                                                
                                             </div>
                                         </div>
                                         <div className="saved-date">

@@ -9,6 +9,7 @@
     "react": "^16.13.1",
     "react-bootstrap": "^1.0.1",
     "react-chartjs-2": "^2.9.0",
+    "react-csv-downloader": "^1.8.0",
     "react-dom": "^16.13.1",
     "react-fade-in": "^1.0.0",
     "react-loading": "^2.0.3",
