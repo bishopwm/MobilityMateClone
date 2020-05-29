@@ -16,6 +16,11 @@ const Profile = (props) => {
         window.location.reload(false);
       }
 
+    function hideDiv(e) {
+        let divToHide = e.target.parentElement.parentElement.parentElement;
+        divToHide.style = 'display: none';
+    }
+
     let grocery = props.user.userGroceryData
     let parks = props.user.userParksData
 
@@ -36,17 +41,17 @@ const Profile = (props) => {
             
             <Container fluid="md">
                 <Row>
-                    <div>
+                    <div> 
                         <h3 className="saved-reports-header">Grocery & Pharmacy</h3>
                         <hr className="saved-reports-baseline"></hr>
                         {grocery.map(eachGroceryStat => {
                             return (
                                 <Col>
                                     <>
-                                    <div className="saved-location">
+                                    <div className="saved-location" id={`${eachGroceryStat.savedLocation}`}>
                                             <div className="delete-container">
                                                 <h2>{eachGroceryStat.savedLocation}</h2>
-                                                <Button className="delete-button" size="sm" variant="outline-danger">Delete Snapshot</Button>
+                                                <Button className="delete-button" size="sm" variant="outline-danger" onClick={(e) => hideDiv(e)}>Cache Snapshot</Button>
                                             </div>
                                             <div className="export-container">
                                                 
@@ -106,7 +111,7 @@ const Profile = (props) => {
                                         <div className="saved-location">
                                                 <div className="delete-container">
                                                     <h2>{eachParkStat.savedLocation}</h2>
-                                                    <Button className="delete-button" size="sm" variant="outline-danger">Delete Snapshot</Button>
+                                                    <Button className="delete-button" size="sm" variant="outline-danger" onClick={(e)=>hideDiv(e)}>Cache Snapshot</Button>
                                                 </div>
                                                 <div className="export-container">
                                                     
