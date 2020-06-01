@@ -27,7 +27,7 @@ const actions = {
     })
   },
   updateUserGroceryData: async (user) => {
-    return await service.post('/saved-grocery-data', user)
+    return await service.post('/saved-grocery-data/', user)
   },
   updateUserParksData: async (user) => {
     return await service.post('/saved-parks-data', user)
