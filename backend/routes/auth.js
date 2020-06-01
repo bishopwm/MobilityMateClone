@@ -39,7 +39,7 @@ router.get('/profile', isAuth, (req, res, next) => {
     .catch((err) => res.status(500).json({ err }));
 });
 
-router.post('/saved-grocery-data', isAuth, (req, res, next) => {
+router.post('/saved-grocery-data/', isAuth, (req, res, next) => {
   const today = new Date();
   const query = { _id: req.user._id };
   let groceryData = {
