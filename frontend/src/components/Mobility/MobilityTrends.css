@@ -248,3 +248,30 @@
     top: 50%;
     left: 50%;
 }
+
+@media (max-width: 480px) {
+    #desktop-header {
+        display: none;
+    }
+    .mobility-title {
+        font-size: 5em;
+    }
+    #save-button {
+        margin-top: 0.5em;
+        margin-left: 1em;
+    }
+    .places-trends-container {
+        margin-left: 1em;
+    }
+    .places-shopping-dining {
+        margin-left: 1em;
+    }
+    #small-calendar-icon {
+        width: 20%;
+    }
+    .average-description {
+        margin-left: 0.5em;
+        margin-right: 0;
+        
+    }
+}

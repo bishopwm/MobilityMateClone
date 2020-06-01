@@ -44,7 +44,7 @@ const Profile = (props) => {
                 <Button className="refresh-button" size="sm" variant="outline-info" onClick={refreshPage}>Refresh</Button>
             </div>
             
-            <Container fluid="md">
+            <Container>
                 <Row>
                     <div> 
                         <h3 className="saved-reports-header">Grocery & Pharmacy</h3>

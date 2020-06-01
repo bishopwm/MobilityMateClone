@@ -549,13 +549,12 @@ class MobilityTrends extends Component {
 
       render() {
         console.log("Mobility Stats from database (Grocery, Transit, Etc.): ", this.state)
-
         if(this.state.regionName){
             return (
                 <div>
                     <div className="mobility-hero">
                         <div className="mobility-title-container">
-                            <h1 className="mobility-title">{this.state.regionName} Mobility Trends</h1>
+                            <h1 className="mobility-title">{this.state.regionName} <span id="desktop-header">Mobility Trends</span></h1>
                         </div>
                         <div className="image-preload1"></div>
                         <div className="image-preload2"></div>
@@ -564,9 +563,9 @@ class MobilityTrends extends Component {
                         {!this.state.done ? (
                         <ReactLoading id="loading-div" type={"bars"} color={"black"} />
                         ) : (
-                            <Container fluid="md">
+                            <Container>
                             <Row>
-                              <Col>
+                              <Col xs={12} md={6}>
                                 <div className="places-trends-container">
                                     <div className="places-grocery">
                                         <div className="places-grocery-header">
@@ -647,7 +646,7 @@ class MobilityTrends extends Component {
                                             </div>
                                         </div>
                               </Col>
-                              <Col>
+                              <Col xs={12} md={6}>
                               <div className="places-trends-container">
                                         <div className="places-transit">
                                             <div className="places-transit-header">

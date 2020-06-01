@@ -44,19 +44,24 @@ class Home extends Component {
                 <div className="mobility-container">
                   {/* <h1 className="mobility-mate-header">MobilityMate</h1> */}
                   <p className="about-mobility-mate">
-                    <span id="mobility-word">MobilityMate</span> is a visualization tool based on the Google <em>Mobility Trends report</em>, which details changes in people's movement over time. This includes various public venues such as parks, grocery stores, transit, and more, which have come into greater focus during the COVID-19 pandemic. 
+                    <span id="mobility-word">MobilityMate</span> is a visualization tool based on the Google <strong><a id="google-href" href="https://www.google.com/covid19/mobility/">Mobility Trends report</a></strong>, which details changes in people's movement over time. This includes various public venues such as parks, grocery stores, transit, and more, which have come into greater focus during the COVID-19 pandemic. 
                     <br></br>
                     <br></br>
                     We've visualized the ever-changing data to make trends visible at a glance!
+                    <br></br>
+                    <br></br>
+                    <strong>Select any state below to get started ↓</strong>
                   </p>
-                  <Button variant="outline-info" size="sm"><a id="google-link" target='_blank' rel="noopener noreferrer" href="https://www.google.com/covid19/mobility/">Learn more</a></Button>{' '}
                 </div>
               </div>
             </div>
           </div>
             <div>
-              <div className="App">
-                <USAMap onClick={this.mapHandler} />
+              <div className="App" id="App-Desktop">
+                <USAMap onClick={this.mapHandler}/>
+              </div>
+              <div className="App" id="App-Mobile">
+                <USAMap onClick={this.mapHandler} width={400}/>
               </div>
             </div>
           </Col>

@@ -77,3 +77,36 @@ path {
   width: 200%;
   border-radius: 0.5em;
 }
+
+#App-Mobile {
+  display: none;
+}
+
+#google-href {
+  text-decoration: none;
+}
+
+@media (max-width: 600px) {
+  #App-Desktop {
+    display: none;
+  }
+  #App-Mobile {
+    display: block;
+    margin-top: -20%;
+  }
+  .big-div {
+    width: 100%;
+    margin-top: 26em;
+    margin-left: 0em;
+  }
+  #mobility-logo {
+    width: 100%;
+    margin-right: 0;
+  }
+ .intro-container {
+    height: 26em;
+  }
+  .about-mobility-mate {
+    font-size: 1em;
+  }
+}
