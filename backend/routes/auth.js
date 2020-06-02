@@ -3,7 +3,7 @@ const router = express.Router();
 const User = require('../models/User');
 const passport = require('../config/passport');
 
-router.post('/signup/', (req, res, next) => {
+router.post('/signup', (req, res, next) => {
   User.register(req.body, req.body.password)
     .then((user) => { 
         req.login(user, function(err,result){
@@ -18,28 +18,28 @@ router.post('/signup/', (req, res, next) => {
 
 
 //return await service.get('/is-logged-in');
-router.get('/is-logged-in/', (req, res, next) => {  
+router.get('/is-logged-in', (req, res, next) => {  
   res.json(req.user)
 })
 
 
-router.post('/login/', passport.authenticate('local'), (req, res, next) => {
+router.post('/login', passport.authenticate('local'), (req, res, next) => {
   const { user } = req;
   res.status(200).json(user);
 });
 
-router.get('/logout/', (req, res, next) => {
+router.get('/logout', (req, res, next) => {
   req.logout();
   res.status(200).json({ msg: 'Logged out' });
 });
 
-router.get('/profile/', isAuth, (req, res, next) => {
+router.get('/profile', isAuth, (req, res, next) => {
   User.findById(req.user._id)
     .then((user) => res.status(200).json({ user }))
     .catch((err) => res.status(500).json({ err }));
 });
 
-router.post('/saved-grocery-data/', isAuth, (req, res, next) => {
+router.post('/saved-grocery-data', isAuth, (req, res, next) => {
   const today = new Date();
   const query = { _id: req.user._id };
   let groceryData = {
@@ -55,7 +55,7 @@ router.post('/saved-grocery-data/', isAuth, (req, res, next) => {
   }).catch(err => res.json({err}))  
 })
 
-router.post('/saved-parks-data/', isAuth, (req, res, next) => {
+router.post('/saved-parks-data', isAuth, (req, res, next) => {
   const today = new Date();
   const query = { _id: req.user._id };
   let parksData = {
