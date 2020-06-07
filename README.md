@@ -1,6 +1,6 @@
 # MobilityMate
 
-##### MobilityMate is a simple app intended to visualize the data available in Google's Mobility Trends report (https://www.google.com/covid19/mobility/) for each American state. This includes the public's movements to various public venues such as parks, grocery stores, transit, and more, which have come into greater focus during the COVID-19 pandemic. This app visualizes the ever-changing data to make trends visible at a glance!
+##### MobilityMate is a simple app intended to visualize the data available in [Google's Mobility Trends report](https://www.google.com/covid19/mobility/) for each American state. This includes the public's movements to various public venues such as parks, grocery stores, transit, and more, which have come into greater focus during the COVID-19 pandemic. This app visualizes the ever-changing data to make trends visible at a glance!
 
 ### About
 
@@ -12,12 +12,12 @@
 
 ### Technologies
 
-##### * Backend: 
+##### Backend: 
 * Node.js, 
 * Express.js, 
 * MongoDB/Atlas Cloud
 
-##### * Frontend: 
+##### Frontend: 
 * ReactJS, 
 * JavaScript, 
 * React-Bootstrap
