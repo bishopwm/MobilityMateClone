@@ -44,7 +44,7 @@ class Home extends Component {
                 <div className="mobility-container">
                   {/* <h1 className="mobility-mate-header">MobilityMate</h1> */}
                   <p className="about-mobility-mate">
-                    <span id="mobility-word">MobilityMate</span> is a visualization tool based on the Google <strong><a id="google-href" href="https://www.google.com/covid19/mobility/">Mobility Trends report</a></strong>, which details changes in people's movement over time. This includes various public venues such as parks, grocery stores, transit, and more, which have come into greater focus during the COVID-19 pandemic. 
+                    <span id="mobility-word">MobilityMate</span> is a visualization tool based on Google's <strong><a id="google-href" href="https://www.google.com/covid19/mobility/">Mobility Trends report</a></strong>, which details changes in people's movement over time. This includes various public venues such as parks, grocery stores, transit, and more, which have come into greater focus during the COVID-19 pandemic. 
                     <br></br>
                     <br></br>
                     We've visualized the ever-changing data to make trends visible at a glance!
