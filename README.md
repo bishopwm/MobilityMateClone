@@ -13,9 +13,9 @@
 ### Technologies
 
 ##### Backend: 
-###### Node.js, Express.js, MongoDB/Atlas Cloud
+###### * Node.js, * Express.js, * MongoDB/Atlas Cloud
 ##### Frontend: 
-###### ReactJS, JavaScript, React-Bootstrap
+###### * ReactJS, * JavaScript, * React-Bootstrap
 
 ### Build Instructions
 
