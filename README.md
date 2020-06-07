@@ -4,14 +4,18 @@
 
 ### About
 
-#### MobilityMate was the brainchild of my project for Ironhack's Hackshow, which took place in May 2020.
+##### MobilityMate was the brainchild of my project for Ironhack's Hackshow, which took place in May 2020.
 
-### Core functionalities: View 30 day average for people's movements to various places, by state. View individual data points for people's movements to varioius places, by state, each day over the past month in graph form. Save graphs to user profile for later reference. Export data to CSV, Add/Remove graphs/data at will.
+### Core functionalities 
+
+##### View 30 day average for people's movements to various places, by state. View individual data points for people's movements to varioius places, by state, each day over the past month in graph form. Save graphs to user profile for later reference. Export data to CSV, Add/Remove graphs/data at will.
 
 ### Technologies
 
-#### Backend: Node.js, Express.js, MongoDB/Atlas Cloud
-#### Frontend: ReactJS, JavaScript, React-Bootstrap
+##### Backend: 
+###### Node.js, Express.js, MongoDB/Atlas Cloud
+##### Frontend: 
+###### ReactJS, JavaScript, React-Bootstrap
 
 ### Build Instructions
 
