@@ -2,9 +2,9 @@
 
 ### About
 
-###### MobilityMate was the brainchild of my fullstack app for Ironhack's Hackshow, which took place in May 2020.
+###### MobilityMate was the brainchild of my fullstack app idea for Ironhack Miami's Hackshow, which took place in May 2020.
 
-###### MobilityMate is a simple app intended to visualize the data available in [Google's Mobility Trends report](https://www.google.com/covid19/mobility/) for each American state. This includes the public's movements to various public venues such as parks, grocery stores, transit, and more, which have come into greater focus during the COVID-19 pandemic. This app visualizes the ever-changing data to make trends visible at a glance!
+###### MobilityMate is a simple app intended to visualize the data available in [Google's Mobility Trends report](https://www.google.com/covid19/mobility/) for each state in the U.S. This includes the public's movements to various public venues such as parks, grocery stores, transit, etc., which have come into greater focus during the COVID-19 pandemic. This app visualizes the ever-changing data to make trends visible at a glance!
 
 ### Core functionalities 
 
